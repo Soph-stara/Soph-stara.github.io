@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EPW Morphing Tool - Sophie Hamann</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        body {
+            background-color: pink;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .navigation {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+        }
+        .navigation a {
+            margin-right: 15px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navigation a:hover {
+            text-decoration: underline;
+            color: #ff69b4;
+        }
+        .tool-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="file"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #ff5ba7;
+        }
+        .result-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            display: none;
+        }
+        .visualization {
+            width: 100%;
+            height: 400px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .loading {
+            display: none;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .loading-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #ff69b4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>EPW Morphing Tool</h1>
+    
+    <!-- Navigation -->
+    <div class="navigation">
+        <a href="index.html">Home</a>
+        <a href="morphing-tool.html">Morphing Tool</a>
+    </div>
+    
+    <div class="tool-container">
+        <h2>Climate Data Morphing Tool</h2>
+        <p>Upload an EPW file and configure parameters to generate future weather scenarios.</p>
+        
+        <div id="morphing-tool">
+            <form id="morphing-form">
+                <div class="form-group">
+                    <label for="epw-file">Upload EPW File:</label>
+                    <input type="file" id="epw-file" accept=".epw">
+                </div>
+                
+                <div class="form-group">
+                    <label for="scenario">Climate Scenario:</label>
+                    <select id="scenario">
+                        <option value="ssp126">SSP1-2.6 (Sustainability)</option>
+                        <option value="ssp245">SSP2-4.5 (Middle of the Road)</option>
+                        <option value="ssp370">SSP3-7.0 (Regional Rivalry)</option>
+                        <option value="ssp585">SSP5-8.5 (Fossil-fueled Development)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="time-period">Future Time Period:</label>
+                    <select id="time-period">
+                        <option value="2021-2040">Near-term (2021-2040)</option>
+                        <option value="2041-2060">Mid-term (2041-2060)</option>
+                        <option value="2081-2100">Long-term (2081-2100)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="variables">Variables to Morph:</label>
+                    <div>
+                        <input type="checkbox" id="temp" checked>
+                        <label for="temp" style="display:inline;">Temperature</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="humidity" checked>
+                        <label for="humidity" style="display:inline;">Humidity</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="radiation" checked>
+                        <label for="radiation" style="display:inline;">Solar Radiation</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="wind" checked>
+                        <label for="wind" style="display:inline;">Wind</label>
+                    </div>
+                </div>
+                
+                <button type="submit" id="process-btn">Process EPW File</button>
+            </form>
+            
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Processing data... This may take a few minutes.</p>
+            </div>
+            
+            <div class="status" id="status"></div>
+            
+            <div class="result-section" id="result-section">
+                <h3>Results</h3>
+                <p>Your morphed EPW file is ready:</p>
+                
+                <div class="form-group">
+                    <button id="download-btn">Download Morphed EPW</button>
+                </div>
+                
+                <h3>Visualization</h3>
+                <div class="visualization" id="visualization">
+                    <p>Visualization will appear here after processing</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- This would connect to your backend API -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('morphing-form');
+            const loading = document.getElementById('loading');
+            const status = document.getElementById('status');
+            const resultSection = document.getElementById('result-section');
+            const downloadBtn = document.getElementById('download-btn');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real implementation, this would connect to your Python backend
+                // For now, we'll just simulate the process
+                
+                // Show loading indicator
+                loading.style.display = 'block';
+                status.style.display = 'none';
+                resultSection.style.display = 'none';
+                
+                // Simulate API call with timeout
+                setTimeout(function() {
+                    loading.style.display = 'none';
+                    
+                    // Show success message
+                    status.textContent = 'EPW file processed successfully!';
+                    status.className = 'status success';
+                    status.style.display = 'block';
+                    
+                    // Show results
+                    resultSection.style.display = 'block';
+                    
+                    // In a real implementation, you would update the visualization
+                    // with actual data returned from your backend
+                }, 3000);
+            });
+            
+            downloadBtn.addEventListener('click', function() {
+                alert('In a real implementation, this would download your morphed EPW file.');
+            });
+        });
+    </script>
+</body>
+</html>
