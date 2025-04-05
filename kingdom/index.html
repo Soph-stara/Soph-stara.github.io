@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belvedere - Resource Management Game</title>
+    <style>
+      :root {
+        --primary-red: #d1332e;
+        --dark-text: #333;
+        --light-bg: #fff;
+      }
+      body { 
+        font-family: 'Helvetica Neue', Arial, sans-serif; 
+        text-align: center; 
+        background: var(--light-bg) url('https://cdn-imgix.headout.com/media/images/2d3ef1846b71171edc4a7a9ba6996f3b-Scho%CC%88nbrunn%20Palace.jpg?auto=format&w=1069.6000000000001&h=687.6&q=90&fit=crop&ar=14%3A9&crop=faces') no-repeat center center fixed; 
+        background-size: cover;
+        color: var(--dark-text);
+        line-height: 1.6;
+        padding: 0;
+        margin: 0;
+      }
+      header {
+        background: white;
+        border-bottom: 1px solid #eee;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+      .logo-circle {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-red);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 24px;
+      }
+      .nav-items {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-item {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--dark-text);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        background-color: rgba(255, 255, 255, 0.85);
+        min-height: calc(100vh - 70px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      h1 { 
+        color: var(--dark-text); 
+        font-weight: 300;
+        font-size: 32px;
+        letter-spacing: 0.5px;
+        margin-bottom: 30px;
+      }
+      .game-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+      .game { 
+        background: white; 
+        padding: 10px; 
+        border-radius: 0; 
+        width: 350px; 
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      h2 {
+        font-weight: 400;
+        font-size: 22px;
+        margin-top: 0;
+      }
+      h3 {
+        font-weight: 400;
+        font-size: 18px;
+        color: var(--primary-red);
+        margin-top: 25px;
+      }
+      button { 
+        margin: 8px 0; 
+        padding: 8px 16px; 
+        font-size: 14px; 
+        border: none;
+        background: var(--primary-red);
+        color: white;
+        border-radius: 0;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      button:hover {
+        background: #b82b26;
+      }
+      input { 
+        width: 80px; 
+        padding: 8px; 
+        margin: 5px 0;
+        border: 1px solid #ddd;
+        border-radius: 0;
+        text-align: center; 
+      }
+      label {
+        display: block;
+        margin: 10px 0 5px;
+        font-size: 14px;
+      }
+      ul {
+        padding-left: 20px;
+        display: inline-block;
+        text-align: center;
+      }
+      ul li {
+        margin-bottom: 6px;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .end-year-btn {
+        background: #333;
+        padding: 12px 24px;
+        width: 100%;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Belvedere Museum Manager</h1>
+            <div class="game">
+          <h2>How to Play</h2>
+          <ul>
+            <li>Buy & Sell Artworks: Manage your art collection wisely.</li>
+            <li>Buy Advertisement: attract more visitors.</li>
+            <li>Buy Supplies & Fund Maintenance: Keep your exhibit in top condition.</li>
+            <li>End the Year: Time advances, and random events may occur.</li>
+            <li>Invest in Human Resources: Raise the salary of your employees.</li>
+            <li>Make art accessible: attract visitors from all backgrounds.</li>
+            <li>Win by reaching 1,000,000 visitors or lose if bankrupt.</li>
+          </ul>
+        </div>
+
+        <div class="game">
+          <div class="stats">
+            <p><b>Year:</b> <span id="year">2023</span></p>
+            <p><b>Budget:</b> <span id="gold">1000000</span> €</p>
+            <p><b>Visitors:</b> <span id="population">0</span></p>
+            <p><b>Ticket Price:</b> <span id="ticketPrice">15</span> €</p>
+            <p><b>Visitor Satisfaction:</b> <span id="vis_satisfaction">50</span>%</p>
+            <p><b>Staff Satisfaction:</b> <span id="emp_satisfaction">50</span>%</p>
+          </div>
+
+          <h3>Museum Operations</h3>
+      <label>Buy Artwork (€): <input type="text" id="buyArtwork" value="0" /></label>
+      <button onclick="buyArtwork()">Buy</button><br />
+
+      <label>Sell Artwork (€): <input type="text" id="sellArtwork" value="0" /></label>
+      <button onclick="sellArtwork()">Sell</button><br />
+
+      <label>Buy Advertisement (€): <input type="text" id="buyAd" value="0"/></label>
+      <button onclick="buyAd()">Buy</button><br />
+
+      <label>Buy Supplies & Fund Maintenance (€): <input type="text" id="buySupFund" value="0"/></label>
+      <button onclick="buySupFund()">Fund</button><br />
+
+      <label>Invest in Human Resources (€): <input type="text" id="hrInvest" value="0"/></label>
+      <button onclick="investHR()">Invest</button><br />
+
+      <label>Accessibility Budget (€): <input type="text" id="accessBudget" value="0"/></label>
+      <button onclick="promoteAccessibility()">Promote</button><br />
+      
+      <label>Adjust Ticket Price (€): <input type="text" id="newTicketPrice" value="15"/></label>
+      <button onclick="adjustTicketPrice()">Adjust</button><br />
+
+      <button onclick="endYear()">End Year</button>
+    </div>
+
+    <script>
+      let year = 2023,
+          gold = 1000000,
+          artworks = 10,
+          population = 0,
+          ticketPrice = 15,
+          visSatisfaction = 50,
+          empSatisfaction = 50;
+
+      function updateUI() {
+        document.getElementById("year").innerText = year;
+        document.getElementById("gold").innerText = gold;
+        document.getElementById("population").innerText = population;
+        document.getElementById("ticketPrice").innerText = ticketPrice;
+        document.getElementById("vis_satisfaction").innerText = visSatisfaction;
+        document.getElementById("emp_satisfaction").innerText = empSatisfaction;
+      }
+      
+      function parseEuroValue(value) {
+        // Remove commas to handle inputs like 10,000
+        return parseInt(value.replace(/,/g, ''));
+      }
+
+      function buyArtwork() {
+        let amount = parseEuroValue(document.getElementById("buyArtwork").value);
+        if (gold >= amount) {
+          artworks += 1;
+          gold -= amount;
+        } else {
+          alert("Not enough budget!");
+        }
+        updateUI();
+      }
+
+      function sellArtwork() {
+        let amount = parseEuroValue(document.getElementById("sellArtwork").value);
+        if (artworks >= 1) {
+          artworks -= 1;
+          gold += amount;
+        } else {
+          alert("Not enough artworks to sell!");
+        }
+        updateUI();
+      }
+
+      function buyAd() {
+        let amount = parseEuroValue(document.getElementById("buyAd").value);
+        if (gold >= amount) {
+          gold -= amount;
+          population += Math.floor(amount / 50);
+          visSatisfaction += 1;
+        } else {
+          alert("Not enough budget!");
+        }
+        updateUI();
+      }
+
+      function buySupFund() {
+        let amount = parseEuroValue(document.getElementById("buySupFund").value);
+        if (gold >= amount) {
+          gold -= amount;
+          visSatisfaction += Math.floor(amount / 6000);
+          empSatisfaction += Math.floor(amount / 10000);
+        } else {
+          alert("Not enough budget!");
+        }
+        updateUI();
+      }
+
+      function investHR() {
+        let amount = parseEuroValue(document.getElementById("hrInvest").value);
+        if (gold >= amount) {
+          gold -= amount;
+          empSatisfaction += Math.floor(amount / 5000);
+        } else {
+          alert("Not enough budget!");
+        }
+        updateUI();
+      }
+
+      function promoteAccessibility() {
+        let amount = parseEuroValue(document.getElementById("accessBudget").value);
+        if (gold >= amount) {
+          gold -= amount;
+          population += Math.floor(amount / 500);
+          visSatisfaction += Math.floor(amount / 25000);
+        } else {
+          alert("Not enough budget!");
+        }
+        updateUI();
+      }
+
+      function endYear() {
+        year++;
+        visSatisfaction = Math.min(100, visSatisfaction + Math.floor(Math.random() * 3));
+        empSatisfaction = Math.min(100, empSatisfaction + Math.floor(Math.random() * 3));
+
+        gold -= Math.floor(Math.random() * 10000);
+        
+        // Calculate new visitors based on satisfaction and ticket price
+        let baseVisitors = Math.floor(Math.random() * 500);
+        let priceEffect = Math.max(0, 1 - (ticketPrice - 10) / 30); // Higher prices reduce visitors
+        population += Math.floor(baseVisitors * priceEffect);
+        
+        // Add ticket revenue
+        gold += population * ticketPrice;
+
+        if (gold <= 0) {
+          alert("Your museum has gone bankrupt!");
+          resetGame();
+        }
+
+        if (population >= 1000000) {
+          alert("Congratulations! You've reached 1,000,000 visitors!");
+          resetGame();
+        }
+
+        updateUI();
+      }
+
+      function adjustTicketPrice() {
+        let newPrice = parseEuroValue(document.getElementById("newTicketPrice").value);
+        if (newPrice >= 0) {
+          ticketPrice = newPrice;
+          // Adjust visitor satisfaction based on price changes
+          if (newPrice > 20) {
+            visSatisfaction = Math.max(0, visSatisfaction - 5);
+          } else if (newPrice < 10) {
+            visSatisfaction = Math.min(100, visSatisfaction + 3);
+            // Lower prices might affect budget
+            gold -= 5000;
+          }
+        } else {
+          alert("Ticket price cannot be negative!");
+        }
+        updateUI();
+      }
+      
+      function resetGame() {
+        year = 2023;
+        gold = 1000000;
+        artworks = 10;
+        population = 0;
+        ticketPrice = 15;
+        visSatisfaction = 50;
+        empSatisfaction = 50;
+        updateUI();
+      }
+
+      updateUI();
+    </script>
+  </body>
+</html>
