@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feminist Icons Memory Game</title>
+    <style>
+        :root {
+            --primary-color: #8A2BE2;
+            --primary-light: #E6E6FA;
+            --primary-dark: #4B0082;
+            --white: #FFFFFF;
+            --gray-light: #F8F8F8;
+            --gray: #DDDDDD;
+            --text-dark: #333333;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 0; /* remove padding */
+            margin: 0;
+        }
+        
+        h1, h2, h3 {
+            color: var(--primary-dark);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .game-status {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .level-indicator, .pairs-counter {
+            font-weight: bold;
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+        }
+        
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 10px;
+            width: 90%;
+            max-width: 100%;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card {
+            position: relative;
+            height: 120px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+            perspective: 1000px;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+        
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-item {
+            display: flex;
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline-year {
+            flex: 0 0 80px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-light);
+            border-radius: 6px;
+            margin-right: 15px;
+            padding: 8px;
+        }
+        
+        .timeline-event {
+            flex: 1;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .card-front {
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-size: 2rem;
+        }
+        
+        .card-back {
+            background-color: var(--white);
+            transform: rotateY(180deg);
+            padding: 10px;
+        }
+        
+        .card-name {
+            font-weight: bold;
+            font-size: 1rem;
+            color: var(--primary-dark);
+            text-align: center;
+            word-wrap: break-word;
+        }
+        
+        .card-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-light);
+        }
+        
+        .card.matched {
+            opacity: 0.7;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .modal {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+        }
+        
+        .info-modal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .info-content {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .info-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .info-text {
+            text-align: left;
+        }
+        
+        .reward-modal {
+            padding: 20px;
+        }
+        
+        .reward-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 15px auto;
+            border: 4px solid var(--primary-light);
+        }
+        
+        .button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .hall-of-fame {
+            margin-top: 30px;
+            width: 90%;
+            max-width: 100%;
+        }
+        
+        .hall-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            padding: 15px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hall-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .hall-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-light);
+        }
+        
+        .hall-name {
+            margin-top: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+        }
+        
+        .victory-screen {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 100%;
+        }
+        
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .game-board {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: auto;
+            }
+            
+            .card {
+                height: 100px;
+            }
+            
+            .card-image {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-board {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .game-status {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Feminist Icons Memory Game</h1>
+    
+    <div id="gameContainer">
+        <div class="game-status">
+            <div class="level-indicator">Level <span id="currentLevel">1</span></div>
+            <div class="pairs-counter">Pairs Found: <span id="pairsFound">0</span>/<span id="totalPairs">10</span></div>
+        </div>
+        
+        <div id="gameBoard" class="game-board">
+            <!-- Cards will be generated here -->
+        </div>
+    </div>
+    
+    <div id="victoryScreen" class="victory-screen hidden">
+        <h2>🎉 Congratulations! 🎉</h2>
+        <p>You've completed all levels and abolished the patriarchy!</p>
+        <button id="restartButton" class="button">Play Again</button>
+    </div>
+    
+    <div id="hallOfFame" class="hall-of-fame hidden">
+        <h2>Hall of Fame</h2>
+        <div id="hallGrid" class="hall-grid">
+            <!-- Hall of fame icons will be added here -->
+        </div>
+    </div>
+    
+    <!-- Info Modal -->
+    <div id="infoModal" class="modal-overlay hidden">
+        <div class="modal info-modal">
+            <h3 id="infoName">Feminist Icon Name</h3>
+            <div class="info-content">
+                <img id="infoImage" class="info-image" src="" alt="Feminist Icon">
+                <p id="infoText" class="info-text">Information about the feminist icon.</p>
+            </div>
+            <button id="infoContinueButton" class="button">Continue</button>
+        </div>
+    </div>
+    
+    <!-- Reward Modal -->
+    <div id="rewardModal" class="modal-overlay hidden">
+        <div class="modal reward-modal">
+            <h3>Level <span id="completedLevel">1</span> Completed!</h3>
+            <p>You've earned a new icon for your Hall of Fame:</p>
+            <img id="rewardImage" class="reward-image" src="" alt="Reward">
+            <p id="rewardName" class="card-name">Reward Name</p>
+            <button id="nextLevelButton" class="button">Go to Next Level</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game State
+            const state = {
+                level: 1,
+                cards: [],
+                flippedCards: [],
+                matchedPairs: [],
+                canFlip: true,
+                hallOfFame: []
+            };
+            
+            // Level Configuration
+            const levelConfig = {
+                1: { pairs: 10, rows: 5, cols: 4 },
+                2: { pairs: 4, rows: 2, cols: 4 },
+                3: { pairs: 6, rows: 3, cols: 4 },
+                4: { pairs: 8, rows: 4, cols: 4 },
+                5: { pairs: 10, rows: 4, cols: 5 }
+            };
+            
+            // Feminist Icons Data
+            // Feminist Icons Data with real images
+            const feministIcons = [
+            { id: 1, name: "Simone de Beauvoir", info: "Philosopher who wrote 'The Second Sex'", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Simone_De_Beauvoir2.jpg/800px-Simone_De_Beauvoir2.jpg" },
+            { id: 2, name: "Frida Kahlo", info: "Mexican painter known for her self-portraits", image: "https://upload.wikimedia.org/wikipedia/commons/0/06/Frida_Kahlo%2C_by_Guillermo_Kahlo.jpg" },
+            { id: 3, name: "Malala Yousafzai", info: "Nobel Prize laureate and education activist", image: "https://upload.wikimedia.org/wikipedia/commons/0/03/Malala_Yousafzai_2023_portrait_2x3.jpg" },
+            { id: 4, name: "Audre Lorde", info: "Writer and civil rights activist", image: "https://static01.nyt.com/images/2024/08/25/magazine/25mag-Lorde-images/25mag-Lorde-images-mediumSquareAt3X.jpg" },
+            { id: 5, name: "Judith Butler", info: "Philosopher and gender theorist", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/JudithButler2013.jpg/640px-JudithButler2013.jpg" },
+            { id: 6, name: "Angela Davis", info: "Political activist, philosopher, and author", image: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Angela_Davis_in_2019.jpg" },
+            { id: 7, name: "Ada Lovelace", info: "Mathematician and first computer programmer", image: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Ada_Lovelace_portrait.jpg" },
+            { id: 8, name: "bell hooks", info: "Author and social activist focusing on race, capitalism, and gender", image: "https://cdn.britannica.com/96/230396-050-206FBC1F/bell-hooks-2018.jpg" },
+            { id: 9, name: "Donna Haraway", info: "Scholar of science and technology studies", image: "https://www.exibart.com/repository/media/2025/04/Donna-Haraway_Photo-by-Clara-Mokri_02.jpeg" },
+            { id: 10, name: "Virginia Woolf", info: "Modernist writer and feminist", image: "https://cdn.britannica.com/82/138382-050-2E8FCB26/Virginia-Woolf.jpg" },
+            { id: 11, name: "Ruth Bader Ginsburg", info: "US Supreme Court Justice and gender equality advocate", image: "https://upload.wikimedia.org/wikipedia/commons/7/76/Ruth_Bader_Ginsburg_2016_portrait.jpg" },
+            { id: 12, name: "Gloria Steinem", info: "Journalist and political activist", image: "https://upload.wikimedia.org/wikipedia/commons/9/97/Gloria_Steinem_%2829459760190%29_%28cropped%29.jpg" },
+            { id: 13, name: "Wangari Maathai", info: "Environmentalist and Nobel Peace Prize winner", image: "https://womenscenter.unc.edu/wp-content/uploads/sites/349/2016/03/PHOTO-Wangari_Maathai-c-Patrick-Wallet.jpg" },
+            { id: 14, name: "Chimamanda Ngozi Adichie", info: "Writer and speaker on feminism", image: "https://pondus-hpg.s3.eu-central-1.amazonaws.com/fischer/public/q7s4bzqTvLAopCS3XN1TcgJHzGdS3wC8jN1GBzleSuk/AF_Adichie_Chimamanda_Ngozi__003.png" },
+            { id: 15, name: "Marie Curie", info: "Physicist and chemist who conducted pioneering research on radioactivity", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Marie_Curie_%28Nobel-Chem%29.jpg/800px-Marie_Curie_%28Nobel-Chem%29.jpg" },
+            { id: 16, name: "Mary Wollstonecraft", info: "Wrote 'A Vindication of the Rights of Woman' (1792), one of the earliest feminist texts.", image: "https://upload.wikimedia.org/wikipedia/commons/3/36/Mary_Wollstonecraft_by_John_Opie_%28c._1797%29.jpg" }, 
+            { id: 17, name: "Sojourner Truth", info: "Former slave, abolitionist, and women's rights activist; famous for her 'Ain't I a Woman?' speech.", image: "https://www.blackpast.org/wp-content/uploads/2024/08/Sojourner-Truth-1864-Smithsonian-Institution.jpg" }, 
+            { id: 18, name: "Emmeline Pankhurst", info: "Leader of the militant Suffragette movement.", image: "https://upload.wikimedia.org/wikipedia/commons/2/25/Emmeline_Pankhurst%2C_seated_%281913%29.jpg" }, 
+            { id: 19, name: "Qiu Jin", info: "Revolutionary and Feminist writer, advocated for women's education", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Qiu_Jin2.jpg/1200px-Qiu_Jin2.jpg" }, 
+            { id: 20, name: "Betty Friedan", info: "Wrote The Feminine Mystique, helping launch second-wave feminism; co-founded NOW", image: "https://cdn.britannica.com/26/227526-050-FA6BBC70/American-author-and-feminist-Betty-Friedan-circa-1987.jpg" }, 
+            { id: 21, name: "Germaine Greer", info: "Wrote The Female Eunuch (1970); challenged societal views on female sexuality", image: "https://cdn.britannica.com/25/218225-050-65C9478C/Australian-writer-Germaine-Greer-2018.jpg" }, 
+            { id: 22, name: "Maria Alyokhina", info: "Russian political activist. She is a member of the anti-Putinist punk rock group Pussy Riot.", image: "https://images.303magazine.com/uploads/2023/11/mashapr.jpeg" }, 
+            { id: 23, name: "Tarana Burke", info: "Founder of the Me Too Movement to support survivors of sexual violence", image: "https://unwomen.org.au/wp-content/uploads/2023/02/Tarana-Burke_Web.jpg" }, 
+            { id: 24, name: "Nadia Murad", info: "Yazidi human rights activist and Nobel Peace Prize Winner; survivor of sexual violence and advocate against trafficking.", image: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Nadia_Murad_2023_%28close-up%29.jpg" }, 
+            { id: 25, name: "Kate Millett", info: "Wrote Sexual Politics, an early feminist critique of literature and patriarchy", image: "https://www.unadonnalgiorno.it/wp-content/uploads/2024/10/Kate-Millet.jpg" }
+            ];
+
+            // Feminist historical timeline with significant years and events
+            const feministYears = [
+            { 
+            year: 1792, 
+            event: "Mary Wollstonecraft publishes 'A Vindication of the Rights of Woman', one of the earliest feminist texts arguing for women's education and equality."
+            },
+            { 
+            year: 1848, 
+            event: "The Seneca Falls Convention, the first women's rights convention, is held in New York. The Declaration of Sentiments, modeled after the Declaration of Independence, is signed."
+            },
+            { 
+            year: 1851, 
+            event: "Sojourner Truth delivers her famous 'Ain't I a Woman?' speech at the Women's Rights Convention in Akron, Ohio."
+            },
+            { 
+            year: 1869, 
+            event: "Wyoming becomes the first U.S. territory to grant women the right to vote."
+            },
+            { 
+            year: 1893, 
+            event: "New Zealand becomes the first nation to grant women the right to vote."
+            },
+            { 
+            year: 1903, 
+            event: "Emmeline Pankhurst founds the Women's Social and Political Union, leading the militant suffragette movement in Britain."
+            },
+            { 
+            year: 1919, 
+            event: "The 19th Amendment to the U.S. Constitution is passed, guaranteeing women's right to vote."
+            },
+            { 
+            year: 1929, 
+            event: "Virginia Woolf publishes 'A Room of One's Own', arguing for women's need for financial independence and private space for creative expression."
+            },
+            { 
+            year: 1949, 
+            event: "Simone de Beauvoir publishes 'The Second Sex', analyzing women's oppression and laying groundwork for second-wave feminism."
+            },
+            { 
+            year: 1963, 
+            event: "Betty Friedan publishes 'The Feminine Mystique', helping to launch second-wave feminism in the United States."
+            },
+            { 
+            year: 1966, 
+            event: "The National Organization for Women (NOW) is founded, with Betty Friedan as its first president."
+            },
+            { 
+            year: 1970, 
+            event: "Germaine Greer publishes 'The Female Eunuch', challenging traditional views on female sexuality and inspiring the women's liberation movement."
+            },
+            { 
+            year: 1972, 
+            event: "Ms. Magazine is founded by Gloria Steinem and Dorothy Pitman Hughes, becoming a major platform for feminist voices."
+            },
+            { 
+            year: 1973, 
+            event: "Roe v. Wade Supreme Court decision establishes abortion as a constitutional right in the United States."
+            },
+            { 
+            year: 1977, 
+            event: "The first Women's Studies department in Britain is established at the University of Kent."
+            },
+            { 
+            year: 1979, 
+            event: "The United Nations adopts the Convention on the Elimination of All Forms of Discrimination Against Women (CEDAW)."
+            },
+            { 
+            year: 1981, 
+            event: "bell hooks publishes 'Ain't I a Woman: Black Women and Feminism', examining the impact of sexism and racism on black women."
+            },
+            { 
+            year: 1990, 
+            event: "Judith Butler publishes 'Gender Trouble', introducing the theory of gender performativity."
+            },
+            { 
+            year: 1995, 
+            event: "The UN Fourth World Conference on Women in Beijing leads to the Beijing Declaration and Platform for Action, a landmark for global women's rights."
+            },
+            { 
+            year: 2006, 
+            event: "Tarana Burke founds the Me Too movement to support survivors of sexual violence."
+            },
+            { 
+            year: 2012, 
+            event: "Malala Yousafzai survives an assassination attempt by the Taliban for advocating girls' education in Pakistan."
+            },
+            { 
+            year: 2014, 
+            event: "Emma Watson launches the HeForShe campaign at the UN, calling for men to advocate for gender equality."
+            },
+            { 
+            year: 2017, 
+            event: "The #MeToo movement goes viral following sexual abuse allegations against Harvey Weinstein, sparking a global reckoning on sexual harassment."
+            },
+            { 
+            year: 2018, 
+            event: "Record numbers of women are elected to U.S. Congress in the midterm elections."
+            },
+            { 
+            year: 2023, 
+            event: "Women-led protests in Iran following the death of Mahsa Amini spark a global movement for women's rights in the country."
+            }
+            ];
+    
+            
+            // Level rewards
+            const levelRewards = [
+                { name: "Maya Angelou", info: "Poet, memoirist, and civil rights activist", image: "https://cdn11.bigcommerce.com/s-qvcg41qdf5/images/stencil/1200x1200/c/maya%20angelou%20photograph%20c.%20chester%20higgins__47757.original.jpg" },
+                { name: "Eleanor Roosevelt", info: "First Lady, diplomat and activist", image: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Eleanor_Roosevelt.jpg"},
+                { name: "Virginia Woolf", info: "Modernist writer and feminist", image: "https://cdn.britannica.com/82/138382-050-2E8FCB26/Virginia-Woolf.jpg"},
+                { name: "Harriet Tubman", info: "Abolitionist and political activist", image: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Harriet_Tubman_1895.jpg"}, 
+                { name: "Betty Friedan", info: "Feminist writer and activist", image: "https://cdn.britannica.com/26/227526-050-FA6BBC70/American-author-and-feminist-Betty-Friedan-circa-1987.jpg" }
+            ];
+            
+            // DOM Elements
+            const gameBoard = document.getElementById('gameBoard');
+            const currentLevelElement = document.getElementById('currentLevel');
+            const pairsFoundElement = document.getElementById('pairsFound');
+            const totalPairsElement = document.getElementById('totalPairs');
+            const infoModal = document.getElementById('infoModal');
+            const infoName = document.getElementById('infoName');
+            const infoImage = document.getElementById('infoImage');
+            const infoText = document.getElementById('infoText');
+            const infoContinueButton = document.getElementById('infoContinueButton');
+            const rewardModal = document.getElementById('rewardModal');
+            const completedLevelElement = document.getElementById('completedLevel');
+            const rewardImage = document.getElementById('rewardImage');
+            const rewardName = document.getElementById('rewardName');
+            const nextLevelButton = document.getElementById('nextLevelButton');
+            const hallOfFame = document.getElementById('hallOfFame');
+            const hallGrid = document.getElementById('hallGrid');
+            const victoryScreen = document.getElementById('victoryScreen');
+            const restartButton = document.getElementById('restartButton');
+            const gameContainer = document.getElementById('gameContainer');
+            
+            // Initialize Game
+            initGame();
+            
+            function initGame() {
+                // Update UI elements
+                currentLevelElement.textContent = state.level;
+                totalPairsElement.textContent = levelConfig[state.level].pairs;
+                pairsFoundElement.textContent = 0;
+                
+                // Create and shuffle cards
+                createCards();
+                
+                // Add event listeners
+                infoContinueButton.addEventListener('click', closeInfoModal);
+                nextLevelButton.addEventListener('click', goToNextLevel);
+                restartButton.addEventListener('click', restartGame);
+            }
+            
+            // Update your createCards function to incorporate feministYears in level 2
+function createCards() {
+    // Clear game board
+    gameBoard.innerHTML = '';
+    state.cards = [];
+    state.flippedCards = [];
+    state.matchedPairs = [];
+    state.canFlip = true;
+    
+    // Update game board grid layout
+    const config = levelConfig[state.level];
+    gameBoard.style.gridTemplateColumns = `repeat(${config.cols}, 1fr)`;
+    gameBoard.style.gridTemplateRows = `repeat(${config.rows}, 1fr)`;
+    
+    // For level 2, use feminist years instead of feminist icons
+    if (state.level === 2) {
+        // Shuffle and select the years needed for this level
+        const shuffledYears = [...feministYears].sort(() => 0.5 - Math.random());
+        const selectedYears = shuffledYears.slice(0, config.pairs);
+        
+        // Create pairs (year + event)
+        let cardPairs = [];
+        selectedYears.forEach(yearData => {
+            cardPairs.push(
+                { id: `year-${yearData.year}`, yearId: yearData.year, year: yearData.year, event: yearData.event, type: 'year', flipped: false, matched: false },
+                { id: `event-${yearData.year}`, yearId: yearData.year, year: yearData.year, event: yearData.event, type: 'event', flipped: false, matched: false }
+            );
+        });
+        
+        // Shuffle cards
+        const shuffledCards = [...cardPairs].sort(() => 0.5 - Math.random());
+        state.cards = shuffledCards;
+        
+        // Create card elements
+        shuffledCards.forEach((card, index) => {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card';
+            cardElement.dataset.index = index;
+            
+            cardElement.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-front">
+                        <span>?</span>
+                    </div>
+                    <div class="card-back">
+                        ${card.type === 'year' 
+                            ? `<div class="card-name">${card.year}</div>`
+                            : `<div class="card-name event-text">${card.event}</div>`
+                        }
+                    </div>
+                </div>
+            `;
+            
+            cardElement.addEventListener('click', () => handleCardClick(index));
+            gameBoard.appendChild(cardElement);
+        });
+    } else {
+        // For other levels, use the original feminist icons code
+        const shuffledIcons = [...feministIcons].sort(() => 0.5 - Math.random());
+        const selectedIcons = shuffledIcons.slice(0, config.pairs);
+        
+        // Create pairs (name + picture)
+        let cardPairs = [];
+        selectedIcons.forEach(icon => {
+            cardPairs.push(
+                { id: `${icon.id}-name`, iconId: icon.id, name: icon.name, info: icon.info, image: icon.image, type: 'name', flipped: false, matched: false },
+                { id: `${icon.id}-pic`, iconId: icon.id, name: icon.name, info: icon.info, image: icon.image, type: 'picture', flipped: false, matched: false }
+            );
+        });
+        
+        // Shuffle cards
+        const shuffledCards = [...cardPairs].sort(() => 0.5 - Math.random());
+        state.cards = shuffledCards;
+        
+        // Create card elements
+        shuffledCards.forEach((card, index) => {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card';
+            cardElement.dataset.index = index;
+            
+            cardElement.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-front">
+                        <span>?</span>
+                    </div>
+                    <div class="card-back">
+                        ${card.type === 'name' 
+                            ? `<div class="card-name">${card.name}</div>`
+                            : `<img class="card-image" src="${card.image}" alt="${card.name}">`
+                        }
+                    </div>
+                </div>
+            `;
+            
+            cardElement.addEventListener('click', () => handleCardClick(index));
+            gameBoard.appendChild(cardElement);
+        });
+    }
+}
+            
+            function handleCardClick(index) {
+                const card = state.cards[index];
+                const cardElement = document.querySelector(`.card[data-index="${index}"]`);
+                
+                // Don't allow clicking if:
+                // - Card is already flipped or matched
+                // - Already two cards flipped
+                // - Game is in "waiting" state
+                if (card.flipped || card.matched || state.flippedCards.length >= 2 || !state.canFlip) {
+                    return;
+                }
+                
+                // Flip the card
+                card.flipped = true;
+                cardElement.classList.add('flipped');
+                state.flippedCards.push({ index, card });
+                
+                // If two cards are flipped, check for a match
+                if (state.flippedCards.length === 2) {
+                    state.canFlip = false;
+                    
+                    const [firstCard, secondCard] = state.flippedCards;
+                    
+                    // Check if the cards match (same icon ID but different types)
+                    if (firstCard.card.iconId === secondCard.card.iconId && 
+                        firstCard.card.type !== secondCard.card.type) {
+                        // It's a match!
+                        setTimeout(() => {
+                            // Mark cards as matched
+                            firstCard.card.matched = true;
+                            secondCard.card.matched = true;
+                            
+                            document.querySelector(`.card[data-index="${firstCard.index}"]`).classList.add('matched');
+                            document.querySelector(`.card[data-index="${secondCard.index}"]`).classList.add('matched');
+                            
+                            // Add to matched pairs
+                            state.matchedPairs.push(firstCard.card.iconId);
+                            pairsFoundElement.textContent = state.matchedPairs.length;
+                            
+                            // Reset flipped cards
+                            state.flippedCards = [];
+                            state.canFlip = true;
+                            
+                            // Show info modal
+                            showInfoModal(firstCard.card);
+                            
+                            // Check if level is complete
+                            if (state.matchedPairs.length === levelConfig[state.level].pairs) {
+                                setTimeout(showRewardModal, 1000);
+                            }
+                        }, 500);
+                    } else {
+                        // Not a match
+                        setTimeout(() => {
+                            // Flip cards back
+                            firstCard.card.flipped = false;
+                            secondCard.card.flipped = false;
+                            
+                            document.querySelector(`.card[data-index="${firstCard.index}"]`).classList.remove('flipped');
+                            document.querySelector(`.card[data-index="${secondCard.index}"]`).classList.remove('flipped');
+                            
+                            // Reset flipped cards
+                            state.flippedCards = [];
+                            state.canFlip = true;
+                        }, 1000);
+                    }
+                }
+            }
+            
+            function showInfoModal(card) {
+                infoName.textContent = card.name;
+                infoImage.src = card.image; // Make sure this line is there
+                infoImage.alt = card.name;
+                infoText.textContent = card.info;
+                infoModal.classList.remove('hidden');
+            }
+            
+            function closeInfoModal() {
+                infoModal.classList.add('hidden');
+            }
+            
+            
+            // Modify your goToNextLevel function to handle level 2 specially
+            function goToNextLevel() {
+                rewardModal.classList.add('hidden');
+                
+                state.level++;
+                currentLevelElement.textContent = state.level;
+                
+                if (state.level === 2) {
+                    // For level 2, show timeline instead of memory game
+                    showTimelineView();
+                } else {
+                    // For other levels, prepare regular memory game
+                    totalPairsElement.textContent = levelConfig[state.level].pairs;
+                    pairsFoundElement.textContent = 0;
+                    createCards();
+                }
+            }
+
+            // Add a new function to display the timeline
+            function showTimelineView() {
+                // Hide the pairs counter as it's not relevant for timeline view
+                document.querySelector('.pairs-counter').style.display = 'none';
+                
+                // Clear the game board
+                gameBoard.innerHTML = '';
+                
+                // Sort the feminist years chronologically
+                const sortedYears = [...feministYears].sort((a, b) => a.year - b.year);
+                
+                // Change the game board layout to be more suitable for a timeline
+                gameBoard.style.display = 'flex';
+                gameBoard.style.flexDirection = 'column';
+                gameBoard.style.gap = '15px';
+                
+                // Create the timeline
+                sortedYears.forEach(yearData => {
+                    const timelineItem = document.createElement('div');
+                    timelineItem.className = 'timeline-item';
+                    timelineItem.innerHTML = `
+                        <div class="timeline-year">${yearData.year}</div>
+                        <div class="timeline-event">${yearData.event}</div>
+                    `;
+                    gameBoard.appendChild(timelineItem);
+                });
+                
+                // Add a "Continue to Level 3" button at the bottom
+                const continueButton = document.createElement('button');
+                continueButton.className = 'button';
+                continueButton.textContent = 'Continue to Level 3';
+                continueButton.addEventListener('click', () => {
+                    // Reset the game board style to grid for future levels
+                    gameBoard.style.display = 'grid';
+                    document.querySelector('.pairs-counter').style.display = 'block';
+                    
+                    state.level++;
+                    currentLevelElement.textContent = state.level;
+                    totalPairsElement.textContent = levelConfig[state.level].pairs;
+                    pairsFoundElement.textContent = 0;
+                    createCards();
+                });
+                
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'button-container';
+                buttonContainer.appendChild(continueButton);
+                gameBoard.appendChild(buttonContainer);
+            }
+            
+            function showRewardModal() {
+                completedLevelElement.textContent = state.level;
+                const reward = levelRewards[state.level - 1];
+                rewardImage.src = reward.image; // Change from placeholder to real image
+                rewardImage.alt = reward.name;
+                rewardName.textContent = reward.name;
+                
+                // Update button text for final level
+                if (state.level === 5) {
+                    nextLevelButton.textContent = 'Finish Game';
+                } else {
+                    nextLevelButton.textContent = `Go to Level ${state.level + 1}`;
+                }
+                
+                rewardModal.classList.remove('hidden');
+                
+                // Add to hall of fame
+                state.hallOfFame.push(reward);
+                updateHallOfFame();
+            }
+            
+            function updateHallOfFame() {
+                if (state.hallOfFame.length > 0) {
+                    hallOfFame.classList.remove('hidden');
+                    hallGrid.innerHTML = '';
+                    
+                    state.hallOfFame.forEach(icon => {
+                        const iconElement = document.createElement('div');
+                        iconElement.className = 'hall-item';
+                        iconElement.innerHTML = `
+                            <img class="hall-image" src="${icon.image}" alt="${icon.name}">
+                            <div class="hall-name">${icon.name}</div>
+                        `;
+                        hallGrid.appendChild(iconElement);
+                    });
+                }
+            }
+            
+            function goToNextLevel() {
+                rewardModal.classList.add('hidden');
+                
+                if (state.level < 5) {
+                    state.level++;
+                    currentLevelElement.textContent = state.level;
+                    totalPairsElement.textContent = levelConfig[state.level].pairs;
+                    pairsFoundElement.textContent = 0;
+                    createCards();
+                } else {
+                    // Game completed
+                    gameContainer.classList.add('hidden');
+                    victoryScreen.classList.remove('hidden');
+                }
+            }
+            
+            function restartGame() {
+                state.level = 1;
+                state.hallOfFame = [];
+                
+                currentLevelElement.textContent = state.level;
+                totalPairsElement.textContent = levelConfig[state.level].pairs;
+                pairsFoundElement.textContent = 0;
+                
+                hallOfFame.classList.add('hidden');
+                victoryScreen.classList.add('hidden');
+                gameContainer.classList.remove('hidden');
+                
+                createCards();
+            }
+        });
+    </script>
+</body>
+</html>
