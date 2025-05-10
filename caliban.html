@@ -58,6 +58,50 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
 
+        .historical-note {
+            background-color: rgba(230, 192, 104, 0.15);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            text-align: left;
+            font-style: italic;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--gold);
+        }
+
+        .theory-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            border-bottom: 1px dotted var(--gold);
+        }
+
+        .theory-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 300px;
+            background-color: rgba(45, 27, 54, 0.95);
+            color: var(--cream);
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-style: normal;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--gold);
+        }
+
+        .theory-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
         .role-select {
             display: flex;
             flex-wrap: wrap;
@@ -89,6 +133,13 @@
 
         .role-card p {
             font-size: 0.9rem;
+        }
+
+        .role-card .role-detail {
+            font-size: 0.8rem;
+            margin-top: 10px;
+            color: var(--cream);
+            opacity: 0.8;
         }
 
         .status-bar {
@@ -200,6 +251,16 @@
             font-size: 1rem;
         }
 
+        .historical-context {
+            background-color: rgba(45, 27, 54, 0.1);
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-top: 5px;
+            color: var(--dark-purple);
+        }
+
         .card-image {
             height: 120px;
             background-color: rgba(45, 27, 54, 0.1);
@@ -234,6 +295,14 @@
             background-color: var(--dark-purple);
         }
 
+        .consequence-preview {
+            display: block;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-style: italic;
+            color: rgba(247, 241, 227, 0.8);
+        }
+
         .draw-button {
             padding: 12px 25px;
             background-color: var(--gold);
@@ -262,10 +331,36 @@
             font-size: 0.9rem;
         }
 
+        .ally-icon {
+            display: inline-flex;
+            width: 12px;
+            height: 12px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            margin-right: 3px;
+        }
+
+        .empty-ally {
+            background-color: rgba(230, 192, 104, 0.3);
+        }
+
         .game-message {
             margin-top: 20px;
             min-height: 60px;
             font-style: italic;
+        }
+
+        .journal-entry {
+            background-color: rgba(45, 27, 54, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+            border-left: 3px solid var(--gold);
+            max-height: 100px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
         }
 
         .hidden {
@@ -285,6 +380,20 @@
         .game-end-screen h2 {
             color: var(--gold);
             font-size: 2rem;
+            margin-top: 0;
+        }
+
+        .theory-connection {
+            background-color: rgba(155, 89, 182, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .theory-connection h3 {
+            color: var(--light-purple);
             margin-top: 0;
         }
 
@@ -331,6 +440,51 @@
             font-weight: bold;
         }
 
+        .toggle-journal {
+            background-color: transparent;
+            border: 1px solid var(--light-purple);
+            color: var(--light-purple);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .toggle-journal:hover {
+            background-color: rgba(155, 89, 182, 0.2);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: rgba(45, 27, 54, 0.9);
+            color: var(--cream);
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.8rem;
@@ -352,6 +506,10 @@
             .card-content {
                 font-size: 0.9rem;
             }
+
+            .historical-context {
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
@@ -362,23 +520,36 @@
             <h1>Caliban's Daughters</h1>
             <h2>A Game of Female Power</h2>
             <p>You are a woman in the Middle Ages. Your wisdom and knowledge makes you suspicious. Survive the time of witch hunts.</p>
+            
+            <div class="historical-note">
+                The witch hunts of early modern Europe were not merely superstition, but a 
+                <span class="theory-tooltip">systematic attack on women's autonomy
+                    <span class="tooltip-text">Silvia Federici argues in "Caliban and the Witch" that witch hunts were a mechanism to destroy women's economic independence and control over reproduction, aiding the transition to capitalism.</span>
+                </span>. 
+                Women with knowledge of healing, midwifery, or those who lived independently were particularly targeted.
+            </div>
+            
             <p>Choose your role to begin:</p>
             <div class="role-select">
                 <div class="role-card" data-role="healer">
                     <h3>Healer</h3>
                     <p>You know remedies for many ailments, but your herbal knowledge has drawn suspicion.</p>
+                    <div class="role-detail">+Ability to reduce suspicion<br>-Vulnerable to accusations</div>
                 </div>
                 <div class="role-card" data-role="midwife">
                     <h3>Midwife</h3>
                     <p>You bring new life into the world, but your knowledge of women's bodies makes some uneasy.</p>
+                    <div class="role-detail">+Respected by villagers<br>-Scrutinized by authorities</div>
                 </div>
                 <div class="role-card" data-role="wisdomkeeper">
                     <h3>Wise Woman</h3>
                     <p>Your wisdom and knowledge of old ways makes you both respected and feared.</p>
+                    <div class="role-detail">+Greater influence<br>-Higher starting suspicion</div>
                 </div>
                 <div class="role-card" data-role="dissenter">
                     <h3>Dissenter</h3>
                     <p>You speak out against injustice, challenging the emerging patriarchal order.</p>
+                    <div class="role-detail">+Gains allies faster<br>-Highest starting suspicion</div>
                 </div>
             </div>
         </div>
@@ -387,10 +558,13 @@
         <div id="game-screen" class="hidden">
             <h1>Caliban's Daughters</h1>
             <div class="stats">
-                <div class="allies-counter">Allies: <span id="allies-count">0</span></div>
+                <div class="allies-counter">
+                    Allies: <span id="allies-count">0</span>
+                    <div id="ally-icons"></div>
+                </div>
                 <div class="rounds-counter">Round: <span id="round-count">1</span>/10</div>
             </div>
-            <div class="status-bar">
+            <div class="status-bar" title="Keep your suspicion below 100 to survive">
                 <div class="suspicion-level" id="suspicion-bar"></div>
                 <div class="status-label">Suspicion: <span id="suspicion-value">30</span>%</div>
             </div>
@@ -405,210 +579,342 @@
                             <!-- Card symbol will go here -->
                         </div>
                         <div class="card-content" id="card-content"></div>
+                        <div class="historical-context" id="card-context"></div>
                         <div class="deck-counter" id="deck-counter"></div>
                     </div>
                 </div>
             </div>
             <div class="choices hidden" id="choices">
-                <button class="choice-button" id="upright-choice"></button>
-                <button class="choice-button" id="reversed-choice"></button>
+                <button class="choice-button" id="upright-choice">
+                    <span id="upright-text"></span>
+                    <span class="consequence-preview" id="upright-preview"></span>
+                </button>
+                <button class="choice-button" id="reversed-choice">
+                    <span id="reversed-text"></span>
+                    <span class="consequence-preview" id="reversed-preview"></span>
+                </button>
             </div>
             <button class="draw-button" id="draw-button">Draw a Card</button>
             <div class="game-message" id="game-message"></div>
+            <button class="toggle-journal" id="toggle-journal">Show Journal</button>
+            <div class="journal-entry hidden" id="journal">
+                Your journey begins...
+            </div>
         </div>
 
         <!-- End Screen -->
         <div id="end-screen" class="game-end-screen hidden">
             <h2 id="end-title"></h2>
             <p id="end-message"></p>
+            <div class="theory-connection">
+                <h3>Historical Reflection</h3>
+                <p id="theory-message"></p>
+            </div>
             <button class="restart-button" id="restart-button">Play Again</button>
         </div>
     </div>
 
     <script>
-        // Game data
+        // Game data - Enhanced cards with historical context
         const cards = [
             {
                 title: "The Moon",
                 content: "Rumor has it that you are a witch. The whispers spread through the village.",
+                context: "Women who did not conform to social expectations were often the first to be labeled as witches. Rumors could quickly become deadly accusations.",
                 upright: {
                     text: "Hide in the forest",
-                    effect: { suspicion: -10, message: "The forest shelters you. The rumors die down... for now." }
+                    effect: { suspicion: -10, message: "The forest shelters you. The rumors die down... for now." },
+                    preview: "Safety, but isolation"
                 },
                 reversed: {
                     text: "Ignore the rumors",
-                    effect: { suspicion: +20, message: "The whispers grow louder as your indifference is seen as defiance." }
+                    effect: { suspicion: +20, message: "The whispers grow louder as your indifference is seen as defiance." },
+                    preview: "Risky, shows independence"
                 }
             },
             {
                 title: "The Tower",
                 content: "The inquisitor arrives in a nearby town. Panic spreads throughout the region.",
+                context: "Inquisitors moved from town to town, creating a climate of fear. Their arrival often triggered a wave of denunciations as people sought to protect themselves.",
                 upright: {
                     text: "Join resistance movement",
-                    effect: { suspicion: +10, allies: +1, message: "You find others who oppose the witch hunts. Risky, but you are not alone." }
+                    effect: { suspicion: +10, allies: +1, message: "You find others who oppose the witch hunts. Risky, but you are not alone." },
+                    preview: "Gain allies, increase risk"
                 },
                 reversed: {
                     text: "Blend in with villagers",
-                    effect: { suspicion: -5, message: "You hide your knowledge and practices, keeping to yourself." }
+                    effect: { suspicion: -5, message: "You hide your knowledge and practices, keeping to yourself." },
+                    preview: "Lower suspicion, remain alone"
                 }
             },
             {
                 title: "The High Priestess",
                 content: "Your healing knowledge has saved a child from illness. The village takes notice.",
+                context: "Healing was a double-edged sword. Success could bring gratitude but also suspicion, especially when traditional methods failed but yours succeeded.",
                 upright: {
                     text: "Share your knowledge",
-                    effect: { allies: +1, message: "You teach others your remedies. Some appreciate your wisdom." }
+                    effect: { allies: +1, message: "You teach others your remedies. Some appreciate your wisdom." },
+                    preview: "Gain allies, no suspicion change"
                 },
                 reversed: {
                     text: "Take credit for the healing",
-                    effect: { suspicion: +15, message: "Your abilities are seen as unnatural by some in the village." }
+                    effect: { suspicion: +15, message: "Your abilities are seen as unnatural by some in the village." },
+                    preview: "Increased suspicion, no allies"
                 }
             },
             {
                 title: "The Hermit",
                 content: "A woman from a neighboring village seeks your help, fleeing persecution.",
+                context: "Networks of support among women were crucial for survival. Helping others carried risk but could build solidarity in resistance.",
                 upright: {
                     text: "Help her escape",
-                    effect: { suspicion: +5, allies: +1, message: "You risk your safety to aid another. She will remember your kindness." }
+                    effect: { suspicion: +5, allies: +1, message: "You risk your safety to aid another. She will remember your kindness." },
+                    preview: "Slight risk, gain ally"
                 },
                 reversed: {
                     text: "Turn her away",
-                    effect: { suspicion: -5, message: "You protect yourself, but lose a potential ally." }
+                    effect: { suspicion: -5, message: "You protect yourself, but lose a potential ally." },
+                    preview: "Reduce suspicion, no allies"
                 }
             },
             {
                 title: "Death",
                 content: "A woman in the village has been accused of witchcraft and awaits trial.",
+                context: "Witch trials relied on community participation. Speaking out risked attention, but silence allowed the persecution machinery to function unchallenged.",
                 upright: {
                     text: "Speak in her defense",
-                    effect: { suspicion: +20, allies: +1, message: "Your words cast suspicion on you, but you've shown great courage." }
+                    effect: { suspicion: +20, allies: +1, message: "Your words cast suspicion on you, but you've shown great courage." },
+                    preview: "High risk, gain ally"
                 },
                 reversed: {
                     text: "Stay silent",
-                    effect: { suspicion: -5, message: "You preserve your safety, but the guilt weighs on you." }
+                    effect: { suspicion: -5, message: "You preserve your safety, but the guilt weighs on you." },
+                    preview: "Slightly safer, alone"
                 }
             },
             {
                 title: "The Devil",
                 content: "The local priest warns about women who defy natural order and church teachings.",
+                context: "Religious authorities played a central role in controlling women's knowledge and bodies, defining what was permissible and what was heretical.",
                 upright: {
                     text: "Question his teachings secretly",
-                    effect: { allies: +1, message: "Others share your doubts. You form a quiet network of dissenters." }
+                    effect: { allies: +1, message: "Others share your doubts. You form a quiet network of dissenters." },
+                    preview: "Gain ally, no suspicion change"
                 },
                 reversed: {
                     text: "Attend church dutifully",
-                    effect: { suspicion: -10, message: "Your public piety provides some protection." }
+                    effect: { suspicion: -10, message: "Your public piety provides some protection." },
+                    preview: "Reduced suspicion, no allies"
                 }
             },
             {
                 title: "The Empress",
                 content: "Your knowledge of reproductive medicine could help a suffering noblewoman.",
+                context: "Control over reproduction was a key battlefield. Women with knowledge of fertility, contraception, or childbirth were both valued and feared.",
                 upright: {
                     text: "Offer your services",
-                    effect: { suspicion: -15, message: "The noblewoman recovers and becomes your protector." }
+                    effect: { suspicion: -15, message: "The noblewoman recovers and becomes your protector." },
+                    preview: "Significant safety, powerful ally"
                 },
                 reversed: {
                     text: "Keep your knowledge hidden",
-                    effect: { suspicion: -5, message: "You remain safe but unseen." }
+                    effect: { suspicion: -5, message: "You remain safe but unseen." },
+                    preview: "Slight safety, missed opportunity"
                 }
             },
             {
                 title: "The Magician",
                 content: "You discover an ancient text with forbidden knowledge.",
+                context: "Literacy among women was often restricted. Texts containing traditional knowledge were systematically destroyed during witch hunts.",
                 upright: {
                     text: "Study it in secret",
-                    effect: { allies: +1, message: "The knowledge connects you to an underground network of learned women." }
+                    effect: { allies: +1, message: "The knowledge connects you to an underground network of learned women." },
+                    preview: "Gain ally, no suspicion change"
                 },
                 reversed: {
                     text: "Destroy the text",
-                    effect: { suspicion: -10, message: "You eliminate evidence that could condemn you." }
+                    effect: { suspicion: -10, message: "You eliminate evidence that could condemn you." },
+                    preview: "Reduced suspicion, knowledge lost"
                 }
             },
             {
                 title: "The Star",
                 content: "A midnight gathering of women is planned to share knowledge and resources.",
+                context: "Women's gatherings were often criminalized. These meetings were important spaces for knowledge sharing and mutual support among women.",
                 upright: {
                     text: "Attend the gathering",
-                    effect: { suspicion: +5, allies: +2, message: "The risk was worth it. You've found your community." }
+                    effect: { suspicion: +10, allies: +2, message: "The connection with other women strengthens your resolve and knowledge." },
+                    preview: "More allies, increased suspicion"
                 },
                 reversed: {
                     text: "Stay home",
-                    effect: { suspicion: -5, message: "Better safe than sorry, though opportunity is lost." }
+                    effect: { suspicion: -5, message: "You remain isolated but avoid immediate danger." },
+                    preview: "Reduced suspicion, no new allies"
                 }
             },
             {
                 title: "Justice",
-                content: "You are directly accused of witchcraft by a neighbor who envies your independence.",
+                content: "A local official offers you protection in exchange for naming other 'suspicious' women.",
+                context: "The witch hunt machinery relied on forced confessions and denunciations, turning women against each other.",
                 upright: {
-                    text: "Flee the village",
-                    effect: { suspicion: -10, message: "You abandon your home but preserve your freedom." }
+                    text: "Refuse the offer",
+                    effect: { suspicion: +15, allies: +1, message: "Your integrity remains intact, earning the trust of other women." },
+                    preview: "High risk, gain ally"
                 },
                 reversed: {
-                    text: "Stand your ground",
-                    effect: { suspicion: +25, message: "Your defiance is noted by authorities. The situation grows dire." }
+                    text: "Provide false names",
+                    effect: { suspicion: -10, message: "You buy yourself time, but at what cost to your conscience?" },
+                    preview: "Reduced suspicion, moral compromise"
+                }
+            },
+            {
+                title: "Wheel of Fortune",
+                content: "Economic changes are forcing more women into dependency on male relatives or employers.",
+                context: "The transition to capitalism included enclosure of commons and exclusion of women from guilds, destroying female economic independence.",
+                upright: {
+                    text: "Help organize women workers",
+                    effect: { suspicion: +15, allies: +1, message: "Your leadership creates solidarity, but draws attention." },
+                    preview: "Increased risk, gain ally"
+                },
+                reversed: {
+                    text: "Secure your own position",
+                    effect: { suspicion: -5, message: "You adapt to changing circumstances, ensuring your survival." },
+                    preview: "Slightly safer, no allies"
+                }
+            },
+            {
+                title: "The Hierophant",
+                content: "New medical authorities are discrediting traditional female healers as unscientific.",
+                context: "The rise of male-dominated medicine systematically excluded women, criminalizing traditional healing practices.",
+                upright: {
+                    text: "Document your knowledge",
+                    effect: { allies: +1, message: "You preserve valuable traditions for future generations." },
+                    preview: "Gain ally, no suspicion change"
+                },
+                reversed: {
+                    text: "Adopt new medical language",
+                    effect: { suspicion: -10, message: "You adapt your practice to avoid scrutiny." },
+                    preview: "Reduced suspicion, compromise"
                 }
             }
         ];
 
-        // Role effect modifiers
-        const roleEffects = {
-            healer: { suspicionStart: 20, specialEffect: "healing" },
-            midwife: { suspicionStart: 25, specialEffect: "respected" },
-            wisdomkeeper: { suspicionStart: 35, specialEffect: "knowledge" },
-            dissenter: { suspicionStart: 40, specialEffect: "rebellion" }
-        };
-
         // Game state
         let gameState = {
+            role: "",
             suspicion: 0,
             allies: 0,
-            deck: [],
-            currentRole: "",
-            specialEffect: "",
             round: 1,
-            maxRounds: 10
+            maxRounds: 10,
+            deck: [],
+            journal: []
         };
 
-        // DOM elements
+        // DOM References
         const introScreen = document.getElementById('intro-screen');
         const gameScreen = document.getElementById('game-screen');
         const endScreen = document.getElementById('end-screen');
         const roleCards = document.querySelectorAll('.role-card');
         const suspicionBar = document.getElementById('suspicion-bar');
         const suspicionValue = document.getElementById('suspicion-value');
+        const alliesCount = document.getElementById('allies-count');
+        const allyIcons = document.getElementById('ally-icons');
+        const roundCount = document.getElementById('round-count');
         const currentCard = document.getElementById('current-card');
         const cardTitle = document.getElementById('card-title');
-        const cardImage = document.getElementById('card-image');
         const cardContent = document.getElementById('card-content');
+        const cardContext = document.getElementById('card-context');
+        const cardImage = document.getElementById('card-image');
         const choices = document.getElementById('choices');
         const uprightChoice = document.getElementById('upright-choice');
         const reversedChoice = document.getElementById('reversed-choice');
+        const uprightText = document.getElementById('upright-text');
+        const reversedText = document.getElementById('reversed-text');
+        const uprightPreview = document.getElementById('upright-preview');
+        const reversedPreview = document.getElementById('reversed-preview');
         const drawButton = document.getElementById('draw-button');
         const gameMessage = document.getElementById('game-message');
+        const journalEl = document.getElementById('journal');
+        const toggleJournal = document.getElementById('toggle-journal');
         const deckCounter = document.getElementById('deck-counter');
-        const alliesCount = document.getElementById('allies-count');
-        const roundCount = document.getElementById('round-count');
         const endTitle = document.getElementById('end-title');
         const endMessage = document.getElementById('end-message');
+        const theoryMessage = document.getElementById('theory-message');
         const restartButton = document.getElementById('restart-button');
 
-        // Initialize the game
+        // Initial setup
         function initGame() {
-            // Reset game state
-            gameState.deck = [...cards];
-            shuffleDeck();
-            
-            // Set up event listeners
+            // Role selection
             roleCards.forEach(card => {
-                card.addEventListener('click', selectRole);
+                card.addEventListener('click', () => {
+                    selectRole(card.dataset.role);
+                    introScreen.classList.add('hidden');
+                    gameScreen.classList.remove('hidden');
+                    updateUI();
+                });
             });
-            
-            drawButton.addEventListener('click', drawCard);
+
+            // Card interaction
+            currentCard.addEventListener('click', () => {
+                if (gameState.currentCard) {
+                    currentCard.classList.add('flipped');
+                    setTimeout(() => {
+                        choices.classList.remove('hidden');
+                        drawButton.classList.add('hidden');
+                    }, 500);
+                }
+            });
+
+            // Choice buttons
             uprightChoice.addEventListener('click', () => makeChoice('upright'));
             reversedChoice.addEventListener('click', () => makeChoice('reversed'));
-            restartButton.addEventListener('click', restartGame);
+
+            // Draw button
+            drawButton.addEventListener('click', drawCard);
+
+            // Journal toggle
+            toggleJournal.addEventListener('click', () => {
+                journalEl.classList.toggle('hidden');
+                toggleJournal.textContent = journalEl.classList.contains('hidden') ? 'Show Journal' : 'Hide Journal';
+            });
+
+            // Restart button
+            restartButton.addEventListener('click', () => {
+                endScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+            });
+        }
+
+        // Select role and initialize game state
+        function selectRole(role) {
+            gameState.role = role;
+            gameState.deck = [...cards]; // Clone the cards array
+            gameState.journal = ["Your journey begins as a " + role + "..."];
             
-            updateDeckCounter();
+            // Shuffle deck
+            shuffleDeck();
+            
+            // Set initial state based on role
+            switch(role) {
+                case 'healer':
+                    gameState.suspicion = 30;
+                    gameState.allies = 0;
+                    break;
+                case 'midwife':
+                    gameState.suspicion = 35;
+                    gameState.allies = 1;
+                    break;
+                case 'wisdomkeeper':
+                    gameState.suspicion = 40;
+                    gameState.allies = 1;
+                    break;
+                case 'dissenter':
+                    gameState.suspicion = 50;
+                    gameState.allies = 2;
+                    break;
+            }
+            
+            updateUI();
         }
 
         // Shuffle the deck
@@ -619,188 +925,144 @@
             }
         }
 
-        // Select role and start game
-        function selectRole() {
-            const role = this.getAttribute('data-role');
-            gameState.currentRole = role;
-            gameState.suspicion = roleEffects[role].suspicionStart;
-            gameState.specialEffect = roleEffects[role].specialEffect;
-            
-            introScreen.classList.add('hidden');
-            gameScreen.classList.remove('hidden');
-            
-            updateSuspicionBar();
-            updateStats();
-            
-            gameMessage.textContent = `You begin your journey as a ${role}. Your knowledge makes you both valuable and vulnerable.`;
-        }
-
         // Draw a card
         function drawCard() {
             if (gameState.deck.length === 0) {
-                endGame('defeat', 'The witch hunts have intensified. You have run out of options.');
+                endGame('survive');
                 return;
             }
             
-            // Draw a card from the deck
-            const card = gameState.deck.pop();
+            currentCard.classList.remove('flipped');
+            choices.classList.add('hidden');
+            gameMessage.textContent = '';
             
-            // Display the card
-            cardTitle.textContent = card.title;
-            cardContent.textContent = card.content;
+            // Draw the top card
+            gameState.currentCard = gameState.deck.pop();
             
-            // Set card symbol (simplified for this version)
-            cardImage.innerHTML = `<svg width="100" height="100" viewBox="0 0 100 100">
-                <text x="50" y="55" font-size="24" text-anchor="middle" fill="#2d1b36">${card.title}</text>
-            </svg>`;
+            // Update card display
+            cardTitle.textContent = gameState.currentCard.title;
+            cardContent.textContent = gameState.currentCard.content;
+            cardContext.textContent = gameState.currentCard.context;
+            cardImage.textContent = gameState.currentCard.title; // Placeholder for actual images
             
-            // Flip the card
-            currentCard.classList.add('flipped');
+            // Update choice buttons
+            uprightText.textContent = gameState.currentCard.upright.text;
+            reversedText.textContent = gameState.currentCard.reversed.text;
+            uprightPreview.textContent = gameState.currentCard.upright.preview;
+            reversedPreview.textContent = gameState.currentCard.reversed.preview;
             
-            // Show choices after a delay
-            setTimeout(() => {
-                choices.classList.remove('hidden');
-                drawButton.classList.add('hidden');
-                
-                // Set choice texts
-                uprightChoice.textContent = card.upright.text;
-                reversedChoice.textContent = card.reversed.text;
-                
-                // Store current card for choice handling
-                gameState.currentCard = card;
-            }, 1000);
+            // Update deck counter
+            deckCounter.textContent = `${gameState.deck.length} cards remaining`;
             
-            updateDeckCounter();
+            // Hide draw button until card is resolved
+            drawButton.classList.add('hidden');
         }
 
         // Make a choice
-        function makeChoice(type) {
-            const card = gameState.currentCard;
-            const effect = card[type].effect;
+        function makeChoice(choice) {
+            const effect = gameState.currentCard[choice].effect;
             
             // Apply effects
             if (effect.suspicion) {
                 gameState.suspicion += effect.suspicion;
-                // Ensure suspicion stays within 0-100 range
+                
+                // Apply role modifier
+                if (gameState.role === 'healer' && effect.suspicion > 0) {
+                    gameState.suspicion -= 5; // Healers get less suspicion
+                }
+                if (gameState.role === 'dissenter' && effect.suspicion > 0) {
+                    gameState.suspicion += 5; // Dissenters get more suspicion
+                }
+                
+                // Allies can reduce suspicion
+                if (effect.suspicion > 0 && gameState.allies > 0) {
+                    gameState.suspicion = Math.max(gameState.suspicion - (gameState.allies * 2), 0);
+                }
+                
+                // Keep suspicion in bounds
                 gameState.suspicion = Math.max(0, Math.min(100, gameState.suspicion));
             }
             
             if (effect.allies) {
                 gameState.allies += effect.allies;
+                
+                // Wisdom keepers get extra ally influence
+                if (gameState.role === 'wisdomkeeper' && effect.allies > 0) {
+                    gameState.allies += 1;
+                }
             }
             
-            // Update UI
-            updateSuspicionBar();
-            updateStats();
+            // Add to journal
+            gameState.journal.push(`Round ${gameState.round}: ${gameState.currentCard.title} - ${gameState.currentCard[choice].text}. ${effect.message}`);
+            journalEl.textContent = gameState.journal.join('\n\n');
             
-            // Display message
+            // Show message
             gameMessage.textContent = effect.message;
             
-            // Hide choices
-            choices.classList.add('hidden');
+            // Check for game over
+            if (gameState.suspicion >= 100) {
+                setTimeout(() => endGame('captured'), 1500);
+                return;
+            }
             
-            // Unflip card
+            // Advance round
+            gameState.round++;
+            if (gameState.round > gameState.maxRounds) {
+                setTimeout(() => endGame('survive'), 1500);
+                return;
+            }
+            
+            // Hide choices, show draw button
+            choices.classList.add('hidden');
             setTimeout(() => {
                 currentCard.classList.remove('flipped');
-            }, 1000);
-            
-            // Show draw button after delay
-            setTimeout(() => {
-                // Check win/lose conditions
-                if (gameState.suspicion >= 100) {
-                    endGame('defeat', 'You have been accused of witchcraft and face trial. Your story ends here.');
-                    return;
-                }
-                
-                if (gameState.allies >= 5) {
-                    endGame('victory', 'You have built a strong network of allies. Together, you create an underground community of resistance and support.');
-                    return;
-                }
-                
-                gameState.round++;
-                updateStats();
-                
-                if (gameState.round > gameState.maxRounds) {
-                    if (gameState.suspicion < 30) {
-                        endGame('victory', 'You have successfully navigated the witch hunt period. Your knowledge lives on.');
-                    } else if (gameState.suspicion < 70) {
-                        endGame('survival', 'You survive, but must continue to be cautious. The threat never truly ends.');
-                    } else {
-                        endGame('defeat', 'The suspicion around you has grown too great. You must flee or face certain doom.');
-                    }
-                    return;
-                }
-                
                 drawButton.classList.remove('hidden');
-            }, 2000);
+                updateUI();
+            }, 1500);
         }
 
-        // Update suspicion bar
-        function updateSuspicionBar() {
+        // Update the UI
+        function updateUI() {
             suspicionBar.style.width = `${gameState.suspicion}%`;
             suspicionValue.textContent = gameState.suspicion;
-        }
-
-        // Update stats
-        function updateStats() {
             alliesCount.textContent = gameState.allies;
-            roundCount.textContent = `${gameState.round}/${gameState.maxRounds}`;
+            roundCount.textContent = gameState.round;
+            
+            // Update ally icons
+            allyIcons.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const allyIcon = document.createElement('div');
+                allyIcon.classList.add('ally-icon');
+                if (i >= gameState.allies) {
+                    allyIcon.classList.add('empty-ally');
+                }
+                allyIcons.appendChild(allyIcon);
+            }
+            
+            // Update deck counter if there's a current game
+            if (gameState.deck) {
+                deckCounter.textContent = `${gameState.deck.length} cards remaining`;
+            }
         }
 
-        // Update deck counter
-        function updateDeckCounter() {
-            deckCounter.textContent = `${gameState.deck.length} cards left`;
-        }
-
-        // End game
-        function endGame(result, message) {
+        // End the game
+        function endGame(outcome) {
             gameScreen.classList.add('hidden');
             endScreen.classList.remove('hidden');
             
-            if (result === 'victory') {
-                endTitle.textContent = 'Victory!';
-                endTitle.style.color = '#e6c068';
-            } else if (result === 'survival') {
-                endTitle.textContent = 'You Survived';
-                endTitle.style.color = '#9b59b6';
-            } else if (result === 'defeat') {
-                endTitle.textContent = 'Defeat';
-                endTitle.style.color = '#8b0000';
+            if (outcome === 'survive') {
+                endTitle.textContent = "You Survived";
+                endMessage.textContent = `You navigated the witch hunt era with ${gameState.allies} allies and a suspicion level of ${gameState.suspicion}%. Your knowledge and wisdom live on.`;
+                theoryMessage.textContent = "Women's resistance to witch hunts took many forms. Those who survived often did so through networks of solidarity and strategic adaptation, preserving traditional knowledge despite attempts to eradicate it.";
+            } else {
+                endTitle.textContent = "You Were Captured";
+                endMessage.textContent = `Despite your efforts, suspicion overwhelmed you. Your story becomes one of the many thousands who fell victim to the witch hunts.`;
+                theoryMessage.textContent = "The witch hunts claimed hundreds of thousands of lives, predominantly women. This systematic violence served to break women's resistance to emerging capitalist social relations and patriarchal control, particularly targeting those with knowledge, economic independence, or who challenged social norms.";
             }
-            
-            endMessage.textContent = message;
         }
 
-        // Restart game
-        function restartGame() {
-            // Reset game state
-            gameState = {
-                suspicion: 0,
-                allies: 0,
-                deck: [],
-                currentRole: "",
-                specialEffect: "",
-                round: 1,
-                maxRounds: 10
-            };
-            
-            // Reset UI
-            currentCard.classList.remove('flipped');
-            choices.classList.add('hidden');
-            drawButton.classList.remove('hidden');
-            gameMessage.textContent = '';
-            
-            // Show intro screen
-            endScreen.classList.add('hidden');
-            gameScreen.classList.add('hidden');
-            introScreen.classList.remove('hidden');
-            
-            // Reinitialize game
-            initGame();
-        }
-
-        // Start the game
-        document.addEventListener('DOMContentLoaded', initGame);
+        // Initialize the game
+        initGame();
     </script>
 </body>
 </html>
