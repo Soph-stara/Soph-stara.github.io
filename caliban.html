@@ -576,16 +576,104 @@
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('end-screen').classList.remove('hidden');
             
-            // Show appropriate ending
-            if (outcome === 'survived') {
-                document.getElementById('end-title').textContent = "You Survived!";
-                document.getElementById('end-message').textContent = 
-                    `You made it through the witch hunts with ${gameState.allies} allies and ${gameState.suspicion}% suspicion.`;
-            } else if (outcome === 'captured') {
-                document.getElementById('end-title').textContent = "You Were Captured";
-                document.getElementById('end-message').textContent = 
-                    "Your suspicion became too high. You became another victim of the witch hunts.";
+            // Determine specific ending based on outcome and player stats
+            if (outcome === 'captured') {
+                showCapturedEnding();
+            } else if (outcome === 'survived') {
+                if (gameState.allies >= 4) {
+                    showResistanceEnding();
+                } else if (gameState.allies >= 2) {
+                    showSolidarityEnding();
+                } else {
+                    showSurvivalEnding();
+                }
             }
+        }
+
+        function showCapturedEnding() {
+            document.getElementById('end-title').textContent = "You Were Captured";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>Your suspicion reached 100%.</strong> The authorities have been watching you for too long.</p>
+                
+                <p>You are accused of witchcraft and taken for trial. Like hundreds of thousands of women during this period, your knowledge, independence, or resistance to the new social order has marked you as dangerous.</p>
+                
+                <p><em>Final Stats: ${gameState.allies} allies tried to help you, but it wasn't enough to overcome ${gameState.suspicion}% suspicion.</em></p>
+            `;
+            
+            document.getElementById('theory-message').innerHTML = `
+                <h3>Historical Reality</h3>
+                <p><strong>The witch hunts claimed an estimated 200,000-500,000 lives, 80-85% of them women.</strong></p>
+                
+                <p>As Silvia Federici argues, these weren't random acts of superstition. They were a systematic campaign to destroy women's autonomy during the transition to capitalism. Women with knowledge (healers, midwives), economic independence, or who resisted new patriarchal norms were specifically targeted.</p>
+                
+                <p><em>"The witch hunt was a war against women; it was a coordinated effort to degrade them, demonize them, and destroy their social power."</em> - Silvia Federici</p>
+                
+                <p>Your story represents the countless women who fell victim to this system of control.</p>
+            `;
+        }
+
+        function showResistanceEnding() {
+            document.getElementById('end-title').textContent = "You Built a Network of Resistance";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You survived with ${gameState.allies} strong allies!</strong> Through solidarity and mutual support, you've created an underground network of women who resist the witch hunts.</p>
+                
+                <p>Your knowledge is preserved and shared secretly. You've helped other women escape persecution. Together, you represent the power of collective resistance against oppression.</p>
+                
+                <p><em>Final Stats: ${gameState.suspicion}% suspicion, but ${gameState.allies} allies protected you and built something larger.</em></p>
+            `;
+            
+            document.getElementById('theory-message').innerHTML = `
+                <h3>The Power of Solidarity</h3>
+                <p><strong>Some women survived through networks of mutual aid and resistance.</strong></p>
+                
+                <p>Federici emphasizes that women didn't passively accept their fate. They formed underground networks, preserved traditional knowledge, and supported each other. Your ending represents this historical reality of resistance.</p>
+                
+                <p>As bell hooks and Angela Davis argue, collective resistance by marginalized groups can challenge systems of oppression. Your network embodies this potential for transformative solidarity.</p>
+                
+                <p><em>You've demonstrated that even under extreme persecution, women's solidarity can create spaces of resistance and survival.</em></p>
+            `;
+        }
+
+        function showSolidarityEnding() {
+            document.getElementById('end-title').textContent = "You Survived Through Community";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You made it through the dangerous period!</strong> With ${gameState.allies} allies supporting you, you managed to keep your suspicion at ${gameState.suspicion}% - low enough to avoid persecution.</p>
+                
+                <p>Your relationships with other women provided protection and support. While you couldn't build a large resistance network, you maintained connections that helped you survive.</p>
+                
+                <p><em>You represent the many women who survived through careful relationship-building and mutual support.</em></p>
+            `;
+            
+            document.getElementById('theory-message').innerHTML = `
+                <h3>Community as Survival Strategy</h3>
+                <p><strong>Many women survived the witch hunts through careful community building.</strong></p>
+                
+                <p>Your experience reflects how women used relationships and community ties as protection against persecution. This aligns with feminist theories about how marginalized groups use solidarity networks as survival strategies.</p>
+                
+                <p>Federici notes that women's communities were both a target of witch hunts and a source of resistance. Your survival demonstrates the protective power of these bonds.</p>
+            `;
+        }
+
+        function showSurvivalEnding() {
+            document.getElementById('end-title').textContent = "You Survived Alone";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You made it through, but at a cost.</strong> With only ${gameState.allies} allies and ${gameState.suspicion}% suspicion, you survived by keeping your head down and avoiding attention.</p>
+                
+                <p>Your knowledge remains hidden, your connections limited. You're alive, but the system has succeeded in isolating you and limiting your power.</p>
+                
+                <p><em>You represent the many women who survived by becoming invisible and suppressing their autonomy.</em></p>
+            `;
+            
+            document.getElementById('theory-message').innerHTML = `
+                <h3>The Cost of Isolation</h3>
+                <p><strong>Some women survived by accepting isolation and suppressing their autonomy.</strong></p>
+                
+                <p>Your ending reflects how the witch hunts succeeded even when women weren't killed - by forcing them to hide their knowledge, limit their independence, and avoid forming connections with other women.</p>
+                
+                <p>Federici argues that this isolation was part of the goal: to break women's collective power and force them into dependency on patriarchal family structures. Your survival came at the cost of your autonomy.</p>
+                
+                <p><em>This demonstrates how oppressive systems can "succeed" even when they don't destroy their targets completely.</em></p>
+            `;
         }
 
         function restartGame() {
