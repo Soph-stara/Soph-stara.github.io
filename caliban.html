@@ -258,6 +258,9 @@
         <button onclick="proceedToGameplay()" class="story-btn">Begin Your Journey</button>
         <button onclick="showRoleSelection()" class="story-btn">Choose Different Character</button>
     </div>
+
+    <!-- Main Game Screen -->
+    <div id="game-screen" class="container hidden">
         <h1>Caliban's Daughters</h1>
         
         <!-- Game Statistics -->
@@ -271,7 +274,7 @@
         <div class="card-display">
             <h2 id="card-title">Ready to Begin</h2>
             <div class="card-image" id="card-image">
-            <img src="images/cover.jpg" alt="Caliban's Daughters Cover" />
+                <img src="images/cover.jpg" alt="Caliban's Daughters Cover" />
             </div>
             <p id="card-scenario">Your story as a woman during the witch hunts is about to unfold...</p>
             <p id="card-context">Each card you draw will present you with a choice that could mean survival or danger.</p>
@@ -299,6 +302,7 @@
         <h1>Game Over</h1>
         <h2 id="end-title"></h2>
         <p id="end-message"></p>
+        <div id="theory-message" class="story-section"></div>
         <button onclick="restartGame()">Play Again</button>
     </div>
 
@@ -863,6 +867,7 @@
             
             document.getElementById('end-screen').classList.add('hidden');
             document.getElementById('start-screen').classList.remove('hidden');
+            showIntroStory(); // Make sure we show the intro story when restarting
         }
 
         // === UTILITY FUNCTIONS ===
@@ -874,35 +879,6 @@
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
-
-        // === HOW TO ADD NEW CARDS ===
-        /*
-        To add a new tarot card, copy this template into the TAROT_CARDS array:
-
-        {
-            title: "Card Name",
-            scenario: "What happens in the story",
-            context: "Historical explanation",
-            choice1: {
-                text: "First option",
-                effects: { suspicion: +10, allies: -1 }, // Change numbers as needed
-                message: "What happens if you choose this"
-            },
-            choice2: {
-                text: "Second option", 
-                effects: { suspicion: -5, allies: +1 },
-                message: "What happens if you choose this"
-            }
-        },
-
-        EFFECT OPTIONS:
-        - suspicion: +10 (increases suspicion by 10)
-        - suspicion: -5 (decreases suspicion by 5)
-        - allies: +1 (gain 1 ally)
-        - allies: -1 (lose 1 ally)
-        
-        You can combine effects: { suspicion: +15, allies: +1 }
-        */
     </script>
 </body>
 </html>
