@@ -359,8 +359,6 @@
                     message: "You stay safe but offer no help."
                 }
             },
-            // === ADD MORE CARDS HERE ===
-            // I'm adding a few more cards so you can play a full game:
             {
                 title: "The Hermit",
                 image: "images/hermit.jpg", // ADD IMAGE PATH HERE
@@ -471,6 +469,166 @@
                     text: "Stay home",
                     effects: { suspicion: -5 },
                     message: "You remain isolated but avoid immediate danger."
+                }
+            },
+            {
+                title: "The Fool",
+                image: "images/fool.jpg",
+                scenario: "A young woman arrives in your village claiming to organize resistance against the new enclosure laws. She seeks women willing to join her cause.",
+                context: "During the transition to capitalism, many displaced people moved between towns. Some organized resistance, but authorities were quick to label such groups as dangerous conspiracies.",
+                choice1: {
+                    text: "Join the cause",
+                    effects: { suspicion: +10, allies: +1 },
+                    message: "You take a leap of faith and join their movement. It's risky, but you're no longer alone in your resistance."
+                },
+                choice2: {
+                    text: "Decline and stay hidden",
+                    effects: { suspicion: -5 },
+                    message: "You choose safety over solidarity, watching the opportunity pass by."
+                }
+            },
+            {
+                title: "Temperance",
+                image: "images/temperance.jpg",
+                scenario: "Two families are feuding over a boundary dispute that threatens to escalate. Both sides ask you to witness their claims and help resolve the matter.",
+                context: "Women often served as informal mediators in community disputes. This role required careful balance - being helpful without appearing to overstep male authority, while maintaining relationships with all parties.",
+                choice1: {
+                    text: "Mediate and create peace",
+                    effects: { suspicion: -10 },
+                    message: "Your careful diplomacy and measured words restore harmony. Both families respect your wisdom and discretion."
+                },
+                choice2: {
+                    text: "Subtly encourage the conflict",
+                    effects: { suspicion: +10, allies: +1 },
+                    message: "You deliberately stoke tensions to keep attention focused elsewhere, using the chaos as cover for your own activities."
+                }
+            },
+            {
+                title: "The Lovers",
+                image: "images/lovers.jpg",
+                scenario: "Another woman, also living on the margins of society, offers to share her hidden shelter. 'We're stronger together,' she says, extending both protection and companionship.",
+                context: "In a world designed to isolate women and break their bonds, choosing to trust another person was both a radical act and a dangerous vulnerability. Close relationships could provide survival but also create new risks.",
+                choice1: {
+                    text: "Trust and join them",
+                    effects: { suspicion: -10, allies: +1 },
+                    message: "You choose vulnerability over safety. The deep connection and shared trust creates a powerful bond that strengthens you both."
+                },
+                choice2: {
+                    text: "Push them away for safety",
+                    effects: { suspicion: -5, allies: -1 },
+                    message: "You protect yourself through isolation, but lose the chance for meaningful connection and mutual support."
+                }
+            },
+            {
+                title: "Strength",
+                image: "images/strength.jpg",
+                scenario: "In the village square, a desperate woman is being publicly flogged for stealing bread to feed her children. The crowd watches in silence as the lash falls.",
+                context: "Public punishments were designed to intimidate communities into compliance. Speaking out required immense moral courage, as it could mark you as a troublemaker who sympathized with criminals and challenged authority.",
+                choice1: {
+                    text: "Step in to stop it",
+                    effects: { suspicion: +25, allies: +1 },
+                    message: "Your quiet courage overcomes fear. You step forward with gentle but unwavering resolve, risking everything to protect the vulnerable."
+                },
+                choice2: {
+                    text: "Look away in silence",
+                    effects: { suspicion: -5 },
+                    message: "You choose safety over moral action, but the weight of inaction sits heavy on your conscience."
+                }
+            },
+            {
+                title: "The Hanged Woman",
+                image: "images/hanged_man.jpg",
+                scenario: "The other women in your village council tell you to remain quiet while they negotiate with authorities about new restrictions on market trading. 'Let us handle this,' they insist.",
+                context: "Women often had to choose between collective patience and individual action. Sometimes waiting was strategic - letting others take the visible risks. Other times, bold individual action was needed to break patterns of oppression.",
+                choice1: {
+                    text: "Endure in silence and wait",
+                    effects: { suspicion: -10 },
+                    message: "You accept the suspended state, trusting in collective wisdom. Your patient sacrifice allows others to act while you remain protected."
+                },
+                choice2: {
+                    text: "Take initiative alone",
+                    effects: { suspicion: +15, allies: +1 },
+                    message: "You break the pattern of waiting and act independently. Your bold move disrupts the status quo and inspires others."
+                }
+            },
+            {
+                title: "The Chariot",
+                image: "images/chariot.jpg",
+                scenario: "A merchant caravan offers passage to a distant region where witch hunts are less frequent. 'Come with us,' they urge. 'Start fresh where no one knows your past.'",
+                context: "Many women fled persecution by joining traveling merchants or moving to new territories. However, leaving meant abandoning your community and any chance to resist the systems destroying women's lives.",
+                choice1: {
+                    text: "Join the caravan",
+                    effects: { suspicion: -30 },
+                    message: "You choose escape over resistance, leaving behind everything you've built but gaining the chance for a new life."
+                },
+                choice2: {
+                    text: "Stay and fight",
+                    effects: { suspicion: +20, allies: +1 },
+                    message: "You master your conflicting desires and choose to remain, determined to resist rather than flee."
+                }
+            },
+            {
+                title: "The World",
+                image: "images/world.jpg",
+                scenario: "You discover women secretly building a hidden sanctuary in the forest - a place where traditional knowledge can be preserved and women can live by the old ways.",
+                context: "Some women created alternative communities away from patriarchal control, preserving ancient wisdom and mutual aid. These refuges represented a complete alternative to the emerging capitalist order.",
+                choice1: {
+                    text: "Join their effort",
+                    effects: { suspicion: +10, allies: +2 },
+                    message: "You become part of something greater - a complete alternative world where women's knowledge and community can flourish."
+                },
+                choice2: {
+                    text: "Pass through quietly",
+                    effects: { suspicion: -5 },
+                    message: "You choose not to commit to their vision, remaining an outsider to this new world they're creating."
+                }
+            },
+            {
+                title: "Wheel of Fortune",
+                image: "images/wheel_of_fortune.jpg",
+                scenario: "During Sunday mass, the priest delivers a fiery sermon specifically denouncing witches and calling on the congregation to report suspicious women.",
+                context: "Religious sermons were often used to turn communities against suspected women. These moments were pivotal - how you responded could determine your fate, but the timing was beyond your control.",
+                choice1: {
+                    text: "Blend in at mass",
+                    effects: { suspicion: -10 },
+                    message: "You bow your head and recite prayers, becoming invisible in the crowd as fate's wheel turns around you."
+                },
+                choice2: {
+                    text: "Speak a coded message",
+                    effects: { suspicion: +15, allies: +1 },
+                    message: "You seize the moment to send subtle signals to other women, turning the priest's words into an opportunity for resistance."
+                }
+            },
+            {
+                title: "Judgement",
+                image: "images/judgement.jpg",
+                scenario: "A suspicious neighbor corners you publicly, demanding you swear your innocence before God and the community. All eyes are upon you in this moment of reckoning.",
+                context: "Public challenges to prove innocence were tests of both faith and identity. How you responded revealed not just your guilt or innocence, but your willingness to submit to patriarchal authority.",
+                choice1: {
+                    text: "Swear on the Bible",
+                    effects: { suspicion: -15 },
+                    message: "You submit to their judgment, performing the required ritual of innocence and conformity."
+                },
+                choice2: {
+                    text: "Walk away with dignity",
+                    effects: { suspicion: +20, allies: +1 },
+                    message: "You refuse their false judgment, choosing truth over submission. Your defiance inspires others but marks you as dangerous."
+                }
+            },
+            {
+                title: "The Sun",
+                image: "images/sun.jpg",
+                scenario: "You stumble upon a group of women celebrating an ancient seasonal ritual in a forest clearing, their joy and laughter ringing through the trees.",
+                context: "Traditional celebrations and women's rituals were increasingly banned as 'pagan.' These moments of joy and spiritual connection were both liberating and dangerous - visible celebrations of the old ways.",
+                choice1: {
+                    text: "Join and help lead it",
+                    effects: { suspicion: +20, allies: +1 },
+                    message: "You step into the sunlight of celebration, bringing joy and truth into the open despite the danger of visibility."
+                },
+                choice2: {
+                    text: "Warn them to hide",
+                    effects: { suspicion: -10 },
+                    message: "You choose caution over celebration, urging them to extinguish their light and hide their joy from watching eyes."
                 }
             }
             // === YOU CAN ADD MORE CARDS FROM YOUR TAROT DOCUMENT HERE ===
