@@ -103,12 +103,22 @@
             background-color: #e94560;
         }
 
-        ul {
-            color: #eee;
+        /* Role selection styling */
+        .roles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
         }
 
-        li {
-            margin: 8px 0;
+        .role-btn {
+            padding: 20px;
+            background-color: #0f3460;
+            border: 2px solid #e94560;
+        }
+
+        .role-btn:hover {
+            background-color: #e94560;
         }
     </style>
 </head>
@@ -186,8 +196,30 @@
         </div>
     </div>
 
-    <!-- Game Screen -->
-    <div id="game-screen" class="container hidden">
+    <!-- Character Introduction Screen -->
+    <div id="character-intro" class="container hidden">
+        <h1>Caliban's Daughters</h1>
+        <div id="character-intro-content" class="story-section">
+            <!-- Content will be filled by JavaScript -->
+        </div>
+        
+        <div class="story-section">
+            <h3>How to Play</h3>
+            <p><strong>Each Round:</strong> You'll draw a tarot card representing a situation or challenge based on historical events during the witch hunts.</p>
+            
+            <p><strong>Your Choices:</strong> Each card offers two options - often a choice between safety and resistance, or between individual survival and helping others.</p>
+            
+            <p><strong>Consequences:</strong> Your choices affect your Suspicion Level and number of Allies. Both are crucial for survival.</p>
+            
+            <div class="game-mechanics-preview">
+                <h4>Theoretical Foundation</h4>
+                <p><em>This game is based on Silvia Federici's analysis in "Caliban and the Witch." You'll experience how the witch hunts functioned as a tool of primitive accumulation, destroying women's autonomy to enforce capitalist and patriarchal control.</em></p>
+            </div>
+        </div>
+        
+        <button onclick="proceedToGameplay()" class="story-btn">Begin Your Journey</button>
+        <button onclick="showRoleSelection()" class="story-btn">Choose Different Character</button>
+    </div>
         <h1>Caliban's Daughters</h1>
         
         <!-- Game Statistics -->
@@ -375,6 +407,7 @@
             document.getElementById('historical-context').classList.add('hidden');
             document.getElementById('role-selection').classList.remove('hidden');
             document.getElementById('role-details').classList.add('hidden');
+            document.getElementById('character-intro').classList.add('hidden');
         }
 
         function showRoleDetails(role) {
@@ -394,21 +427,56 @@
         // === GAME FUNCTIONS ===
 
         function startGame(selectedRole) {
+            console.log("Starting game with role:", selectedRole); // Debug line
+            
             // Set up the game with chosen role
             gameState.role = selectedRole;
-            gameState.suspicion = ROLE_STATS[selectedRole].suspicion;
-            gameState.allies = ROLE_STATS[selectedRole].allies;
+            gameState.suspicion = ROLE_STORIES[selectedRole].suspicion;
+            gameState.allies = ROLE_STORIES[selectedRole].allies;
             gameState.round = 1;
             
             // Create shuffled deck of cards
             gameState.deck = [...TAROT_CARDS]; // Copy the cards
             shuffleArray(gameState.deck);
             
-            // Switch to game screen
+            // Show the character introduction screen first
+            showCharacterIntroduction(selectedRole);
+        }
+
+        function showCharacterIntroduction(role) {
+            // Hide start screen and show character intro
             document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('character-intro').classList.remove('hidden');
+            
+            // Fill in character intro content
+            const roleData = ROLE_STORIES[role];
+            document.getElementById('character-intro-content').innerHTML = `
+                <h2>You are ${roleData.title}</h2>
+                <div class="character-setup">
+                    <p><strong>Your situation:</strong> The year is 1580. The witch hunts have been spreading across Europe for decades. You live in a small village where everyone knows everyone else's business.</p>
+                    
+                    <p><strong>Your knowledge makes you valuable...</strong> People come to you when they need help. But that same knowledge makes you dangerous in the eyes of the authorities.</p>
+                    
+                    <p><strong>Your starting position:</strong></p>
+                    <ul>
+                        <li>Suspicion Level: ${roleData.suspicion}% (how much attention you've already drawn)</li>
+                        <li>Allies: ${roleData.allies} (people who trust and support you)</li>
+                    </ul>
+                    
+                    <p><em>Your goal is to survive 10 rounds of challenges while managing suspicion and building alliances. Too much suspicion (100%) means capture and death. Allies can help protect you and provide alternative paths to survival.</em></p>
+                </div>
+            `;
+        }
+
+        function proceedToGameplay() {
+            // Now transition to the actual game
+            document.getElementById('character-intro').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             
             updateDisplay();
+            
+            // Show initial game message
+            showMessage(`Your journey begins. The village feels tense today. Someone mentioned seeing lights in the forest last night...`);
         }
 
         function drawCard() {
