@@ -44,14 +44,16 @@
         .card-display {
             background-color: #e94560;
             color: white;
-            padding: 20px;
+            padding: 15px;
+            max-width: 400px;
             border-radius: 10px;
-            margin: 20px 0;
-            min-height: 200px;
+            margin: 20px auto;
+            min-height: 220px;
         }
 
         .card-image {
-            height: 120px;
+            height: 180px;
+            width: 120px;   
             background-color: rgba(45, 27, 54, 0.1);
             margin: 10px auto;
             border-radius: 5px;
@@ -256,24 +258,24 @@
         <button onclick="proceedToGameplay()" class="story-btn">Begin Your Journey</button>
         <button onclick="showRoleSelection()" class="story-btn">Choose Different Character</button>
     <div id="game-screen" class="container hidden">
-        <h1>Caliban's Daughters</h1>
-        
-        <!-- Game Statistics -->
-        <div class="game-stats">
-            <div class="stat-item">Suspicion: <span id="suspicion">0</span>%</div>
-            <div class="stat-item">Allies: <span id="allies">0</span></div>
-            <div class="stat-item">Round: <span id="round">1</span>/10</div>
-        </div>
+    <h1>Caliban's Daughters</h1>
+    
+    <!-- Game Statistics -->
+    <div class="game-stats">
+        <div class="stat-item">Suspicion: <span id="suspicion">0</span>%</div>
+        <div class="stat-item">Allies: <span id="allies">0</span></div>
+        <div class="stat-item">Round: <span id="round">1</span>/10</div>
+    </div>
 
-        <!-- Card Display Area -->
-        <div class="card-display">
-            <h2 id="card-title">Ready to Begin</h2>
-            <div class="card-image" id="card-image">
-                <!-- Card image will appear here -->
-            </div>
-            <p id="card-scenario">Your story as a woman during the witch hunts is about to unfold...</p>
-            <p id="card-context">Each card you draw will present you with a choice that could mean survival or danger.</p>
+    <!-- Card Display Area -->
+    <div class="card-display">
+        <h2 id="card-title">Ready to Begin</h2>
+        <div class="card-image" id="card-image">
+            <!-- Card image will appear here -->
         </div>
+        <p id="card-scenario">Your story as a woman during the witch hunts is about to unfold...</p>
+        <p id="card-context">Each card you draw will present you with a choice that could mean survival or danger.</p>
+    </div>
 
         <!-- Choice Buttons -->
         <div id="choices" class="choices hidden">
