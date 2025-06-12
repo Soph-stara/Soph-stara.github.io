@@ -231,9 +231,9 @@
 
         <!-- Card Display Area -->
         <div class="card-display">
-            <h2 id="card-title">Click "Draw Card" to begin</h2>
-            <p id="card-scenario"></p>
-            <p id="card-context"></p>
+            <h2 id="card-title">Ready to Begin</h2>
+            <p id="card-scenario">Your story as a woman during the witch hunts is about to unfold...</p>
+            <p id="card-context">Each card you draw will present you with a choice that could mean survival or danger.</p>
         </div>
 
         <!-- Choice Buttons -->
@@ -444,6 +444,9 @@
         }
 
         function showCharacterIntroduction(role) {
+            console.log("Setting up character intro for:", role); // Debug
+            console.log("Role data:", ROLE_STORIES[role]); // Debug
+            
             // Hide start screen and show character intro
             document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('character-intro').classList.remove('hidden');
@@ -473,10 +476,11 @@
             document.getElementById('character-intro').classList.add('hidden');
             document.getElementById('game-screen').classList.remove('hidden');
             
+            // Make sure the stats are properly initialized
             updateDisplay();
             
             // Show initial game message
-            showMessage(`Your journey begins. The village feels tense today. Someone mentioned seeing lights in the forest last night...`);
+            showMessage(`Your journey begins as ${ROLE_STORIES[gameState.role].title.toLowerCase()}. The village feels tense today. Someone mentioned seeing lights in the forest last night... Click "Draw Card" when you're ready for your first challenge.`);
         }
 
         function drawCard() {
