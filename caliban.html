@@ -50,6 +50,42 @@
             min-height: 200px;
         }
 
+        .card-image {
+            height: 120px;
+            background-color: rgba(45, 27, 54, 0.1);
+            margin: 10px auto;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 2px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .card-image img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 3px;
+        }
+
+        .character-setup {
+            background-color: rgba(233, 69, 96, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #e94560;
+        }
+
+        .game-mechanics-preview {
+            background-color: rgba(15, 52, 96, 0.5);
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
         .choices {
             display: flex;
             gap: 20px;
@@ -232,6 +268,9 @@
         <!-- Card Display Area -->
         <div class="card-display">
             <h2 id="card-title">Ready to Begin</h2>
+            <div class="card-image" id="card-image">
+                <!-- Card image will appear here -->
+            </div>
             <p id="card-scenario">Your story as a woman during the witch hunts is about to unfold...</p>
             <p id="card-context">Each card you draw will present you with a choice that could mean survival or danger.</p>
         </div>
@@ -268,7 +307,7 @@
         const TAROT_CARDS = [
             {
                 title: "The Moon", // Tarot card name
-                image: "images/moon.jpg",
+                image: "images/moon.jpg", // ADD IMAGE PATH HERE
                 scenario: "Whispers spread that you meet with spirits at night.", // What happens
                 context: "Rumors could quickly become deadly accusations.", // Historical context
                 choice1: {
@@ -284,7 +323,7 @@
             },
             {
                 title: "The Tower",
-                image: "images/tower.jpg",
+                image: "images/tower.jpg", // ADD IMAGE PATH HERE
                 scenario: "A local woman betrays your secret gathering.",
                 context: "Trust could be broken by fear and desperation.",
                 choice1: {
@@ -300,7 +339,7 @@
             },
             {
                 title: "The High Priestess",
-                image: "images/high_priestess.jpg",
+                image: "images/high-priestess.jpg", // ADD IMAGE PATH HERE
                 scenario: "A woman in labor calls for your help.",
                 context: "Healing knowledge was both valued and dangerous.",
                 choice1: {
@@ -314,9 +353,11 @@
                     message: "You stay safe but offer no help."
                 }
             },
+            // === ADD MORE CARDS HERE ===
+            // I'm adding a few more cards so you can play a full game:
             {
                 title: "The Hermit",
-                image: "images/hermit.jpg",
+                image: "images/hermit.jpg", // ADD IMAGE PATH HERE
                 scenario: "A woman from a neighboring village seeks your help, fleeing persecution.",
                 context: "Networks of support among women were crucial for survival.",
                 choice1: {
@@ -332,7 +373,7 @@
             },
             {
                 title: "Death",
-                image: "images/death.jpg",
+                image: "images/death.jpg", // ADD IMAGE PATH HERE
                 scenario: "A woman in the village has been accused of witchcraft and awaits trial.",
                 context: "Witch trials relied on community participation. Speaking out risked attention.",
                 choice1: {
@@ -348,7 +389,7 @@
             },
             {
                 title: "The Devil",
-                image: "images/devil.jpg",
+                image: "images/devil.jpg", // ADD IMAGE PATH HERE
                 scenario: "The local priest warns about women who defy natural order and church teachings.",
                 context: "Religious authorities played a central role in controlling women's knowledge.",
                 choice1: {
@@ -364,7 +405,7 @@
             },
             {
                 title: "The Empress",
-                image: "images/empress.jpg",
+                image: "images/empress.jpg", // ADD IMAGE PATH HERE
                 scenario: "Your knowledge of reproductive medicine could help a suffering noblewoman.",
                 context: "Control over reproduction was a key battlefield during witch hunts.",
                 choice1: {
@@ -380,7 +421,7 @@
             },
             {
                 title: "The Magician",
-                image: "images/magician.jpg",
+                image: "images/magician.jpg", // ADD IMAGE PATH HERE
                 scenario: "You discover an ancient text with forbidden knowledge.",
                 context: "Literacy among women was often restricted. Traditional texts were being destroyed.",
                 choice1: {
@@ -396,7 +437,7 @@
             },
             {
                 title: "Justice",
-                image: "images/justice.jpg",
+                image: "images/justice.jpg", // ADD IMAGE PATH HERE
                 scenario: "A local official offers you protection in exchange for naming other 'suspicious' women.",
                 context: "The witch hunt machinery relied on forced confessions and denunciations.",
                 choice1: {
@@ -412,7 +453,7 @@
             },
             {
                 title: "The Star",
-                image: "images/star.jpg",
+                image: "images/star.jpg", // ADD IMAGE PATH HERE
                 scenario: "A midnight gathering of women is planned to share knowledge and resources.",
                 context: "Women's gatherings were often criminalized but important for mutual support.",
                 choice1: {
@@ -551,8 +592,9 @@
             gameState.round = 1;
             
             // Create shuffled deck of cards
-            gameState.deck = [...TAROT_CARDS]; // Copy the cards
-            shuffleArray(gameState.deck);
+            gameState.deck = [...TAROT_CARDS]; // Copy the cards array
+            shuffleArray(gameState.deck);      // Randomize the order!
+            console.log("Shuffled deck:", gameState.deck); // Debug: see the random order
             
             // Show the character introduction screen first
             showCharacterIntroduction(selectedRole);
@@ -612,6 +654,16 @@
             document.getElementById('card-title').textContent = gameState.currentCard.title;
             document.getElementById('card-scenario').textContent = gameState.currentCard.scenario;
             document.getElementById('card-context').textContent = gameState.currentCard.context;
+            
+            // === DISPLAY THE CARD IMAGE ===
+            const cardImageEl = document.getElementById('card-image');
+            if (gameState.currentCard.image) {
+                // If there's an image path, show the image
+                cardImageEl.innerHTML = `<img src="${gameState.currentCard.image}" alt="${gameState.currentCard.title}" onerror="this.style.display='none'; this.parentElement.textContent='${gameState.currentCard.title}';" />`;
+            } else {
+                // If no image, show the card title as fallback
+                cardImageEl.textContent = gameState.currentCard.title;
+            }
             
             // Show choice buttons
             document.getElementById('choice-1-text').textContent = gameState.currentCard.choice1.text;
