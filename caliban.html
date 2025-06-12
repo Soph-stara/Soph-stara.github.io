@@ -311,8 +311,115 @@
                     message: "You stay safe but offer no help."
                 }
             },
-            // ADD MORE CARDS HERE using the same format
-            // Copy from your tarot cards document and convert to this format
+            // === ADD MORE CARDS HERE ===
+            // I'm adding a few more cards so you can play a full game:
+            {
+                title: "The Hermit",
+                scenario: "A woman from a neighboring village seeks your help, fleeing persecution.",
+                context: "Networks of support among women were crucial for survival.",
+                choice1: {
+                    text: "Help her escape",
+                    effects: { suspicion: +5, allies: +1 },
+                    message: "You risk your safety to aid another. She will remember your kindness."
+                },
+                choice2: {
+                    text: "Turn her away",
+                    effects: { suspicion: -5 },
+                    message: "You protect yourself, but lose a potential ally."
+                }
+            },
+            {
+                title: "Death",
+                scenario: "A woman in the village has been accused of witchcraft and awaits trial.",
+                context: "Witch trials relied on community participation. Speaking out risked attention.",
+                choice1: {
+                    text: "Speak in her defense",
+                    effects: { suspicion: +20, allies: +1 },
+                    message: "Your words cast suspicion on you, but you've shown great courage."
+                },
+                choice2: {
+                    text: "Stay silent",
+                    effects: { suspicion: -5 },
+                    message: "You preserve your safety, but the guilt weighs on you."
+                }
+            },
+            {
+                title: "The Devil",
+                scenario: "The local priest warns about women who defy natural order and church teachings.",
+                context: "Religious authorities played a central role in controlling women's knowledge.",
+                choice1: {
+                    text: "Question his teachings secretly",
+                    effects: { allies: +1 },
+                    message: "Others share your doubts. You form a quiet network of dissenters."
+                },
+                choice2: {
+                    text: "Attend church dutifully",
+                    effects: { suspicion: -10 },
+                    message: "Your public piety provides some protection."
+                }
+            },
+            {
+                title: "The Empress",
+                scenario: "Your knowledge of reproductive medicine could help a suffering noblewoman.",
+                context: "Control over reproduction was a key battlefield during witch hunts.",
+                choice1: {
+                    text: "Offer your services",
+                    effects: { suspicion: -15 },
+                    message: "The noblewoman recovers and becomes your protector."
+                },
+                choice2: {
+                    text: "Keep your knowledge hidden",
+                    effects: { suspicion: -5 },
+                    message: "You remain safe but unseen."
+                }
+            },
+            {
+                title: "The Magician",
+                scenario: "You discover an ancient text with forbidden knowledge.",
+                context: "Literacy among women was often restricted. Traditional texts were being destroyed.",
+                choice1: {
+                    text: "Study it in secret",
+                    effects: { allies: +1 },
+                    message: "The knowledge connects you to an underground network of learned women."
+                },
+                choice2: {
+                    text: "Destroy the text",
+                    effects: { suspicion: -10 },
+                    message: "You eliminate evidence that could condemn you."
+                }
+            },
+            {
+                title: "Justice",
+                scenario: "A local official offers you protection in exchange for naming other 'suspicious' women.",
+                context: "The witch hunt machinery relied on forced confessions and denunciations.",
+                choice1: {
+                    text: "Refuse the offer",
+                    effects: { suspicion: +15, allies: +1 },
+                    message: "Your integrity remains intact, earning the trust of other women."
+                },
+                choice2: {
+                    text: "Provide false names",
+                    effects: { suspicion: -10 },
+                    message: "You buy yourself time, but at what cost to your conscience?"
+                }
+            },
+            {
+                title: "The Star",
+                scenario: "A midnight gathering of women is planned to share knowledge and resources.",
+                context: "Women's gatherings were often criminalized but important for mutual support.",
+                choice1: {
+                    text: "Attend the gathering",
+                    effects: { suspicion: +10, allies: +2 },
+                    message: "The connection with other women strengthens your resolve and knowledge."
+                },
+                choice2: {
+                    text: "Stay home",
+                    effects: { suspicion: -5 },
+                    message: "You remain isolated but avoid immediate danger."
+                }
+            }
+            // === YOU CAN ADD MORE CARDS FROM YOUR TAROT DOCUMENT HERE ===
+            // Copy the format above and use your detailed card descriptions from the PDF
         ];
 
         // === GAME STATE ===
