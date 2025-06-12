@@ -44,16 +44,14 @@
         .card-display {
             background-color: #e94560;
             color: white;
-            padding: 15px;
-            max-width: 400px;
+            padding: 20px;
             border-radius: 10px;
-            margin: 20px auto;
+            margin: 20px 0;
             min-height: 200px;
         }
 
         .card-image {
-            height: 180px;
-            width: 120px;
+            height: 120px;
             background-color: rgba(45, 27, 54, 0.1);
             margin: 10px auto;
             border-radius: 5px;
@@ -271,7 +269,7 @@
         <div class="card-display">
             <h2 id="card-title">Ready to Begin</h2>
             <div class="card-image" id="card-image">
-                <!-- Card image will appear here -->
+                <img src="images/cover.jpg" alt="Caliban's Daughters Cover" />
             </div>
             <p id="card-scenario">Your story as a woman during the witch hunts is about to unfold...</p>
             <p id="card-context">Each card you draw will present you with a choice that could mean survival or danger.</p>
@@ -299,6 +297,7 @@
         <h1>Game Over</h1>
         <h2 id="end-title"></h2>
         <p id="end-message"></p>
+        <div id="theory-message"></div>
         <button onclick="restartGame()">Play Again</button>
     </div>
 
