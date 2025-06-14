@@ -1,163 +1,491 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophie Hamann</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <!-- Alternative favicon formats for better browser compatibility -->
     <link rel="shortcut icon" href="images/favicon.ico">
-    <!-- Try with absolute path as well -->
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: pink;
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #fafafa;
         }
 
-                /* Button style */
-        .special-button {
-            display: inline-block;
-            background-color: #ff69b4;
-            color: white !important;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 250, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e5e5;
+            z-index: 1000;
+            padding: 20px 0;
         }
 
-        .special-button:hover {
-            background-color: #ff5aa7;
-            transform: scale(1.05);
-            text-decoration: none !important;
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            margin: 15px 0;
-            border-radius: 8px;
-        }
-        .education {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-        }
-        .year {
-            font-weight: bold;
-        }
-        .job {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-        }
-        .year {
-            font-weight: bold;
-        }
-        /* Navigation style */
-        .navigation {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-        }
-
-        .navigation a {
-            margin-right: 15px;
-            color: #333;
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
             text-decoration: none;
-            font-weight: bold;
-        }
-        .navigation a:hover {
-            text-decoration: underline;
-            color: #ff69b4;
+            letter-spacing: -0.5px;
         }
 
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s ease;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            min-height: 70vh;
+            margin-bottom: 120px;
+        }
+
+        .hero-text {
+            padding-right: 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: #666;
+            font-weight: 300;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .hero-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            aspect-ratio: 4/5;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #1a1a1a;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 2px solid #1a1a1a;
+        }
+
+        .nav-button:hover {
+            background: transparent;
+            color: #1a1a1a;
+        }
+
+        .nav-button.secondary {
+            background: transparent;
+            color: #1a1a1a;
+            border: 2px solid #e5e5e5;
+        }
+
+        .nav-button.secondary:hover {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        /* CV Section */
         .cv-section {
-            background-color: rgba(255, 255, 255, 0.6);
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 8px;
+            background: white;
+            border-radius: 16px;
+            padding: 60px;
+            margin: 80px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
+
+        .cv-section h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 60px;
+            color: #1a1a1a;
+            letter-spacing: -1px;
+        }
+
         .cv-section h3 {
-            margin-top: 20px;
-            color: #cc3366;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 50px 0 20px 0;
+            color: #1a1a1a;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
         }
+
+        .cv-section h3:first-of-type {
+            margin-top: 0;
+        }
+
         .cv-section ul {
-            list-style-type: none;
-            padding-left: 0;
+            list-style: none;
+            padding: 0;
         }
+
         .cv-section li {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #f5f5f5;
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+        }
+
+        .cv-section li:last-child {
+            border-bottom: none;
+        }
+
+        .year {
+            font-weight: 600;
+            color: #666;
+            min-width: 120px;
+            font-size: 14px;
+        }
+
+        .details {
+            flex: 1;
+        }
+
+        .details strong {
+            font-weight: 600;
+            color: #1a1a1a;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .details em {
+            color: #666;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .main-content {
+                padding: 0 20px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .hero-text {
+                padding-right: 0;
+            }
+
+            .cv-section {
+                padding: 40px 30px;
+            }
+
+            .cv-section li {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .year {
+                min-width: auto;
+            }
+
+            .nav-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 15px;
+            }
+
+            .main-content {
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cv-section {
+                padding: 30px 20px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-button {
+                width: 100%;
+                text-align: center;
+                max-width: 300px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Sophie Hamann</h1>
-    
-    <!-- Navigation -->
-    <div class="navigation">
-        <a href="index.html" class="special-button">Home</a>
-        <a href="https://soph-stara.github.io/feminist_memory/" class="special-button">Feminist Memory Project</a>
-        <a href="caliban.html" class="special-button">Caliban´s Daughters</a>
-        <a href="vienna_tips.html" class="special-button">Wiener Dolce Vita</a>
-    </div>
-    
-    <!-- Your hamster GIF -->
-    <img src="images/sadhamstergirl.gif" alt="Sad hamster girl GIF">
-    <p>My favorite sad hamster girl.</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">SOPHIE HAMANN</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#work">Work</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="cv-section">
-        <h2>Curriculum Vitae</h2>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1 class="hero-title">DIGITAL<br>HUMANITIES<br>RESEARCHER</h1>
+                <p class="hero-subtitle">
+                    Interdisciplinary researcher working at the intersection of climate science, 
+                    digital humanities, and creative practice. Currently pursuing dual master's degrees 
+                    in Digital Humanities and Cross Disciplinary Strategies.
+                </p>
+                <div class="nav-buttons">
+                    <a href="https://soph-stara.github.io/feminist_memory/" class="nav-button">Feminist Memory Project</a>
+                    <a href="caliban.html" class="nav-button secondary">Caliban´s Daughters</a>
+                    <a href="vienna_tips.html" class="nav-button secondary">Wiener Dolce Vita</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/22902_002-003.jpg" alt="Sophie Hamann" onerror="this.src='images/sadhamstergirl.gif'">
+            </div>
+        </section>
 
-        <h3>Education</h3>
-        <ul>
-            <li><strong>2025-2027</strong>: Master of Arts in Cross Disciplinary Strategies, University of Applied Arts Vienna</li>
-            <li><strong>2023–2026</strong>: MA in Digital Humanities, University of Vienna</li>
-            <li><strong>2018–2022</strong>: BA in Sociology, Politics and Economics, Zeppelin University</li>
-        </ul>
+        <!-- CV Section -->
+        <section class="cv-section" id="about">
+            <h2>Curriculum Vitae</h2>
 
-        <h3>Work, Internship & Volunteer Experience</h3>
-        <ul>
-            <li><strong>2025</strong>: Researcher, infrared.city – Urban Resilience, Climate Simulation, Business Development</li>
-            <li><strong>2024–2025</strong>: Research Intern, infrared.city – Climate Research & Business Development</li>
-            <!-- <li><strong>2023–2024</strong>: Austrian Gallery Belvedere – Customer Management & Booking</li> -->
-            <li><strong>2022–2023</strong>: Petar Petrov – Archive and Logistics Coordinator (Internship)</li>
-            <li><strong>2021</strong>: Kunstverein München – Exhibition Planning & Artist Correspondence (Internship)</li>
-            <li><strong>2021</strong>: Kunstverein Harburger Bahnhof Hamburg – Administration & Archive Work (Internship)</li>
-            <li><strong>2020–2021</strong>: Artsprogram, Zeppelin University – Curatorial Assistant</li>
-        </ul>
+            <h3>Education</h3>
+            <ul>
+                <li>
+                    <span class="year">2025-2027</span>
+                    <div class="details">
+                        <strong>Master of Arts in Cross Disciplinary Strategies</strong>
+                        <em>University of Applied Arts Vienna</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">2023–2026</span>
+                    <div class="details">
+                        <strong>MA in Digital Humanities</strong>
+                        <em>University of Vienna</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">2018–2022</span>
+                    <div class="details">
+                        <strong>BA in Sociology, Politics and Economics</strong>
+                        <em>Zeppelin University</em>
+                    </div>
+                </li>
+            </ul>
 
-        <h3>Scholarships</h3>
-        <ul>
-            <li><strong>2020–2022</strong>: Deutschlandstipendium – Federal Ministry of Education and Research</li>
-        </ul>
+            <h3>Work, Internship & Volunteer Experience</h3>
+            <ul>
+                <li>
+                    <span class="year">2025</span>
+                    <div class="details">
+                        <strong>Researcher</strong>
+                        <em>infrared.city – Urban Resilience, Climate Simulation, Business Development</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">2024–2025</span>
+                    <div class="details">
+                        <strong>Research Intern</strong>
+                        <em>infrared.city – Climate Research & Business Development</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">2022–2023</span>
+                    <div class="details">
+                        <strong>Archive and Logistics Coordinator</strong>
+                        <em>Petar Petrov (Internship)</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">2021</span>
+                    <div class="details">
+                        <strong>Exhibition Planning & Artist Correspondence</strong>
+                        <em>Kunstverein München (Internship)</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">2021</span>
+                    <div class="details">
+                        <strong>Administration & Archive Work</strong>
+                        <em>Kunstverein Harburger Bahnhof Hamburg (Internship)</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">2020–2021</span>
+                    <div class="details">
+                        <strong>Curatorial Assistant</strong>
+                        <em>Artsprogram, Zeppelin University</em>
+                    </div>
+                </li>
+            </ul>
 
-        <h3>Publications</h3>
-        <ul>
-            <li><strong>2025</strong>: Hamann, S., Chronis, A., Taut, O., Galanos, T. <br>
-            <em>Advanced Weather Data Morphing for Future Climate-Based Building Simulation. A Modular Python Tool Utilizing Enhanced Morphing Algorithms for .epw File Generation.
-                
-            </em> Proceedings of the ANNSIM’25, Madrid, Spain.
-            </li>
-        </ul>
+            <h3>Scholarships</h3>
+            <ul>
+                <li>
+                    <span class="year">2020–2022</span>
+                    <div class="details">
+                        <strong>Deutschlandstipendium</strong>
+                        <em>Federal Ministry of Education and Research</em>
+                    </div>
+                </li>
+            </ul>
 
-        <h3>Extracurricular and Volunteering</h3>
-        <ul>
-            <li><strong>2023</strong>: Fashion Capsule Collection – Design & Construction</li>
-            <li><strong>2019–2021</strong>: Das LAUT Kollektiv – Founder & Chairwoman</li>
-        </ul>
+            <h3>Publications</h3>
+            <ul>
+                <li>
+                    <span class="year">2025</span>
+                    <div class="details">
+                        <strong>Advanced Weather Data Morphing for Future Climate-Based Building Simulation</strong>
+                        <em>Hamann, S., Chronis, A., Taut, O., Galanos, T. - A Modular Python Tool Utilizing Enhanced Morphing Algorithms for .epw File Generation. Proceedings of the ANNSIM'25, Madrid, Spain.</em>
+                    </div>
+                </li>
+            </ul>
 
-        <h3>Digital and Soft Skills</h3>
-        <ul>
-            <li><strong>Human Languages:</strong> German (Native), English (C1)</li>
-            <li><strong>Computer Languages:</strong> R, Python, HTML, JavaScript</li>
-            <li><strong>Interests:</strong> Sewing & Fashion Design, Cycling, Creative Coding</li>
-        </ul>
-</div>
+            <h3>Extracurricular and Volunteering</h3>
+            <ul>
+                <li>
+                    <span class="year">2023</span>
+                    <div class="details">
+                        <strong>Fashion Capsule Collection</strong>
+                        <em>Design & Construction</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">2019–2021</span>
+                    <div class="details">
+                        <strong>Das LAUT Kollektiv</strong>
+                        <em>Founder & Chairwoman</em>
+                    </div>
+                </li>
+            </ul>
+
+            <h3>Digital and Soft Skills</h3>
+            <ul>
+                <li>
+                    <span class="year">Languages</span>
+                    <div class="details">
+                        <strong>Human Languages:</strong>
+                        <em>German (Native), English (C1)</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">Technical</span>
+                    <div class="details">
+                        <strong>Computer Languages:</strong>
+                        <em>R, Python, HTML, JavaScript</em>
+                    </div>
+                </li>
+                <li>
+                    <span class="year">Personal</span>
+                    <div class="details">
+                        <strong>Interests:</strong>
+                        <em>Sewing & Fashion Design, Cycling, Creative Coding</em>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
 </body>
 </html>
