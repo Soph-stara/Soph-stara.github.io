@@ -106,6 +106,10 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
+        .filter-button.active {
+            background-color: #ff69b4;
+            color: white;
+        }
         .location-section {
             margin-top: 40px;
             margin-bottom: 30px;
@@ -153,7 +157,7 @@
         <h2 class="location-heading">Innere Stadt (1. Bezirk)</h2>
         <div class="cafe-container">
             <!-- Cafe 1 -->
-            <div class="cafe-card" data-categories="Cafés und Bars" data-location="1. Bezirk">
+            <div class="cafe-card" data-categories="cafes-bars" data-location="1. Bezirk">
                 <img src="images/cafe_prueckel.jpeg" alt="Cafe Prückel" class="cafe-image">
                 <h3 class="cafe-name">Café Prückel</h3>
                 <p class="cafe-address">Stubenring 24, 1010 Wien</p>
@@ -173,7 +177,7 @@
         <h2 class="location-heading">Yppenplatz (16th District)</h2>
         <div class="cafe-container">
             <!-- Yppenplatz Cafe 1 -->
-            <div class="cafe-card" data-categories="Cafés und Bard" data-location="yppenplatz">
+            <div class="cafe-card" data-categories="cafes-bars" data-location="yppenplatz">
                 <img src="images/S01.jpg" alt="Cafe AnDo" class="cafe-image">
                 <h3 class="cafe-name">Cafe AnDo</h3>
                 <p class="cafe-address">Yppenplatz 5, 1160 Wien</p>
@@ -181,7 +185,6 @@
                     <p><strong>Was bestellen?</strong> Spinat-Schafskäse Laibchen, Schoko Mandel Kuchen, auf jeden Fall Spritzer.</p>
                     <p><strong>Wann besuchen?</strong> Immer</p>
                     <p><strong>Notizen</strong> Der Chef ist immer gestresst und der größte Hundefan. Vormittags auch gut zum Arbeiten.</p>
-
                 </div>
                 <div class="cafe-notes">
                     <p>Gutes People Watching ist vorprogrammiert. </p>
@@ -189,7 +192,7 @@
             </div>
             
             <!-- Yppenplatz Cafe 2 -->
-            <div class="cafe-card" data-categories="modern" data-location="yppenplatz">
+            <div class="cafe-card" data-categories="cafes-bars" data-location="yppenplatz">
                 <img src="images/yppenplatz-cafe2.jpg" alt="Cafe Frida" class="cafe-image">
                 <h3 class="cafe-name">Cafe Frida</h3>
                 <p class="cafe-address">Yppenplatz 7, 1160 Wien</p>
@@ -200,45 +203,22 @@
                 <div class="cafe-notes">
                     <p>Vibrant atmosphere with delicious food. The outdoor seating area is perfect when the weather is nice.</p>
                 </div>
-                <div class="location-section" id="yppenplatz">
-        <h2 class="location-heading">Yppenplatz (16th District)</h2>
-        <div class="cafe-container">
-            <!-- Yppenplatz Cafe 1 -->
-            <div class="cafe-card" data-categories="Kaffe-Spritzer-Daydrink" data-location="yppenplatz">
-                <img src="images/S01.jpg" alt="Cafe AnDo" class="cafe-image">
-                <h3 class="cafe-name">Cafe AnDo</h3>
-                <p class="cafe-address">Yppenplatz 5, 1160 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> Spinat-Schafskäse Laibchen, Schoko Mandel Kuchen, auf jeden Fall Spritzer.</p>
-                    <p><strong>Wann besuchen?</strong> Immer</p>
-                    <p><strong>Notizen</strong> Der Chef ist immer gestresst und der größte Hundefan. Vormittags auch gut zum Arbeiten.</p>
-
-                </div>
-                <div class="cafe-notes">
-                    <p>Gutes People Watching ist vorprogrammiert. </p>
-                </div>
-            </div>
             </div>
         </div>
     </div>
     
     <!-- You can add more location sections following the same pattern -->
-    </div>
     
     <script>
-        // Simple filtering functionality for cafe types
-        function filterCafes(category) {
+        // Simple filtering functionality for categories
+        function filterByCategory(category) {
             // Update active button state
             document.querySelectorAll('.filter-button').forEach(button => {
-                if(button.textContent.includes(category) || 
-                   (category === 'all' && button.textContent === 'All')) {
-                    button.classList.add('active');
-                } else if(!button.textContent.includes('All Areas') && 
-                          !button.textContent.includes('Yppenplatz') && 
-                          !button.textContent.includes('Innere Stadt')) {
-                    button.classList.remove('active');
-                }
+                button.classList.remove('active');
             });
+            
+            // Add active to clicked button
+            event.target.classList.add('active');
             
             // Filter the cafes
             document.querySelectorAll('.cafe-card').forEach(cafe => {
@@ -252,36 +232,6 @@
                     }
                 }
             });
-        }
-        
-        // Filter by location
-        function filterLocation(location) {
-            // Update active button state
-            document.querySelectorAll('.filter-button').forEach(button => {
-                if(button.textContent.includes(location) || 
-                   (location === 'all' && button.textContent === 'All Areas')) {
-                    button.classList.add('active');
-                } else if(button.textContent.includes('All Areas') || 
-                          button.textContent.includes('Yppenplatz') || 
-                          button.textContent.includes('Innere Stadt')) {
-                    button.classList.remove('active');
-                }
-            });
-            
-            // Show/hide location sections
-            if(location === 'all') {
-                document.querySelectorAll('.location-section').forEach(section => {
-                    section.style.display = 'block';
-                });
-            } else {
-                document.querySelectorAll('.location-section').forEach(section => {
-                    if(section.id === location) {
-                        section.style.display = 'block';
-                    } else {
-                        section.style.display = 'none';
-                    }
-                });
-            }
         }
     </script>
 </body>
