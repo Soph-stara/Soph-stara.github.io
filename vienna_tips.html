@@ -1,459 +1,513 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-   <!--<title>Best Cafes in Vienna - Sophie Hamann</title>-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiener Dolce Vita</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #1a1a1a;
+            --white: #ffffff;
+            --off-white: #f8f8f8;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-400: #9ca3af;
+            --gray-600: #6b7280;
+            --gray-800: #374151;
+            --accent: #2563eb;
+        }
+
         body {
-            background-color: pink;
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.5;
+            color: var(--black);
+            background: var(--white);
+            font-weight: 300;
         }
-        h1, h2, h3 {
-            color: #333;
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-        /* Navigation style */
-        .navigation {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
+
+        /* Header */
+        .header {
+            border-bottom: 1px solid var(--gray-200);
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .navigation a {
-            margin-right: 15px;
-            color: #333;
+
+        .header-content {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 100;
+            letter-spacing: -0.02em;
+            color: var(--black);
+        }
+
+        .subtitle {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 300;
+            margin-top: 0.25rem;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
             text-decoration: none;
-            font-weight: bold;
-        }
-        .navigation a:hover {
-            text-decoration: underline;
-            color: #ff69b4;
-        }
-        /* Special button style */
-        .special-button {
-            display: inline-block;
-            background-color: #ff69b4;
-            color: white !important;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-        .special-button:hover {
-            background-color: #ff5aa7;
-            transform: scale(1.05);
-            text-decoration: none !important;
-        }
-        /* Cafe card style */
-        .cafe-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .cafe-card {
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        .cafe-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .cafe-name {
-            color: #ff69b4;
-            margin-top: 0;
-            border-bottom: 2px solid #ff69b4;
-            padding-bottom: 5px;
-        }
-        .cafe-address {
-            font-style: italic;
-            color: #555;
-            margin-bottom: 10px;
-        }
-        .cafe-tips {
-            margin-bottom: 10px;
-        }
-        .cafe-notes {
-            background-color: rgba(255, 182, 193, 0.3);
-            padding: 8px;
-            border-radius: 5px;
-            font-size: 0.9em;
-        }
-        .cafe-image {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        /* Filter options */
-        .filter-options {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-        }
-        .filter-button {
-            background-color: #fff;
-            border: 1px solid #ff69b4;
-            color: #ff69b4;
-            padding: 5px 10px;
-            margin-right: 8px;
-            border-radius: 15px;
-            cursor: pointer;
+            color: var(--gray-600);
+            font-weight: 300;
+            font-size: 0.875rem;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 0.25rem;
             transition: all 0.2s ease;
         }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--black);
+            border-bottom-color: var(--black);
+        }
+
+        /* Filter */
+        .filter-section {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .filter-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-button {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            color: var(--gray-600);
+            border: 1px solid var(--gray-200);
+            cursor: pointer;
+            font-weight: 300;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .filter-button:hover {
+            border-color: var(--black);
+            color: var(--black);
+        }
+
         .filter-button.active {
-            background-color: #ff69b4;
-            color: white;
+            background: var(--black);
+            color: var(--white);
+            border-color: var(--black);
         }
+
+        /* Location Sections */
         .location-section {
-            margin-top: 40px;
-            margin-bottom: 30px;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--gray-200);
         }
-        .location-heading {
-            background-color: rgba(255, 105, 180, 0.2);
-            padding: 10px 15px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 15px;
-            border-left: 5px solid #ff69b4;
+
+        .location-section:last-child {
+            border-bottom: none;
+        }
+
+        .location-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            color: var(--black);
+            letter-spacing: -0.01em;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 3rem 2rem;
+        }
+
+        /* Cafe Cards */
+        .cafe-card {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1.5rem;
+            padding: 0;
+            background: transparent;
+            transition: opacity 0.2s ease;
+        }
+
+        .cafe-card:hover {
+            opacity: 0.7;
+        }
+
+        .cafe-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            background: var(--gray-100);
+        }
+
+        .cafe-content {
+            min-width: 0;
+        }
+
+        .cafe-name {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: var(--black);
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+        }
+
+        .cafe-address {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .tip-section {
+            margin-bottom: 1rem;
+        }
+
+        .tip-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .tip-label {
+            font-weight: 400;
+            color: var(--black);
+            font-size: 0.875rem;
+            margin-bottom: 0.125rem;
+        }
+
+        .tip-text {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 300;
+            line-height: 1.4;
+        }
+
+        .cafe-notes {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.4;
+            border-left: 2px solid var(--gray-200);
+            padding-left: 1rem;
+        }
+
+        /* Category indicator */
+        .category-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--black);
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .cafe-card {
+            position: relative;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .nav {
+                gap: 1rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cafe-card {
+                grid-template-columns: 100px 1fr;
+                gap: 1rem;
+            }
+
+            .cafe-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Minimal animations */
+        .cafe-card {
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .cafe-card:nth-child(1) { animation-delay: 0s; }
+        .cafe-card:nth-child(2) { animation-delay: 0.05s; }
+        .cafe-card:nth-child(3) { animation-delay: 0.1s; }
+        .cafe-card:nth-child(4) { animation-delay: 0.15s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Typography refinements */
+        h1, h2, h3 {
+            font-weight: 300;
+        }
+
+        /* Clean focus states */
+        button:focus,
+        a:focus {
+            outline: 2px solid var(--black);
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
-   <h1>Wiener Dolce Vita</h1>
-       <h2>Die besten Orte in der besten Stadt der Welt!</h2>
-
-    
-    <!-- Navigation -->
-    <div class="navigation">
-        <a href="index.html" class="special-button">Home</a>
-        <a href="caliban.html" class="special-button">Caliban´s Daughters</a>
-        <a href="vienna_tips.html" class="special-button">Wiener Dolce Vita</a>
-    </div>
-    
-    <!-- Filter options -->
-    <div class="filter-options">
-    <p>Filter by:</p>
-    <button class="filter-button active" onclick="filterByCategory('all')">All</button>
-    <button class="filter-button" onclick="filterByCategory('cafes-bars')">Cafés und Bars</button>
-    <button class="filter-button" onclick="filterByCategory('restaurants')">Restaurants</button>
-    <button class="filter-button" onclick="filterByCategory('tanzen')">Tanzen</button>
-    <button class="filter-button" onclick="filterByCategory('events')">Events</button>
-    <button class="filter-button" onclick="filterByCategory('museen')">Museen</button>
-    <button class="filter-button" onclick="filterByCategory('baden')">Baden im Sommer</button>
-    <button class="filter-button" onclick="filterByCategory('natur')">Natur</button>
-    <button class="filter-button" onclick="filterByCategory('shopping')">Shopping</button>
-    <button class="filter-button" onclick="filterByCategory('rennrad')">Rennradrouten</button>
-    <button class="filter-button" onclick="filterByCategory('sonstige')">Sonstige wichtige Sachen für ein gutes Leben</button>
-    </div>
-    
-    <!-- Location sections -->
-    <div class="location-section" id="1. Bezirk">
-        <h2 class="location-heading">Innere Stadt (1. Bezirk)</h2>
-        <div class="cafe-container">
-            <!-- Cafe 1 -->
-            <div class="cafe-card" data-categories="cafes-bars" data-location="1. Bezirk">
-                <img src="images/cafe_prueckel.jpeg" alt="Cafe Prückel" class="cafe-image">
-                <h3 class="cafe-name">Café Prückel</h3>
-                <p class="cafe-address">Stubenring 24, 1010 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> Auf jeden Fall die Sachertorte. Kaffee ist nicht gut da.</p>
-                    <p><strong>Wann besuchen?</strong> Unter der Woche ist am besten, danach direkt ins MAK auf der anderen Straßenseite</p>
-                    <p><strong>Notizen</strong> Die Kellner können echt unhöflich sein aber das gehört irgendwie da zum Vibe dazu.</p>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1 class="logo">Wiener Dolce Vita</h1>
+                    <p class="subtitle">Die besten Orte in der besten Stadt der Welt</p>
                 </div>
-                <div class="cafe-notes">
-                    <p>A historic cafe with stunning architecture. Was once frequented by Freud, Trotsky, and other intellectuals. Slightly touristy but worth the visit for the ambiance.</p>
-                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="caliban.html" class="nav-link">Caliban's Daughters</a>
+                    <a href="vienna_tips.html" class="nav-link active">Wiener Dolce Vita</a>
+                </nav>
             </div>
         </div>
-    </div>
-    
-    <div class="location-section" id="yppenplatz">
-        <h2 class="location-heading">Yppenplatz (16th District)</h2>
-        <div class="cafe-container">
-            <!-- Yppenplatz Cafe 1 -->
-            <div class="cafe-card" data-categories="cafes-bars" data-location="yppenplatz">
-                <img src="images/S01.jpg" alt="Cafe AnDo" class="cafe-image">
-                <h3 class="cafe-name">Cafe AnDo</h3>
-                <p class="cafe-address">Yppenplatz 5, 1160 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> Spinat-Schafskäse Laibchen, Schoko Mandel Kuchen, auf jeden Fall Spritzer.</p>
-                    <p><strong>Wann besuchen?</strong> Immer</p>
-                    <p><strong>Notizen</strong> Der Chef ist immer gestresst und der größte Hundefan. Vormittags auch gut zum Arbeiten.</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>Gutes People Watching ist vorprogrammiert. </p>
-                </div>
-            </div>
-            
-            <!-- Yppenplatz Cafe 2 -->
-            <div class="cafe-card" data-categories="cafes-bars" data-location="yppenplatz">
-                <img src="images/yppenplatz-cafe2.jpg" alt="Cafe Frida" class="cafe-image">
-                <h3 class="cafe-name">Cafe Frida</h3>
-                <p class="cafe-address">Yppenplatz 7, 1160 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>What to try:</strong> Mexican-inspired brunch and their coffee</p>
-                    <p><strong>Best times to visit:</strong> Sunny afternoons for outdoor seating</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>Vibrant atmosphere with delicious food. The outdoor seating area is perfect when the weather is nice.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 2. Bezirk -->
-    <div class="location-section" id="2. Bezirk">
-        <h2 class="location-heading">Leopoldstadt (2. Bezirk)</h2>
-        <div class="cafe-container">
-            <div class="cafe-card" data-categories="cafes-bars" data-location="2. Bezirk">
-                <img src="images/placeholder.jpg" alt="Café Fokus" class="cafe-image">
-                <h3 class="cafe-name">Café Fokus</h3>
-                <p class="cafe-address">Kleine Pfarrgasse 28, 1020 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> Specialty Coffee</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> direkt am Augarten</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    </header>
 
-    <!-- 5. Bezirk -->
-    <div class="location-section" id="5. Bezirk">
-        <h2 class="location-heading">Margareten (5. Bezirk)</h2>
-        <div class="cafe-container">
-            <div class="cafe-card" data-categories="cafes-bars" data-location="5. Bezirk">
-                <img src="images/placeholder.jpg" alt="Hafi books + coffee" class="cafe-image">
-                <h3 class="cafe-name">Hafi books + coffee</h3>
-                <p class="cafe-address">Rechte Wienzeile 45/1, 1050 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> café und sehr gut kuratierte Buchauswahl</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
+    <main class="container">
+        <section class="filter-section">
+            <div class="filter-grid">
+                <button class="filter-button active" onclick="filterByCategory('all')">Alle</button>
+                <button class="filter-button" onclick="filterByCategory('cafes-bars')">Cafés & Bars</button>
+                <button class="filter-button" onclick="filterByCategory('restaurants')">Restaurants</button>
+                <button class="filter-button" onclick="filterByCategory('tanzen')">Tanzen</button>
+                <button class="filter-button" onclick="filterByCategory('events')">Events</button>
+                <button class="filter-button" onclick="filterByCategory('museen')">Museen</button>
+                <button class="filter-button" onclick="filterByCategory('baden')">Baden</button>
+                <button class="filter-button" onclick="filterByCategory('natur')">Natur</button>
+                <button class="filter-button" onclick="filterByCategory('shopping')">Shopping</button>
+                <button class="filter-button" onclick="filterByCategory('rennrad')">Rennrad</button>
+                <button class="filter-button" onclick="filterByCategory('sonstige')">Sonstige</button>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- 6. Bezirk -->
-    <div class="location-section" id="6. Bezirk">
-        <h2 class="location-heading">Mariahilf (6. Bezirk)</h2>
-        <div class="cafe-container">
-            <div class="cafe-card" data-categories="cafes-bars" data-location="6. Bezirk">
-                <img src="images/placeholder.jpg" alt="Café Jelinek" class="cafe-image">
-                <h3 class="cafe-name">Café Jelinek</h3>
-                <p class="cafe-address">Otto-Bauer-Gasse 5, 1060 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> Kuchen, Kaiserspritizer</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
+        <section class="location-section">
+            <h2 class="location-title">Innere Stadt</h2>
+            <div class="card-grid">
+                <div class="cafe-card" data-categories="cafes-bars">
+                    <div class="category-indicator"></div>
+                    <img src="images/cafe_prueckel.jpeg" alt="Cafe Prückel" class="cafe-image">
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">Café Prückel</h3>
+                        <p class="cafe-address">Stubenring 24, 1010 Wien</p>
+                        
+                        <div class="tip-section">
+                            <div class="tip-item">
+                                <div class="tip-label">Was bestellen?</div>
+                                <div class="tip-text">Auf jeden Fall die Sachertorte. Kaffee ist nicht gut da.</div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-label">Wann besuchen?</div>
+                                <div class="tip-text">Unter der Woche ist am besten, danach direkt ins MAK auf der anderen Straßenseite</div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-label">Notizen</div>
+                                <div class="tip-text">Die Kellner können echt unhöflich sein aber das gehört irgendwie da zum Vibe dazu.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cafe-notes">
+                            A historic cafe with stunning architecture. Was once frequented by Freud, Trotsky, and other intellectuals.
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- 8. Bezirk -->
-    <div class="location-section" id="8. Bezirk">
-        <h2 class="location-heading">Josefstadt (8. Bezirk)</h2>
-        <div class="cafe-container">
-            <div class="cafe-card" data-categories="cafes-bars" data-location="8. Bezirk">
-                <img src="images/placeholder.jpg" alt="Sipsong Bar" class="cafe-image">
-                <h3 class="cafe-name">Sipsong Bar</h3>
-                <p class="cafe-address">Florianigasse 15, 1080 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
+        <section class="location-section">
+            <h2 class="location-title">Yppenplatz</h2>
+            <div class="card-grid">
+                <div class="cafe-card" data-categories="cafes-bars">
+                    <div class="category-indicator"></div>
+                    <img src="images/S01.jpg" alt="Cafe AnDo" class="cafe-image">
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">Cafe AnDo</h3>
+                        <p class="cafe-address">Yppenplatz 5, 1160 Wien</p>
+                        
+                        <div class="tip-section">
+                            <div class="tip-item">
+                                <div class="tip-label">Was bestellen?</div>
+                                <div class="tip-text">Spinat-Schafskäse Laibchen, Schoko Mandel Kuchen, auf jeden Fall Spritzer.</div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-label">Wann besuchen?</div>
+                                <div class="tip-text">Immer</div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-label">Notizen</div>
+                                <div class="tip-text">Der Chef ist immer gestresst und der größte Hundefan. Vormittags auch gut zum Arbeiten.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cafe-notes">
+                            Gutes People Watching ist vorprogrammiert.
+                        </div>
+                    </div>
                 </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- 15. Bezirk -->
-    <div class="location-section" id="15. Bezirk">
-        <h2 class="location-heading">Rudolfsheim-Fünfhaus (15. Bezirk)</h2>
-        <div class="cafe-container">
-            <div class="cafe-card" data-categories="cafes-bars" data-location="15. Bezirk">
-                <img src="images/placeholder.jpg" alt="Café Kriemhild" class="cafe-image">
-                <h3 class="cafe-name">Café Kriemhild</h3>
-                <p class="cafe-address">Markgraf-Rüdiger-Straße 14, 1150 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> Frühstück bis 14:00, geile Sandwiches ab 17:00</p>
-                    <p><strong>Wann besuchen?</strong> Immer, für Frühstück am Wochenede oft sehr voll, abends für Spritzer geil</p>
-                    <p><strong>Notizen</strong> Billard und Darts inklusive! Außerdem arbeiten dort die süßesten Mäuse</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
-            </div>
-            
-            <div class="cafe-card" data-categories="cafes-bars" data-location="15. Bezirk">
-                <img src="images/placeholder.jpg" alt="Podium Espresso Zum schwarzen Flamingo" class="cafe-image">
-                <h3 class="cafe-name">Podium Espresso "Zum schwarzen Flamingo"</h3>
-                <p class="cafe-address">Schwendergasse 19, 1150 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> Super Bar im tiefsten 15. Bezirk</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
+                <div class="cafe-card" data-categories="cafes-bars">
+                    <div class="category-indicator"></div>
+                    <img src="images/yppenplatz-cafe2.jpg" alt="Cafe Frida" class="cafe-image">
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">Cafe Frida</h3>
+                        <p class="cafe-address">Yppenplatz 7, 1160 Wien</p>
+                        
+                        <div class="tip-section">
+                            <div class="tip-item">
+                                <div class="tip-label">Was bestellen?</div>
+                                <div class="tip-text">Mexican-inspired brunch and their coffee</div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-label">Wann besuchen?</div>
+                                <div class="tip-text">Sunny afternoons for outdoor seating</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cafe-notes">
+                            Vibrant atmosphere with delicious food. The outdoor seating area is perfect when the weather is nice.
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- 17. Bezirk -->
-    <div class="location-section" id="17. Bezirk">
-        <h2 class="location-heading">Hernals (17. Bezirk)</h2>
-        <div class="cafe-container">
-            <div class="cafe-card" data-categories="cafes-bars" data-location="17. Bezirk">
-                <img src="images/placeholder.jpg" alt="Jetzt Bar" class="cafe-image">
-                <h3 class="cafe-name">Jetzt Bar</h3>
-                <p class="cafe-address">Parhamerpl. 16, 1170 Wien</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Placeholders for remaining cafes that need location info -->
-    <div class="location-section" id="unknown-location">
-        <h2 class="location-heading">Weitere Cafés und Bars</h2>
-        <div class="cafe-container">
-            <div class="cafe-card" data-categories="cafes-bars" data-location="unknown">
-                <img src="images/placeholder.jpg" alt="Café Atlas" class="cafe-image">
-                <h3 class="cafe-name">Café Atlas</h3>
-                <p class="cafe-address">work in progress</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
+        <section class="location-section">
+            <h2 class="location-title">Leopoldstadt</h2>
+            <div class="card-grid">
+                <div class="cafe-card" data-categories="cafes-bars">
+                    <div class="category-indicator"></div>
+                    <img src="images/placeholder.jpg" alt="Café Fokus" class="cafe-image">
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">Café Fokus</h3>
+                        <p class="cafe-address">Kleine Pfarrgasse 28, 1020 Wien</p>
+                        
+                        <div class="tip-section">
+                            <div class="tip-item">
+                                <div class="tip-label">Was bestellen?</div>
+                                <div class="tip-text">Specialty Coffee</div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-label">Notizen</div>
+                                <div class="tip-text">direkt am Augarten</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="cafe-card" data-categories="restaurants" data-location="unknown">
-                <img src="images/placeholder.jpg" alt="Rausch & Tagada" class="cafe-image">
-                <h3 class="cafe-name">Rausch & Tagada</h3>
-                <p class="cafe-address">work in progress</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
+        <section class="location-section">
+            <h2 class="location-title">Rudolfsheim-Fünfhaus</h2>
+            <div class="card-grid">
+                <div class="cafe-card" data-categories="cafes-bars">
+                    <div class="category-indicator"></div>
+                    <img src="images/placeholder.jpg" alt="Café Kriemhild" class="cafe-image">
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">Café Kriemhild</h3>
+                        <p class="cafe-address">Markgraf-Rüdiger-Straße 14, 1150 Wien</p>
+                        
+                        <div class="tip-section">
+                            <div class="tip-item">
+                                <div class="tip-label">Was bestellen?</div>
+                                <div class="tip-text">Frühstück bis 14:00, geile Sandwiches ab 17:00</div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-label">Wann besuchen?</div>
+                                <div class="tip-text">Immer, für Frühstück am Wochenede oft sehr voll, abends für Spritzer geil</div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-label">Notizen</div>
+                                <div class="tip-text">Billard und Darts inklusive! Außerdem arbeiten dort die süßesten Mäuse</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
+
+                <div class="cafe-card" data-categories="cafes-bars">
+                    <div class="category-indicator"></div>
+                    <img src="images/placeholder.jpg" alt="Podium Espresso" class="cafe-image">
+                    <div class="cafe-content">
+                        <h3 class="cafe-name">Podium Espresso "Zum schwarzen Flamingo"</h3>
+                        <p class="cafe-address">Schwendergasse 19, 1150 Wien</p>
+                        
+                        <div class="tip-section">
+                            <div class="tip-item">
+                                <div class="tip-label">Notizen</div>
+                                <div class="tip-text">Super Bar im tiefsten 15. Bezirk</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+    </main>
 
-            <div class="cafe-card" data-categories="restaurants" data-location="unknown">
-                <img src="images/placeholder.jpg" alt="Kärntnerei" class="cafe-image">
-                <h3 class="cafe-name">Kärntnerei</h3>
-                <p class="cafe-address">work in progress</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> Kasnudeln! (nicht vegetarisches) Jausenbrettl</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
-            </div>
-
-            <div class="cafe-card" data-categories="cafes-bars" data-location="unknown">
-                <img src="images/placeholder.jpg" alt="Café Club International" class="cafe-image">
-                <h3 class="cafe-name">Café Club International</h3>
-                <p class="cafe-address">work in progress</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
-            </div>
-
-            <div class="cafe-card" data-categories="restaurants" data-location="unknown">
-                <img src="images/placeholder.jpg" alt="Sofis Pizza vera napoletana" class="cafe-image">
-                <h3 class="cafe-name">Sofis Pizza vera napoletana</h3>
-                <p class="cafe-address">work in progress</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
-            </div>
-
-            <div class="cafe-card" data-categories="restaurants" data-location="unknown">
-                <img src="images/placeholder.jpg" alt="tredici e mezzo" class="cafe-image">
-                <h3 class="cafe-name">tredici e mezzo</h3>
-                <p class="cafe-address">work in progress</p>
-                <div class="cafe-tips">
-                    <p><strong>Was bestellen?</strong> work in progress</p>
-                    <p><strong>Wann besuchen?</strong> work in progress</p>
-                    <p><strong>Notizen</strong> work in progress</p>
-                </div>
-                <div class="cafe-notes">
-                    <p>work in progress</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- You can add more location sections following the same pattern -->
-    
     <script>
-        // Simple filtering functionality for categories
         function filterByCategory(category) {
-            // Update active button state
             document.querySelectorAll('.filter-button').forEach(button => {
                 button.classList.remove('active');
             });
-            
-            // Add active to clicked button
             event.target.classList.add('active');
             
-            // Filter the cafes
-            document.querySelectorAll('.cafe-card').forEach(cafe => {
-                if (category === 'all') {
-                    cafe.style.display = 'block';
+            document.querySelectorAll('.cafe-card').forEach(card => {
+                if (category === 'all' || card.dataset.categories.includes(category)) {
+                    card.style.display = 'grid';
                 } else {
-                    if (cafe.dataset.categories.includes(category)) {
-                        cafe.style.display = 'block';
-                    } else {
-                        cafe.style.display = 'none';
-                    }
+                    card.style.display = 'none';
                 }
             });
         }
