@@ -13,7 +13,7 @@
         }
 
         :root {
-            --black: #1a1a1a;
+            --black: #8b5a6b;
             --white: #ffffff;
             --off-white: #f8f8f8;
             --gray-100: #f5f5f5;
@@ -21,14 +21,17 @@
             --gray-400: #9ca3af;
             --gray-600: #6b7280;
             --gray-800: #374151;
-            --accent: #2563eb;
+            --accent: #f4a6cd;
+            --pastel-pink: #f4a6cd;
+            --dark-pink: #8b5a6b;
+            --pastel-pink-bg: #fdf2f8;
         }
 
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.5;
-            color: var(--black);
-            background: var(--white);
+            color: var(--dark-pink);
+            background: var(--pastel-pink-bg);
             font-weight: 300;
         }
 
@@ -58,7 +61,7 @@
             font-size: 2rem;
             font-weight: 100;
             letter-spacing: -0.02em;
-            color: var(--black);
+            color: var(--dark-pink);
         }
 
         .subtitle {
@@ -85,8 +88,8 @@
 
         .nav-link:hover,
         .nav-link.active {
-            color: var(--black);
-            border-bottom-color: var(--black);
+            color: var(--pastel-pink);
+            border-bottom-color: var(--pastel-pink);
         }
 
         /* Filter */
@@ -113,14 +116,14 @@
         }
 
         .filter-button:hover {
-            border-color: var(--black);
-            color: var(--black);
+            border-color: var(--pastel-pink);
+            color: var(--pastel-pink);
         }
 
         .filter-button.active {
-            background: var(--black);
+            background: var(--pastel-pink);
             color: var(--white);
-            border-color: var(--black);
+            border-color: var(--pastel-pink);
         }
 
         /* Location Sections */
@@ -137,7 +140,7 @@
             font-size: 1.5rem;
             font-weight: 300;
             margin-bottom: 3rem;
-            color: var(--black);
+            color: var(--dark-pink);
             letter-spacing: -0.01em;
         }
 
@@ -176,7 +179,7 @@
         .cafe-name {
             font-size: 1.125rem;
             font-weight: 400;
-            color: var(--black);
+            color: var(--dark-pink);
             margin-bottom: 0.25rem;
             letter-spacing: -0.01em;
         }
@@ -198,7 +201,7 @@
 
         .tip-label {
             font-weight: 400;
-            color: var(--black);
+            color: var(--dark-pink);
             font-size: 0.875rem;
             margin-bottom: 0.125rem;
         }
@@ -216,7 +219,7 @@
             font-weight: 300;
             font-style: italic;
             line-height: 1.4;
-            border-left: 2px solid var(--gray-200);
+            border-left: 2px solid var(--pastel-pink);
             padding-left: 1rem;
         }
 
@@ -224,7 +227,7 @@
         .category-indicator {
             width: 8px;
             height: 8px;
-            background: var(--black);
+            background: var(--pastel-pink);
             border-radius: 50%;
             position: absolute;
             top: 0;
@@ -296,11 +299,29 @@
         /* Clean focus states */
         button:focus,
         a:focus {
-            outline: 2px solid var(--black);
+            outline: 2px solid var(--pastel-pink);
             outline-offset: 2px;
         }
     </style>
 </head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1 class="logo">Wiener Dolce Vita</h1>
+                    <p class="subtitle">Die besten Orte in der besten Stadt der Welt</p>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="caliban.html" class="nav-link">Caliban's Daughters</a>
+                    <a href="vienna_tips.html" class="nav-link active">Wiener Dolce Vita</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+</body>
+</html>
 <body>
     <header class="header">
         <div class="container">
