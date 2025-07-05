@@ -11,15 +11,15 @@
         }
 
         body {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            background-color: #b8d4e3;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
-            color: #ecf0f1;
+            color: #d2b48c;
             line-height: 1.6;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 60px 40px;
         }
@@ -29,30 +29,108 @@
             font-weight: 300;
             text-align: center;
             margin-bottom: 60px;
-            color: #ecf0f1;
+            color: #d2b48c;
             letter-spacing: 2px;
         }
 
-        .content-section {
-            background: rgba(255, 255, 255, 0.1);
+        .category {
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .content-section h2 {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            color: #bdc3c7;
+        .category h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #d2b48c;
             font-weight: 400;
+            border-bottom: 2px solid rgba(210, 180, 140, 0.3);
+            padding-bottom: 10px;
         }
 
-        .content-section p {
-            font-size: 1.1rem;
+        .item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 20px;
-            color: #ecf0f1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #d2b48c;
+            margin-bottom: 8px;
+        }
+
+        .item-subtitle {
+            font-size: 1rem;
+            color: rgba(210, 180, 140, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .item-notes {
+            font-size: 0.95rem;
+            color: rgba(210, 180, 140, 0.7);
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .spotify-link {
+            display: inline-block;
+            background: rgba(29, 185, 84, 0.2);
+            color: #d2b48c;
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            border: 1px solid rgba(29, 185, 84, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .spotify-link:hover {
+            background: rgba(29, 185, 84, 0.3);
+            transform: scale(1.05);
+        }
+
+        .website-link {
+            display: inline-block;
+            background: rgba(210, 180, 140, 0.2);
+            color: #d2b48c;
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            border: 1px solid rgba(210, 180, 140, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .website-link:hover {
+            background: rgba(210, 180, 140, 0.3);
+            transform: scale(1.05);
+        }
+
+        .empty-state {
+            text-align: center;
+            color: rgba(210, 180, 140, 0.6);
+            font-style: italic;
+            padding: 20px;
         }
 
         @media (max-width: 768px) {
@@ -64,8 +142,8 @@
                 font-size: 2.5rem;
             }
             
-            .content-section {
-                padding: 30px 20px;
+            .category {
+                padding: 20px;
             }
         }
     </style>
@@ -74,12 +152,49 @@
     <div class="container">
         <h1>Für Freddy</h1>
         
-        <div class="content-section">
-            <h2>Für Freddy</h2>
-            <p>This page is dedicated to Freddy.</p>
+        <!-- Musik Category -->
+        <div class="category">
+            <h2>Musik</h2>
             
-            <!-- Add your content here -->
+            <!-- Example item - replace with your content -->
+            <div class="item">
+                <div class="item-title">Song Title</div>
+                <div class="item-subtitle">Artist Name</div>
+                <a href="#" class="spotify-link">🎵 Spotify</a>
+            </div>
             
+            <!-- Add more music items here -->
+            <div class="empty-state">Add your favorite songs here...</div>
+        </div>
+
+        <!-- Books Category -->
+        <div class="category">
+            <h2>Books</h2>
+            
+            <!-- Example item - replace with your content -->
+            <div class="item">
+                <div class="item-title">Book Title</div>
+                <div class="item-subtitle">Author Name</div>
+                <div class="item-notes">Your notes, quotes, or thoughts about the book...</div>
+            </div>
+            
+            <!-- Add more book items here -->
+            <div class="empty-state">Add your favorite books here...</div>
+        </div>
+
+        <!-- Websites Category -->
+        <div class="category">
+            <h2>Websites (Fashion) und Inspiration</h2>
+            
+            <!-- Example item - replace with your content -->
+            <div class="item">
+                <div class="item-title">Website Name</div>
+                <div class="item-notes">Your thoughts and inspiration notes...</div>
+                <a href="#" class="website-link">🔗 Visit Website</a>
+            </div>
+            
+            <!-- Add more website items here -->
+            <div class="empty-state">Add your favorite websites and inspiration here...</div>
         </div>
     </div>
 </body>
