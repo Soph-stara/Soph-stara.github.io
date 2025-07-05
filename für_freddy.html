@@ -34,13 +34,15 @@
         }
 
         .category {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 
+                        0 2px 8px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .category h2 {
@@ -53,17 +55,21 @@
         }
 
         .item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
 
         .item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         .item:last-child {
@@ -92,38 +98,42 @@
 
         .spotify-link {
             display: inline-block;
-            background: rgba(29, 185, 84, 0.2);
+            background: rgba(29, 185, 84, 0.3);
             color: #000000;
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 20px;
             text-decoration: none;
             font-size: 0.9rem;
             margin-top: 10px;
-            border: 1px solid rgba(29, 185, 84, 0.3);
+            border: 2px solid rgba(29, 185, 84, 0.5);
+            box-shadow: 0 4px 12px rgba(29, 185, 84, 0.2);
             transition: all 0.3s ease;
         }
 
         .spotify-link:hover {
-            background: rgba(29, 185, 84, 0.3);
+            background: rgba(29, 185, 84, 0.4);
             transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(29, 185, 84, 0.3);
         }
 
         .website-link {
             display: inline-block;
-            background: rgba(210, 180, 140, 0.2);
+            background: rgba(210, 180, 140, 0.3);
             color: #000000;
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 20px;
             text-decoration: none;
             font-size: 0.9rem;
             margin-top: 10px;
-            border: 1px solid rgba(210, 180, 140, 0.3);
+            border: 2px solid rgba(210, 180, 140, 0.5);
+            box-shadow: 0 4px 12px rgba(210, 180, 140, 0.2);
             transition: all 0.3s ease;
         }
 
         .website-link:hover {
-            background: rgba(210, 180, 140, 0.3);
+            background: rgba(210, 180, 140, 0.4);
             transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(210, 180, 140, 0.3);
         }
 
         .photo-grid {
@@ -134,16 +144,19 @@
         }
 
         .photo-item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .photo-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         .photo-item img {
@@ -162,8 +175,8 @@
         }
 
         .photo-upload-placeholder {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             padding: 40px 20px;
             text-align: center;
@@ -171,8 +184,8 @@
         }
 
         .photo-upload-placeholder:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(0, 0, 0, 0.6);
         }
 
         .upload-icon {
@@ -189,7 +202,11 @@
             text-align: center;
             color: rgba(0, 0, 0, 0.6);
             font-style: italic;
-            padding: 20px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         @media (max-width: 768px) {
@@ -244,28 +261,28 @@
             <div class="item">
                 <div class="item-title">Unterm Rad</div>
                 <div class="item-subtitle">Hermann Hesse</div>
-                <div class="item-notes">Eins von Hesses ersten Büchern. Ich glaube es könnte ganz gut zu deiner Situation passen. Es ist aber auch schon lange her, dass ich das Buch gelesen habe.
+                <div class="item-notes">"Eins von Hesses ersten Büchern. Ich glaube es könnte ganz gut zu deiner Situation passen. Es ist aber auch schon lange her, dass ich das Buch gelesen habe."
                 </div>
             </div>
 
             <div class="item">
                 <div class="item-title">Siddharta</div>
                 <div class="item-subtitle">Hermann Hesse</div>
-                <div class="item-notes">Ein Buch über Glaube und Zukunft. Dieses Buch hat mir damals, als ich es gelesen habe, sehr viel Ruhe gegeben.
+                <div class="item-notes">"Ein Buch über Glaube und Zukunft. Dieses Buch hat mir damals, als ich es gelesen habe, sehr viel Ruhe gegeben."
                 </div>
             </div>
 
             <div class="item">
                 <div class="item-title">Brief an D.</div>
                 <div class="item-subtitle">Andre Gorz</div>
-                <div class="item-notes">Ein wunderschöner Liebesbrief von André Gortz (google den mal) an seine Frau. Das Buch hat mir als ich so alt war wie du eine neue Sicht auf die Liebe gegeben.
+                <div class="item-notes">"Ein wunderschöner Liebesbrief von André Gortz (google den mal) an seine Frau. Das Buch hat mir als ich so alt war wie du eine neue Sicht auf die Liebe gegeben."
                 </div>
             </div>
 
             <div class="item">
                 <div class="item-title">Der Mythos des Sysiphos</div>
                 <div class="item-subtitle">Albert Camus</div>
-                <div class="item-notes">Ein sehr intensives und schwer zu lesendes Buch über Sysiphos und die Absurdität des Lebens.
+                <div class="item-notes">"Ein sehr intensives und schwer zu lesendes Buch über Sysiphos und die Absurdität des Lebens."
                 </div>
             </div>
             
