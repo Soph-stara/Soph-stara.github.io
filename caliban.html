@@ -1037,6 +1037,190 @@
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
+        // === LEVEL 2 TRIAL CARDS ===
+const TRIAL_CARDS = [
+    {
+        title: "The Arrest",
+        scenario: "Authorities strip you and search for 'devil's marks' - any birthmark or scar is suspicious.",
+        context: "The Malleus Maleficarum demanded thorough bodily examination for signs of witchcraft.",
+        choice1: {
+            text: "Submit quietly",
+            effects: { despair: -10 },
+            message: "Your compliance shows 'proper fear of God' to the judges."
+        },
+        choice2: {
+            text: "Protest your innocence",
+            effects: { despair: +15 },
+            message: "Your protests are seen as defiance - more evidence of guilt."
+        }
+    },
+    {
+        title: "The Interrogation",
+        scenario: "The judge asks you to confess 'freely' before torture begins. 'Confess now and we may spare your life.'",
+        context: "Judges were instructed to promise leniency to encourage confession, though this was often false.",
+        choice1: {
+            text: "Confess to minor charges",
+            effects: { despair: +20 },
+            message: "Your confession is recorded, but they demand names of other witches."
+        },
+        choice2: {
+            text: "Maintain innocence",
+            effects: { despair: +10 },
+            message: "Your refusal to confess means torture is 'necessary to find truth.'"
+        }
+    },
+    {
+        title: "The Strappado",
+        scenario: "They prepare the pulley torture. 'Last chance to confess before we begin.'",
+        context: "The strappado lifted victims by ropes tied to their wrists behind their backs.",
+        choice1: {
+            text: "Confess under threat",
+            effects: { despair: +15 },
+            message: "You break before the torture begins. The confession must be 'freely' repeated later."
+        },
+        choice2: {
+            text: "Endure the torture",
+            effects: { despair: +25 },
+            message: "The pain is unbearable, but you must 'confirm' any confession made under torture."
+        }
+    },
+    {
+        title: "The Prison Cell",
+        scenario: "Alone in your cell, the guards warn that the Devil will tempt you to suicide.",
+        context: "Prisoners were watched constantly to prevent suicide, which would 'cheat' justice.",
+        choice1: {
+            text: "Pray continuously",
+            effects: { despair: -15 },
+            message: "Prayer gives you strength and may impress the guards."
+        },
+        choice2: {
+            text: "Plan escape",
+            effects: { despair: +20 },
+            message: "Escape attempts prove your guilt - only the Devil could help you."
+        }
+    },
+    {
+        title: "Name Others",
+        scenario: "They demand you name accomplices. 'Give us three names and avoid further torture.'",
+        context: "The witch hunt system required accusations to spread and justify itself.",
+        choice1: {
+            text: "Give false names",
+            effects: { despair: +30 },
+            message: "You doom innocent women, but the guilt may destroy your soul."
+        },
+        choice2: {
+            text: "Refuse to name anyone",
+            effects: { despair: +10 },
+            message: "Your silence protects others but ensures your own continued torture."
+        }
+    },
+    {
+        title: "The Final Judgment",
+        scenario: "The judge announces your sentence. All your choices have led to this moment.",
+        context: "Most trials ended in execution, but some received life imprisonment.",
+        choice1: {
+            text: "Accept your fate",
+            effects: { despair: +5 },
+            message: "You find peace in acceptance as your ordeal nears its end."
+        },
+        choice2: {
+            text: "Make final appeal",
+            effects: { despair: +15 },
+            message: "Your desperate appeal is seen as proof you remain unrepentant."
+        }
+    }
+];
+
+// === MODIFY THE makeChoice FUNCTION ===
+// Replace the suspicion >= 100 check with this:
+if (gameState.suspicion >= 100 && !gameState.level2) {
+    setTimeout(() => startLevel2(), 2000);
+    return;
+}
+
+// === ADD LEVEL 2 FUNCTIONS ===
+function startLevel2() {
+    gameState.level2 = true;
+    gameState.despair = 0; // New stat for level 2
+    gameState.round = 1;
+    gameState.maxRounds = 6;
+    gameState.deck = [...TRIAL_CARDS];
+    shuffleArray(gameState.deck);
+    
+    // Update display
+    document.getElementById('card-title').textContent = "Level 2: The Trial";
+    document.getElementById('card-scenario').textContent = "You have been captured and accused of witchcraft. Now you face the brutal reality of the witch trial system.";
+    document.getElementById('card-context').textContent = "Your goal is survival through the trial process. Can you endure without losing all hope?";
+    
+    // Update stats display
+    document.querySelector('.game-stats').innerHTML = `
+        <div class="stat-item">Despair: <span id="despair">0</span>%</div>
+        <div class="stat-item">Allies: <span id="allies">${gameState.allies}</span></div>
+        <div class="stat-item">Trial Round: <span id="round">1</span>/6</div>
+    `;
+    
+    showMessage("You are now in the hands of the witch hunters. The Malleus Maleficarum guides their every action...");
+    document.getElementById('draw-btn').classList.remove('hidden');
+}
+
+// === MODIFY applyEffects FUNCTION ===
+// Add this to the applyEffects function:
+if (effects.despair) {
+    gameState.despair += effects.despair;
+    gameState.despair = Math.max(0, Math.min(100, gameState.despair));
+}
+
+// === MODIFY updateDisplay FUNCTION ===  
+// Add this line to updateDisplay:
+if (gameState.level2) {
+    document.getElementById('despair').textContent = gameState.despair;
+}
+
+// === MODIFY makeChoice FUNCTION FOR LEVEL 2 ENDINGS ===
+// Add after the despair check:
+if (gameState.level2 && gameState.despair >= 100) {
+    setTimeout(() => endGame('broken'), 2000);
+    return;
+}
+
+if (gameState.level2 && gameState.round > gameState.maxRounds) {
+    if (gameState.despair <= 30) {
+        setTimeout(() => endGame('survived_trial'), 2000);
+    } else {
+        setTimeout(() => endGame('executed'), 2000);
+    }
+    return;
+}
+
+// === ADD LEVEL 2 ENDINGS ===
+function showBrokenEnding() {
+    document.getElementById('end-title').textContent = "Your Spirit Was Broken";
+    document.getElementById('end-message').innerHTML = `
+        <p><strong>The torture and psychological pressure destroyed your will.</strong> Like many victims, you confessed to impossible crimes and named innocent people as accomplices.</p>
+        <p><em>Final Stats: ${gameState.despair}% despair overwhelmed you during the trial process.</em></p>
+    `;
+    document.getElementById('theory-message').innerHTML = `
+        <h3>The Machinery of Confession</h3>
+        <p>The Malleus Maleficarum created a system designed to break the human spirit. Through torture, isolation, and false promises, it extracted confessions that 'proved' the witch hunt's validity.</p>
+        <p>Your ending represents the countless women who were destroyed by this legal machinery of oppression.</p>
+    `;
+}
+
+function showExecutedEnding() {
+    document.getElementById('end-title').textContent = "You Were Executed";
+    document.getElementById('end-message').innerHTML = `
+        <p><strong>Despite surviving the trial process, you were sentenced to death.</strong> Your ${gameState.despair}% despair wasn't enough to break you completely, but the system claimed your life anyway.</p>
+        <p><em>You maintained some dignity and resistance even in the face of death.</em></p>
+    `;
+}
+
+function showSurvivedTrialEnding() {
+    document.getElementById('end-title').textContent = "You Survived the Trial";
+    document.getElementById('end-message').innerHTML = `
+        <p><strong>Incredibly, you survived both levels of persecution.</strong> With only ${gameState.despair}% despair, you endured the trial and received life imprisonment instead of execution.</p>
+        <p><em>You represent the rare few who survived the complete witch hunt process.</em></p>
+    `;
+}
     </script>
 </body>
 </html>
