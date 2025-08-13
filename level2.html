@@ -177,13 +177,13 @@
             <h3>You Have Been Accused</h3>
             <p>Despite your efforts in Level 1, suspicion has grown. You now face the ultimate test: a witch trial based on actual procedures from the <em>Malleus Maleficarum</em> (1486).</p>
             
-            <div id="level1-results" style="margin: 20px 0; padding: 15px; background-color: #0f3460; border-radius: 5px;">
+            <div id="level1-results" style="margin: 20px 0; padding: 15px; background-color: #654321; border-radius: 5px;">
                 <p>Loading your results from Level 1...</p>
             </div>
         </div>
         
         <button onclick="startTrial()">Begin Your Trial</button>
-        <button onclick="window.location.href='index.html'" style="background-color: #16213e; margin-left: 10px;">Return to Level 1</button>
+        <button onclick="window.location.href='index.html'" style="background-color: #3d2817; margin-left: 10px;">Return to Level 1</button>
     </div>
 
     <!-- Trial Screen -->
@@ -249,7 +249,7 @@
                 trialState.allies = results.allies;
             } else {
                 document.getElementById('level1-results').innerHTML = `
-                    <p style="color: #e94560;"><strong>No Level 1 data found.</strong></p>
+                    <p style="color: #8b4513;"><strong>No Level 1 data found.</strong></p>
                     <p><a href="index.html" style="color: #eee;">Play Level 1 first</a> to get the full experience!</p>
                 `;
                 trialState.allies = 0; // Default if no Level 1 data
