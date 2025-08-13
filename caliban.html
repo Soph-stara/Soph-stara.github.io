@@ -28,6 +28,14 @@
             margin-bottom: 10px;
         }
 
+        .level-header {
+            background-color: #0f3460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 3px solid #e94560;
+        }
+
         .game-stats {
             display: flex;
             justify-content: space-between;
@@ -49,6 +57,21 @@
             border-radius: 10px;
             margin: 20px auto;
             min-height: 200px;
+        }
+
+        .trial-display {
+            background-color: #8b0000;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            min-height: 200px;
+        }
+
+        .trial-phase {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-weight: bold;
         }
 
         .card-image {
@@ -144,6 +167,23 @@
             background-color: #e94560;
         }
 
+        .ally-bonus {
+            background-color: rgba(0, 128, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #00ff00;
+        }
+
+        .transition-screen {
+            background-color: #8b0000;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
         /* Role selection styling */
         .roles {
             display: grid;
@@ -164,7 +204,7 @@
     </style>
 </head>
 <body>
-    <!-- === GAME SCREENS === -->
+    <!-- === LEVEL 1 SCREENS === -->
     
     <!-- Start Screen -->
     <div id="start-screen" class="container">
@@ -262,7 +302,7 @@
         <button onclick="showRoleSelection()" class="story-btn">Choose Different Character</button>
     </div>
 
-    <!-- Main Game Screen -->
+    <!-- Main Game Screen (Level 1) -->
     <div id="game-screen" class="container hidden">
         <h1>Caliban's Daughters</h1>
         
@@ -300,14 +340,70 @@
         <div id="message" class="message hidden"></div>
     </div>
 
+    <!-- Transition to Trial Screen -->
+    <div id="trial-transition" class="container hidden">
+        <div class="transition-screen">
+            <h1>You Have Been Accused!</h1>
+            <h3>Suspicion has reached 100%</h3>
+            
+            <div class="story-section">
+                <p><strong>The authorities have come for you.</strong> Despite your efforts, the web of suspicion has tightened around you. You are dragged before the court to face trial for witchcraft.</p>
+                
+                <p><strong>Your allies from Level 1:</strong> <span id="transition-allies">0</span> people who trust you and may help during the trial.</p>
+                
+                <p><strong>You now face the ultimate test:</strong> a witch trial based on actual procedures from the <em>Malleus Maleficarum</em> (1486).</p>
+            </div>
+            
+            <button onclick="startTrial()">Face Your Trial</button>
+        </div>
+    </div>
+
+    <!-- === LEVEL 2 SCREENS === -->
+
+    <!-- Trial Screen -->
+    <div id="trial-screen" class="container hidden">
+        <h1>The Witch Trial</h1>
+        
+        <!-- Game Statistics -->
+        <div class="game-stats">
+            <div class="stat-item">Judge's Favor: <span id="judge-favor">50</span>%</div>
+            <div class="stat-item">Allies Available: <span id="trial-allies">0</span></div>
+            <div class="stat-item">Phase: <span id="phase">1</span>/5</div>
+        </div>
+
+        <!-- Trial Display Area -->
+        <div class="trial-display">
+            <div class="trial-phase" id="phase-title">Accusation Phase</div>
+            <p id="trial-scenario">You stand before the court...</p>
+            <p id="trial-context">The judge watches you carefully.</p>
+        </div>
+
+        <!-- Ally Bonus Display -->
+        <div id="ally-bonus" class="ally-bonus hidden">
+            <strong>Ally Support:</strong> <span id="ally-message"></span>
+        </div>
+
+        <!-- Choice Buttons -->
+        <div id="trial-choices" class="choices">
+            <button id="trial-choice-1" onclick="makeTrialChoice(1)">
+                <span id="trial-choice-1-text">Choice 1</span>
+            </button>
+            <button id="trial-choice-2" onclick="makeTrialChoice(2)">
+                <span id="trial-choice-2-text">Choice 2</span>
+            </button>
+        </div>
+
+        <!-- Trial Messages -->
+        <div id="trial-message" class="message hidden"></div>
+    </div>
+
     <!-- End Screen -->
     <div id="end-screen" class="container hidden">
-        <h1>Game Over</h1>
+        <h1 id="end-game-title">Game Over</h1>
         <h2 id="end-title"></h2>
         <p id="end-message"></p>
         <div id="theory-message" class="story-section"></div>
         <button onclick="restartGame()">Play Again</button>
-        <button onclick="alert('Level 2 would load here - create level2.html to continue!')" style="background-color: #0f3460; margin-left: 10px;">Continue to Trial</button>
     </div>
 
     <script>
@@ -507,6 +603,85 @@
             }
         ];
 
+        // Trial phases based on Malleus Maleficarum procedures
+        const TRIAL_PHASES = [
+            {
+                title: "The Accusation",
+                scenario: "The court clerk reads the charges: 'You are accused of practicing witchcraft, consorting with devils, and harming your neighbors through supernatural means.'",
+                context: "According to the Malleus Maleficarum, the accused must respond to formal charges.",
+                choice1: {
+                    text: "Deny everything firmly",
+                    effects: { judgeFavor: 10 },
+                    message: "Your clear denial impresses the court with its confidence."
+                },
+                choice2: {
+                    text: "Question the legal basis",
+                    effects: { judgeFavor: 15 },
+                    message: "Your knowledge of legal procedure surprises the judge."
+                }
+            },
+            {
+                title: "Witness Testimony",
+                scenario: "Three neighbors testify against you. They claim they saw you speaking to your cat at midnight and that their milk soured after arguing with you.",
+                context: "The Malleus required witness testimony. Your response is crucial.",
+                choice1: {
+                    text: "Point out contradictions",
+                    effects: { judgeFavor: 20 },
+                    message: "You skillfully highlight inconsistencies in their stories."
+                },
+                choice2: {
+                    text: "Provide an alibi",
+                    effects: { judgeFavor: 10 },
+                    message: "Your explanation seems reasonable to the court."
+                }
+            },
+            {
+                title: "Physical Examination",
+                scenario: "The court examiner claims to have found a 'devil's mark' - a small birthmark on your shoulder.",
+                context: "The Malleus described how to identify supernatural marks on accused witches.",
+                choice1: {
+                    text: "Explain it's a birthmark",
+                    effects: { judgeFavor: 5 },
+                    message: "You calmly explain the natural origin of the mark."
+                },
+                choice2: {
+                    text: "Demand a physician's opinion",
+                    effects: { judgeFavor: 15 },
+                    message: "Your demand for expert testimony shows legal awareness."
+                }
+            },
+            {
+                title: "The Torture Chamber",
+                scenario: "The judge threatens torture to extract a confession. The implements are displayed before you.",
+                context: "The Malleus provided detailed instructions for torture procedures.",
+                choice1: {
+                    text: "Maintain innocence",
+                    effects: { judgeFavor: 25 },
+                    message: "Your unwavering stance despite intimidation is noted."
+                },
+                choice2: {
+                    text: "Appeal to canon law",
+                    effects: { judgeFavor: 30 },
+                    message: "Your knowledge of church law gives the judge pause."
+                }
+            },
+            {
+                title: "Final Judgment",
+                scenario: "The judge prepares to pronounce sentence. This is your last chance to speak in your defense.",
+                context: "The final phase determined life or death for the accused.",
+                choice1: {
+                    text: "Make a passionate plea",
+                    effects: { judgeFavor: 15 },
+                    message: "Your emotional appeal touches the court."
+                },
+                choice2: {
+                    text: "Cite legal precedents",
+                    effects: { judgeFavor: 20 },
+                    message: "Your legal arguments impress the learned judge."
+                }
+            }
+        ];
+
         // === GAME STATE ===
         let gameState = {
             role: "",
@@ -515,7 +690,15 @@
             round: 1,
             maxRounds: 10,
             deck: [],
-            currentCard: null
+            currentCard: null,
+            inTrial: false
+        };
+
+        let trialState = {
+            judgeFavor: 50,
+            allies: 0,
+            phase: 0,
+            maxPhases: 5
         };
 
         // === ROLE DETAILS ===
@@ -616,6 +799,7 @@
             gameState.suspicion = ROLE_STORIES[selectedRole].suspicion;
             gameState.allies = ROLE_STORIES[selectedRole].allies;
             gameState.round = 1;
+            gameState.inTrial = false;
             
             gameState.deck = [...TAROT_CARDS];
             shuffleArray(gameState.deck);
@@ -641,7 +825,7 @@
                         <li>Allies: ${roleData.allies} (people who trust and support you)</li>
                     </ul>
                     
-                    <p><em>Your goal is to survive 10 rounds of challenges while managing suspicion and building alliances. Too much suspicion (100%) means capture and death. Allies can help protect you and provide alternative paths to survival.</em></p>
+                    <p><em>Your goal is to survive 10 rounds of challenges while managing suspicion and building alliances. Too much suspicion (100%) means capture and trial. Allies can help protect you and provide alternative paths to survival.</em></p>
                 </div>
             `;
         }
@@ -701,106 +885,290 @@
             
             document.getElementById('choices').classList.add('hidden');
             
+            // Check if suspicion reached 100% - if so, go to trial
             if (gameState.suspicion >= 100) {
-                setTimeout(() => endGame('captured'), 2000);
+                setTimeout(() => transitionToTrial(), 2000);
                 return;
             }
             
             gameState.round++;
-                if (gameState.round > gameState.maxRounds) {
-                    setTimeout(() => endGame('survived'), 2000);
-                    return;
+            if (gameState.round > gameState.maxRounds) {
+                setTimeout(() => endGame('survived'), 2000);
+                return;
+            }
+            
+            updateDisplay();
+            document.getElementById('draw-btn').classList.remove('hidden');
+        }
+
+        function applyEffects(effects) {
+            if (effects.suspicion) {
+                gameState.suspicion += effects.suspicion;
+                gameState.suspicion = Math.max(0, Math.min(100, gameState.suspicion));
+            }
+            
+            if (effects.allies) {
+                gameState.allies += effects.allies;
+                gameState.allies = Math.max(0, gameState.allies);
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById('suspicion').textContent = gameState.suspicion;
+            document.getElementById('allies').textContent = gameState.allies;
+            document.getElementById('round').textContent = gameState.round;
+        }
+
+        function showMessage(message) {
+            document.getElementById('message').textContent = message;
+            document.getElementById('message').classList.remove('hidden');
+        }
+
+        // === TRANSITION TO TRIAL ===
+        function transitionToTrial() {
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('trial-transition').classList.remove('hidden');
+            
+            document.getElementById('transition-allies').textContent = gameState.allies;
+        }
+
+        function startTrial() {
+            // Initialize trial state with allies from Level 1
+            trialState.allies = gameState.allies;
+            trialState.judgeFavor = 50;
+            trialState.phase = 0;
+            gameState.inTrial = true;
+            
+            document.getElementById('trial-transition').classList.add('hidden');
+            document.getElementById('trial-screen').classList.remove('hidden');
+            
+            updateTrialDisplay();
+            showCurrentPhase();
+        }
+
+        // === TRIAL FUNCTIONS ===
+        function showCurrentPhase() {
+            const phase = TRIAL_PHASES[trialState.phase];
+            
+            document.getElementById('phase-title').textContent = phase.title;
+            document.getElementById('trial-scenario').textContent = phase.scenario;
+            document.getElementById('trial-context').textContent = phase.context;
+            
+            document.getElementById('trial-choice-1-text').textContent = phase.choice1.text;
+            document.getElementById('trial-choice-2-text').textContent = phase.choice2.text;
+            
+            // Hide any previous messages
+            document.getElementById('trial-message').classList.add('hidden');
+            document.getElementById('ally-bonus').classList.add('hidden');
+        }
+
+        function makeTrialChoice(choiceNumber) {
+            const phase = TRIAL_PHASES[trialState.phase];
+            const choice = choiceNumber === 1 ? phase.choice1 : phase.choice2;
+            
+            // Apply base effects
+            applyTrialEffects(choice.effects);
+            
+            // Show choice result
+            showTrialMessage(choice.message);
+            
+            // Apply ally bonus if available
+            if (trialState.allies > 0 && Math.random() < 0.6) {
+                applyAllyBonus();
+            }
+            
+            // Check if trial should end
+            setTimeout(() => {
+                trialState.phase++;
+                if (trialState.phase >= trialState.maxPhases) {
+                    endTrial();
+                } else {
+                    showCurrentPhase();
+                    updateTrialDisplay();
                 }
-                
-                updateDisplay();
-                document.getElementById('draw-btn').classList.remove('hidden');
-            }
+            }, 2500);
+        }
 
-            function applyEffects(effects) {
-                if (effects.suspicion) {
-                    gameState.suspicion += effects.suspicion;
-                    gameState.suspicion = Math.max(0, Math.min(100, gameState.suspicion));
+        function applyTrialEffects(effects) {
+            if (effects.judgeFavor) {
+                trialState.judgeFavor += effects.judgeFavor;
+                trialState.judgeFavor = Math.max(0, Math.min(100, trialState.judgeFavor));
+            }
+            updateTrialDisplay();
+        }
+
+        function applyAllyBonus() {
+            const bonuses = [
+                "A neighbor testifies to your good character",
+                "Someone provides evidence supporting your alibi",
+                "A respected villager speaks in your defense",
+                "Your ally brings a witness to contradict the accusers"
+            ];
+            
+            const bonus = bonuses[Math.floor(Math.random() * bonuses.length)];
+            trialState.judgeFavor += 10;
+            trialState.judgeFavor = Math.min(100, trialState.judgeFavor);
+            trialState.allies--;
+            
+            document.getElementById('ally-message').textContent = bonus + " (+10 Judge's Favor)";
+            document.getElementById('ally-bonus').classList.remove('hidden');
+            updateTrialDisplay();
+        }
+
+        function updateTrialDisplay() {
+            document.getElementById('judge-favor').textContent = trialState.judgeFavor;
+            document.getElementById('trial-allies').textContent = trialState.allies;
+            document.getElementById('phase').textContent = trialState.phase + 1;
+        }
+
+        function showTrialMessage(text) {
+            const messageEl = document.getElementById('trial-message');
+            messageEl.textContent = text;
+            messageEl.classList.remove('hidden');
+        }
+
+        function endTrial() {
+            document.getElementById('trial-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            document.getElementById('end-game-title').textContent = "Trial Complete";
+            
+            if (trialState.judgeFavor >= 80) {
+                showAcquittalEnding();
+            } else if (trialState.judgeFavor >= 60) {
+                showBanishmentEnding();
+            } else if (trialState.judgeFavor >= 40) {
+                showImprisonmentEnding();
+            } else {
+                showExecutionEnding();
+            }
+        }
+
+        function showAcquittalEnding() {
+            document.getElementById('end-title').textContent = "Acquitted!";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>The judge finds you innocent!</strong> Your combination of legal knowledge and strong defense convinced the court.</p>
+                <p><em>Final Judge's Favor: ${trialState.judgeFavor}%</em></p>
+            `;
+            
+            document.getElementById('theory-message').innerHTML = `
+                <h3>Historical Reality</h3>
+                <p>Full acquittals were rare but possible, especially when the accused demonstrated legal knowledge or had strong community support. Your success represents the few who overcame the system through preparation and allies.</p>
+                <p><strong>Your Journey:</strong> Role: ${ROLE_STORIES[gameState.role].title}, Level 1 Allies: ${gameState.allies + trialState.allies}, Final Suspicion in Level 1: 100%</p>
+            `;
+        }
+
+        function showBanishmentEnding() {
+            document.getElementById('end-title').textContent = "Banished";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You are banished from the region.</strong> The judge spares your life but exiles you permanently.</p>
+                <p><em>Final Judge's Favor: ${trialState.judgeFavor}%</em></p>
+            `;
+            
+            document.getElementById('theory-message').innerHTML = `
+                <h3>Historical Context</h3>
+                <p>Banishment was sometimes used as a compromise sentence when evidence was insufficient for execution but suspicion remained high. Many women survived this way, though they lost everything.</p>
+                <p><strong>Your Journey:</strong> Role: ${ROLE_STORIES[gameState.role].title}, Level 1 Allies: ${gameState.allies + trialState.allies}, Final Suspicion in Level 1: 100%</p>
+            `;
+        }
+
+        function showImprisonmentEnding() {
+            document.getElementById('end-title').textContent = "Imprisoned";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You are sentenced to life imprisonment.</strong> You escape death but will spend your remaining years in confinement.</p>
+                <p><em>Final Judge's Favor: ${trialState.judgeFavor}%</em></p>
+            `;
+            
+            document.getElementById('theory-message').innerHTML = `
+                <h3>Historical Reality</h3>
+                <p>According to the Malleus Maleficarum, perpetual imprisonment "on bread and water" was sometimes offered to those who confessed and provided information about other witches.</p>
+                <p><strong>Your Journey:</strong> Role: ${ROLE_STORIES[gameState.role].title}, Level 1 Allies: ${gameState.allies + trialState.allies}, Final Suspicion in Level 1: 100%</p>
+            `;
+        }
+
+        function showExecutionEnding() {
+            document.getElementById('end-title').textContent = "Condemned";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You are sentenced to death.</strong> Despite your efforts, the court finds you guilty of witchcraft.</p>
+                <p><em>Final Judge's Favor: ${trialState.judgeFavor}%</em></p>
+            `;
+            
+            document.getElementById('theory-message').innerHTML = `
+                <h3>The Tragic Reality</h3>
+                <p>Most witch trials ended in execution. The Malleus Maleficarum was designed to ensure conviction, not justice. Your fate represents the thousands of women who faced this same unjust system.</p>
+                <p><strong>Your Journey:</strong> Role: ${ROLE_STORIES[gameState.role].title}, Level 1 Allies: ${gameState.allies + trialState.allies}, Final Suspicion in Level 1: 100%</p>
+            `;
+        }
+
+        function endGame(result) {
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            document.getElementById('end-game-title').textContent = "Level 1 Complete";
+            
+            let title, message, theory;
+            
+            if (result === 'survived') {
+                if (gameState.suspicion >= 70) {
+                    title = "Barely Survived";
+                    message = `You managed to survive all 10 rounds, but with ${gameState.suspicion}% suspicion, you live in constant fear. Every day could be your last.`;
+                    theory = `Many women lived under constant surveillance and fear, their autonomy severely restricted even if they avoided execution.`;
+                } else if (gameState.suspicion >= 40) {
+                    title = "Cautious Survivor";
+                    message = `You survived by carefully balancing resistance with discretion. With ${gameState.suspicion}% suspicion and ${gameState.allies} allies, you've found a precarious safety.`;
+                    theory = `Success often required careful calculation and compromise, forcing women to constantly police their own behavior.`;
+                } else {
+                    title = "Thrived in Secret";
+                    message = `Remarkably, you kept suspicion low (${gameState.suspicion}%) while building ${gameState.allies} allies. You represent the hidden networks that preserved women's knowledge.`;
+                    theory = `Some women successfully built underground support systems that kept alive the knowledge and solidarity that authorities sought to destroy.`;
                 }
-                
-                if (effects.allies) {
-                    gameState.allies += effects.allies;
-                    gameState.allies = Math.max(0, gameState.allies);
-                }
             }
+            
+            document.getElementById('end-title').textContent = title;
+            document.getElementById('end-message').textContent = message;
+            document.getElementById('theory-message').innerHTML = `
+                <h4>Historical Analysis</h4>
+                <p>${theory}</p>
+                <p><strong>Final Stats:</strong> Suspicion: ${gameState.suspicion}%, Allies: ${gameState.allies}, Rounds Survived: ${gameState.round - 1}</p>
+                <p><em>You have completed Level 1 and can continue to other scenarios with different outcomes!</em></p>
+            `;
+        }
 
-            function updateDisplay() {
-                document.getElementById('suspicion').textContent = gameState.suspicion;
-                document.getElementById('allies').textContent = gameState.allies;
-                document.getElementById('round').textContent = gameState.round;
+        function restartGame() {
+            gameState = {
+                role: "",
+                suspicion: 0,
+                allies: 0,
+                round: 1,
+                maxRounds: 10,
+                deck: [],
+                currentCard: null,
+                inTrial: false
+            };
+            
+            trialState = {
+                judgeFavor: 50,
+                allies: 0,
+                phase: 0,
+                maxPhases: 5
+            };
+            
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+            showIntroStory();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
+        }
 
-            function showMessage(message) {
-                document.getElementById('message').textContent = message;
-                document.getElementById('message').classList.remove('hidden');
-            }
-
-            function endGame(result) {
-                document.getElementById('game-screen').classList.add('hidden');
-                document.getElementById('end-screen').classList.remove('hidden');
-                
-                let title, message, theory;
-                
-                if (result === 'captured') {
-                    title = "Captured";
-                    message = `You have been accused of witchcraft. Your suspicion level reached 100%, and the authorities have taken you into custody. Your fate now lies in the hands of the courts.`;
-                    theory = `This represents how the witch hunt system was designed to trap women. Once suspicion reached a critical level, individual choices became irrelevant - the machinery of persecution took over.`;
-                } else if (result === 'survived') {
-                    if (gameState.suspicion >= 70) {
-                        title = "Barely Survived";
-                        message = `You managed to survive all 10 rounds, but with ${gameState.suspicion}% suspicion, you live in constant fear. Every day could be your last.`;
-                        theory = `Many women lived under constant surveillance and fear, their autonomy severely restricted even if they avoided execution.`;
-                    } else if (gameState.suspicion >= 40) {
-                        title = "Cautious Survivor";
-                        message = `You survived by carefully balancing resistance with discretion. With ${gameState.suspicion}% suspicion and ${gameState.allies} allies, you've found a precarious safety.`;
-                        theory = `Success often required careful calculation and compromise, forcing women to constantly police their own behavior.`;
-                    } else {
-                        title = "Thrived in Secret";
-                        message = `Remarkably, you kept suspicion low (${gameState.suspicion}%) while building ${gameState.allies} allies. You represent the hidden networks that preserved women's knowledge.`;
-                        theory = `Some women successfully built underground support systems that kept alive the knowledge and solidarity that authorities sought to destroy.`;
-                    }
-                }
-                
-                document.getElementById('end-title').textContent = title;
-                document.getElementById('end-message').textContent = message;
-                document.getElementById('theory-message').innerHTML = `
-                    <h4>Historical Analysis</h4>
-                    <p>${theory}</p>
-                    <p><strong>Final Stats:</strong> Suspicion: ${gameState.suspicion}%, Allies: ${gameState.allies}, Rounds Survived: ${gameState.round - 1}</p>
-                `;
-            }
-
-            function restartGame() {
-                gameState = {
-                    role: "",
-                    suspicion: 0,
-                    allies: 0,
-                    round: 1,
-                    maxRounds: 10,
-                    deck: [],
-                    currentCard: null
-                };
-                
-                document.getElementById('end-screen').classList.add('hidden');
-                document.getElementById('start-screen').classList.remove('hidden');
-                showIntroStory();
-            }
-
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-            }
-
-            // Initialize game
-            document.addEventListener('DOMContentLoaded', function() {
-                showIntroStory();
-            });
-        </script>
-    </body>
-    </html>
+        // Initialize game
+        document.addEventListener('DOMContentLoaded', function() {
+            showIntroStory();
+        });
+    </script>
+</body>
+</html>
