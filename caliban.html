@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caliban's Daughters</title>
     <style>
-        /* === SIMPLE STYLING === */
         body {
             font-family: Arial, sans-serif;
             background-color: #1a1a2e;
@@ -73,26 +72,12 @@
             text-align: center;
         }
 
-        .card-image img {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 3px;
-        }
-
         .character-setup {
             background-color: rgba(233, 69, 96, 0.1);
             padding: 15px;
             border-radius: 5px;
             margin: 15px 0;
             border-left: 3px solid #e94560;
-        }
-
-        .game-mechanics-preview {
-            background-color: rgba(15, 52, 96, 0.5);
-            padding: 12px;
-            border-radius: 5px;
-            margin: 15px 0;
-            font-size: 0.9em;
         }
 
         .choices {
@@ -161,7 +146,6 @@
             background-color: #e94560;
         }
 
-        /* Role selection styling */
         .roles {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -189,14 +173,11 @@
     </style>
 </head>
 <body>
-    <!-- === GAME SCREENS === -->
-    
     <!-- Start Screen -->
     <div id="start-screen" class="container">
         <h1>Caliban's Daughters</h1>
         <h3>A Game of Survival, Resistance, and Feminist History</h3>
         
-        <!-- Story Introduction -->
         <div id="intro-story" class="story-section">
             <p><strong>Europe, 15th-17th centuries.</strong> The world is changing rapidly. Old ways of life are being destroyed as capitalism takes hold. Commons are being enclosed. Women are losing their economic independence.</p>
             
@@ -205,116 +186,55 @@
             <p>You are a woman with knowledge, skills, or independence that threatens the new social order. Your very existence is becoming suspicious...</p>
             
             <button onclick="showRoleSelection()" class="story-btn">Begin Your Story</button>
-            <button onclick="showHistoricalContext()" class="story-btn">Learn More About This Period</button>
         </div>
 
-        <!-- Historical Context Screen -->
-        <div id="historical-context" class="story-section hidden">
-            <h3>The Historical Context</h3>
-            <p><strong>The witch hunts were not about superstition.</strong> As feminist historian Silvia Federici argues in "Caliban and the Witch," they were a systematic attack on women's autonomy during the rise of capitalism.</p>
-            
-            <h4>Why Women Were Targeted:</h4>
-            <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
-                <li><strong>Economic Independence:</strong> Women who lived alone, had their own income, or controlled property</li>
-                <li><strong>Traditional Knowledge:</strong> Healers, midwives, and herbalists whose skills challenged emerging male-dominated medicine</li>
-                <li><strong>Resistance to Change:</strong> Those who opposed new laws restricting women's behavior and mobility</li>
-                <li><strong>Control of Reproduction:</strong> Women who knew about contraception, abortion, or childbirth</li>
-            </ul>
-            
-            <p><em>"The witch hunt was a war against women; it was a coordinated effort to degrade them, demonize them, and destroy their social power."</em> - Silvia Federici</p>
-            
-            <button onclick="showRoleSelection()" class="story-btn">Choose Your Role</button>
-            <button onclick="showIntroStory()" class="story-btn">Back</button>
-        </div>
-
-        <!-- Role Selection Screen -->
         <div id="role-selection" class="story-section hidden">
             <h3>Who Are You?</h3>
-            <p>Each woman faced different challenges and had different resources for survival:</p>
+            <p>Each woman faced different challenges:</p>
             
             <div class="roles">
-                <button class="role-btn" onclick="showRoleDetails('healer')">
+                <button class="role-btn" onclick="selectRole('healer')">
                     <strong>Healer</strong><br>
                     <small>Knows herbs and remedies</small>
                 </button>
-                <button class="role-btn" onclick="showRoleDetails('midwife')">
+                <button class="role-btn" onclick="selectRole('midwife')">
                     <strong>Midwife</strong><br>
                     <small>Helps with childbirth</small>
                 </button>
-                <button class="role-btn" onclick="showRoleDetails('wise-woman')">
+                <button class="role-btn" onclick="selectRole('wise-woman')">
                     <strong>Wise Woman</strong><br>
                     <small>Keeper of old knowledge</small>
                 </button>
-                <button class="role-btn" onclick="showRoleDetails('dissenter')">
+                <button class="role-btn" onclick="selectRole('dissenter')">
                     <strong>Dissenter</strong><br>
                     <small>Speaks against injustice</small>
                 </button>
             </div>
-            
-            <button onclick="showHistoricalContext()" class="story-btn">Learn More About This Period</button>
         </div>
-
-        <!-- Individual Role Details -->
-        <div id="role-details" class="story-section hidden">
-            <div id="role-story-content"></div>
-            <button id="start-game-btn" class="story-btn" onclick="confirmRole()">Begin as This Character</button>
-            <button onclick="showRoleSelection()" class="story-btn">Choose Different Role</button>
-        </div>
-    </div>
-
-    <!-- Character Introduction Screen -->
-    <div id="character-intro" class="container hidden">
-        <h1>Caliban's Daughters</h1>
-        <div id="character-intro-content" class="story-section">
-            <!-- Content will be filled by JavaScript -->
-        </div>
-        
-        <div class="story-section">
-            <h3>How to Play</h3>
-            <p><strong>Level 1:</strong> You'll draw tarot cards representing situations during the witch hunts. Each choice affects your Suspicion Level and number of Allies.</p>
-            
-            <p><strong>Level 2:</strong> If your suspicion reaches 100%, you'll face the brutal reality of a witch trial. Your goal becomes psychological survival through the ordeal.</p>
-            
-            <p><strong>Your Choices:</strong> Each card offers two options - often a choice between safety and resistance, or between individual survival and helping others.</p>
-            
-            <div class="game-mechanics-preview">
-                <h4>Theoretical Foundation</h4>
-                <p><em>This game is based on Silvia Federici's analysis in "Caliban and the Witch." You'll experience how the witch hunts functioned as a tool of primitive accumulation, destroying women's autonomy to enforce capitalist and patriarchal control.</em></p>
-            </div>
-        </div>
-        
-        <button onclick="proceedToGameplay()" class="story-btn">Begin Your Journey</button>
-        <button onclick="showRoleSelection()" class="story-btn">Choose Different Character</button>
     </div>
 
     <!-- Main Game Screen -->
     <div id="game-screen" class="container hidden">
         <h1>Caliban's Daughters</h1>
         
-        <!-- Game Statistics -->
         <div class="game-stats" id="game-stats">
             <div class="stat-item">Suspicion: <span id="suspicion">0</span>%</div>
             <div class="stat-item">Allies: <span id="allies">0</span></div>
             <div class="stat-item">Round: <span id="round">1</span>/10</div>
         </div>
 
-        <!-- Level 2 Warning -->
         <div id="level2-warning" class="level2-warning hidden">
             <h3>⚠️ Level 2: The Trial ⚠️</h3>
-            <p>You have been captured and accused of witchcraft. The trial system designed by the Malleus Maleficarum now controls your fate. Your goal is psychological survival - can you endure without losing all hope?</p>
+            <p>You have been captured and accused of witchcraft. Your goal is psychological survival through the ordeal.</p>
         </div>
 
-        <!-- Card Display Area -->
         <div class="card-display" id="card-display">
             <h2 id="card-title">Ready to Begin</h2>
-            <div class="card-image" id="card-image">
-                <img src="images/cover.jpg" alt="Caliban's Daughters Cover">
-            </div>
+            <div class="card-image" id="card-image">📜</div>
             <p id="card-scenario">Your story as a woman during the witch hunts is about to unfold...</p>
-            <p id="card-context">Each card you draw will present you with a choice that could mean survival or danger.</p>
+            <p id="card-context">Each card will present choices that could mean survival or danger.</p>
         </div>
 
-        <!-- Choice Buttons -->
         <div id="choices" class="choices hidden">
             <button id="choice-1" onclick="makeChoice(1)">
                 <span id="choice-1-text">Choice 1</span>
@@ -324,10 +244,7 @@
             </button>
         </div>
 
-        <!-- Draw Card Button -->
         <button id="draw-btn" onclick="drawCard()">Draw Card</button>
-
-        <!-- Game Messages -->
         <div id="message" class="message hidden"></div>
     </div>
 
@@ -341,317 +258,107 @@
     </div>
 
     <script>
-        // === GAME STATE ===
         let player = {
             role: null,
             suspicion: 0,
             allies: 0,
             round: 0,
             despair: 0,
-            level2: false,
-            selectedRole: null
+            level2: false
         };
         
-        let currentCardIndex = 0;
-        let usedCards = [];
+        let currentCard = null;
 
-        // === ROLE DATA ===
         const ROLES = {
-            healer: {
-                name: "Healer",
-                description: "You know the secrets of herbs and remedies, passed down through generations of women. Your knowledge saves lives, but it also marks you as dangerous to those who fear female wisdom.",
-                story: "As a healer, you possess ancient knowledge of plants, remedies, and the body's mysteries. In a world increasingly dominated by male physicians and church doctrine, your traditional wisdom represents both hope for the suffering and a threat to emerging power structures. Every person you heal could become an ally - or an accuser.",
-                startingSuspicion: 10,
-                startingAllies: 1
-            },
-            midwife: {
-                name: "Midwife",
-                description: "You bring new life into the world and know the intimate secrets of birth and death. Your presence at life's most vulnerable moments gives you great influence - and great danger.",
-                story: "As a midwife, you hold power over life and death, birth and fertility. You know which herbs prevent pregnancy, which ease childbirth, and how to save mothers when others would let them die. This knowledge makes you invaluable - and terrifying to those who seek to control women's bodies and reproductive choices.",
-                startingSuspicion: 15,
-                startingAllies: 2
-            },
-            "wise-woman": {
-                name: "Wise Woman",
-                description: "You are the keeper of old knowledge - folklore, traditions, and wisdom that stretches back before written history. You remember the old ways that the new world seeks to destroy.",
-                story: "As a wise woman, you are a living library of traditional knowledge. You know the old stories, the seasonal rituals, the ways of reading signs and omens. You understand the connections between all living things. But in a world that increasingly values only written, male-authorized knowledge, your wisdom is seen as primitive superstition - or dangerous witchcraft.",
-                startingSuspicion: 5,
-                startingAllies: 1
-            },
-            dissenter: {
-                name: "Dissenter",
-                description: "You speak out against injustice and refuse to accept the new restrictions being placed on women. Your voice of resistance inspires some and terrifies others.",
-                story: "As a dissenter, you refuse to quietly accept the changes destroying women's lives. You speak out against unfair laws, challenge corrupt officials, and organize resistance. Your courage inspires other women, but it also paints a target on your back. Every act of defiance could be your last - or could spark the flame that lights a revolution.",
-                startingSuspicion: 20,
-                startingAllies: 0
-            }
+            healer: { name: "Healer", suspicion: 10, allies: 1 },
+            midwife: { name: "Midwife", suspicion: 15, allies: 2 },
+            "wise-woman": { name: "Wise Woman", suspicion: 5, allies: 1 },
+            dissenter: { name: "Dissenter", suspicion: 20, allies: 0 }
         };
 
-        // === LEVEL 1 TAROT CARDS ===
-        const TAROT_CARDS = [
+        const LEVEL1_CARDS = [
             {
                 title: "The Moon",
-                image: "images/moon.jpg",
                 scenario: "Whispers spread that you meet with spirits at night.",
                 context: "Rumors could quickly become deadly accusations.",
-                choice1: {
-                    text: "Hide for a few nights",
-                    effects: { suspicion: -15 },
-                    message: "You stay hidden until the rumors die down."
-                },
-                choice2: {
-                    text: "Confront the gossips",
-                    effects: { suspicion: +20, allies: +1 },
-                    message: "Your bold confrontation gains respect but draws attention."
-                }
+                choice1: { text: "Hide for a few nights", effects: { suspicion: -15 }, message: "You stay hidden until rumors die down." },
+                choice2: { text: "Confront the gossips", effects: { suspicion: 20, allies: 1 }, message: "Your bold confrontation gains respect but draws attention." }
             },
             {
                 title: "The Tower",
-                image: "images/tower.jpg",
                 scenario: "A local woman betrays your secret gathering.",
                 context: "Trust could be broken by fear and desperation.",
-                choice1: {
-                    text: "Disperse quietly",
-                    effects: { suspicion: -10 },
-                    message: "You scatter safely but lose the gathering."
-                },
-                choice2: {
-                    text: "Defy the accuser",
-                    effects: { suspicion: +30, allies: -1 },
-                    message: "Your defiance is seen as proof of guilt."
-                }
+                choice1: { text: "Disperse quietly", effects: { suspicion: -10 }, message: "You scatter safely but lose the gathering." },
+                choice2: { text: "Defy the accuser", effects: { suspicion: 30, allies: -1 }, message: "Your defiance is seen as proof of guilt." }
             },
             {
                 title: "The High Priestess",
-                image: "images/high_priestess.jpg",
                 scenario: "A woman in labor calls for your help.",
                 context: "Healing knowledge was both valued and dangerous.",
-                choice1: {
-                    text: "Use your knowledge",
-                    effects: { suspicion: +20, allies: +1 },
-                    message: "You save mother and child, but your skills are noticed."
-                },
-                choice2: {
-                    text: "Send someone else",
-                    effects: { suspicion: -10 },
-                    message: "You stay safe but offer no help."
-                }
+                choice1: { text: "Use your knowledge", effects: { suspicion: 20, allies: 1 }, message: "You save mother and child, but your skills are noticed." },
+                choice2: { text: "Send someone else", effects: { suspicion: -10 }, message: "You stay safe but offer no help." }
             },
             {
                 title: "The Hermit",
-                image: "images/hermit.jpg",
                 scenario: "A woman from a neighboring village seeks your help, fleeing persecution.",
                 context: "Networks of support among women were crucial for survival.",
-                choice1: {
-                    text: "Help her escape",
-                    effects: { suspicion: +5, allies: +1 },
-                    message: "You risk your safety to aid another. She will remember your kindness."
-                },
-                choice2: {
-                    text: "Turn her away",
-                    effects: { suspicion: -5 },
-                    message: "You protect yourself, but lose a potential ally."
-                }
+                choice1: { text: "Help her escape", effects: { suspicion: 5, allies: 1 }, message: "You risk your safety to aid another." },
+                choice2: { text: "Turn her away", effects: { suspicion: -5 }, message: "You protect yourself, but lose a potential ally." }
             },
             {
                 title: "Death",
-                image: "images/death.jpg",
-                scenario: "A woman in the village has been accused of witchcraft and awaits trial.",
-                context: "Witch trials relied on community participation. Speaking out risked attention.",
-                choice1: {
-                    text: "Speak in her defense",
-                    effects: { suspicion: +20, allies: +1 },
-                    message: "Your words cast suspicion on you, but you've shown great courage."
-                },
-                choice2: {
-                    text: "Stay silent",
-                    effects: { suspicion: -5 },
-                    message: "You preserve your safety, but the guilt weighs on you."
-                }
-            },
-            {
-                title: "The Devil",
-                image: "images/devil.jpg",
-                scenario: "The local priest warns about women who defy natural order and church teachings.",
-                context: "Religious authorities played a central role in controlling women's knowledge.",
-                choice1: {
-                    text: "Question his teachings secretly",
-                    effects: { allies: +1 },
-                    message: "Others share your doubts. You form a quiet network of dissenters."
-                },
-                choice2: {
-                    text: "Attend church dutifully",
-                    effects: { suspicion: -10 },
-                    message: "Your public piety provides some protection."
-                }
-            },
-            {
-                title: "The Empress",
-                image: "images/empress.jpg",
-                scenario: "Your knowledge of reproductive medicine could help a suffering noblewoman.",
-                context: "Control over reproduction was a key battlefield during witch hunts.",
-                choice1: {
-                    text: "Offer your services",
-                    effects: { suspicion: -15 },
-                    message: "The noblewoman recovers and becomes your protector."
-                },
-                choice2: {
-                    text: "Keep your knowledge hidden",
-                    effects: { suspicion: -5 },
-                    message: "You remain safe but unseen."
-                }
-            },
-            {
-                title: "Justice",
-                image: "images/justice.jpg",
-                scenario: "A local official offers you protection in exchange for naming other 'suspicious' women.",
-                context: "The witch hunt machinery relied on forced confessions and denunciations.",
-                choice1: {
-                    text: "Refuse the offer",
-                    effects: { suspicion: +15, allies: +1 },
-                    message: "Your integrity remains intact, earning the trust of other women."
-                },
-                choice2: {
-                    text: "Provide false names",
-                    effects: { suspicion: -10 },
-                    message: "You buy yourself time, but at what cost to your conscience?"
-                }
-            },
-            {
-                title: "The Star",
-                image: "images/star.jpg",
-                scenario: "A midnight gathering of women is planned to share knowledge and resources.",
-                context: "Women's gatherings were often criminalized but important for mutual support.",
-                choice1: {
-                    text: "Attend the gathering",
-                    effects: { suspicion: +10, allies: +2 },
-                    message: "The connection with other women strengthens your resolve and knowledge."
-                },
-                choice2: {
-                    text: "Stay home",
-                    effects: { suspicion: -5 },
-                    message: "You remain isolated but avoid immediate danger."
-                }
-            },
-            {
-                title: "Strength",
-                image: "images/strength.jpg",
-                scenario: "In the village square, a desperate woman is being publicly flogged for stealing bread to feed her children.",
-                context: "Public punishments were designed to intimidate communities into compliance.",
-                choice1: {
-                    text: "Step in to stop it",
-                    effects: { suspicion: +25, allies: +1 },
-                    message: "Your quiet courage overcomes fear. You risk everything to protect the vulnerable."
-                },
-                choice2: {
-                    text: "Look away in silence",
-                    effects: { suspicion: -5 },
-                    message: "You choose safety over moral action, but the weight sits heavy."
-                }
+                scenario: "A woman in the village has been accused of witchcraft.",
+                context: "Witch trials relied on community participation.",
+                choice1: { text: "Speak in her defense", effects: { suspicion: 20, allies: 1 }, message: "Your words cast suspicion on you, but show courage." },
+                choice2: { text: "Stay silent", effects: { suspicion: -5 }, message: "You preserve your safety, but guilt weighs on you." }
             }
         ];
 
-        // === LEVEL 2 TRIAL CARDS ===
-        const TRIAL_CARDS = [
+        const LEVEL2_CARDS = [
             {
                 title: "The Arrest",
-                image: "images/arrest.jpg",
-                scenario: "Authorities strip you and search for 'devil's marks' - any birthmark or scar is suspicious.",
-                context: "The Malleus Maleficarum demanded thorough bodily examination for signs of witchcraft.",
-                choice1: {
-                    text: "Submit quietly",
-                    effects: { despair: -10 },
-                    message: "Your compliance shows 'proper fear of God' to the judges."
-                },
-                choice2: {
-                    text: "Protest your innocence",
-                    effects: { despair: +15 },
-                    message: "Your protests are seen as defiance - more evidence of guilt."
-                }
+                scenario: "Authorities strip you and search for 'devil's marks'.",
+                context: "The Malleus Maleficarum demanded thorough examination.",
+                choice1: { text: "Submit quietly", effects: { despair: -10 }, message: "Your compliance shows 'proper fear of God'." },
+                choice2: { text: "Protest your innocence", effects: { despair: 15 }, message: "Your protests are seen as defiance - more evidence of guilt." }
             },
             {
                 title: "The Interrogation",
-                image: "images/interrogation.jpg",
-                scenario: "The judge asks you to confess 'freely' before torture begins. 'Confess now and we may spare your life.'",
-                context: "Judges were instructed to promise leniency to encourage confession, though this was often false.",
-                choice1: {
-                    text: "Confess to minor charges",
-                    effects: { despair: +20 },
-                    message: "Your confession is recorded, but they demand names of other witches."
-                },
-                choice2: {
-                    text: "Maintain innocence",
-                    effects: { despair: +10 },
-                    message: "Your refusal to confess means torture is 'necessary to find truth.'"
-                }
+                scenario: "The judge asks you to confess 'freely' before torture begins.",
+                context: "Judges promised leniency to encourage confession.",
+                choice1: { text: "Confess to minor charges", effects: { despair: 20 }, message: "Your confession is recorded, but they demand more names." },
+                choice2: { text: "Maintain innocence", effects: { despair: 10 }, message: "Your refusal means torture is 'necessary to find truth'." }
             },
             {
                 title: "The Strappado",
-                image: "images/torture.jpg",
-                scenario: "They prepare the pulley torture. 'Last chance to confess before we begin.'",
-                context: "The strappado lifted victims by ropes tied to their wrists behind their backs.",
-                choice1: {
-                    text: "Confess under threat",
-                    effects: { despair: +15 },
-                    message: "You break before the torture begins. The confession must be 'freely' repeated later."
-                },
-                choice2: {
-                    text: "Endure the torture",
-                    effects: { despair: +25 },
-                    message: "The pain is unbearable, but you must 'confirm' any confession made under torture."
-                }
+                scenario: "They prepare the pulley torture. 'Last chance to confess.'",
+                context: "The strappado lifted victims by ropes tied to their wrists.",
+                choice1: { text: "Confess under threat", effects: { despair: 15 }, message: "You break before torture begins." },
+                choice2: { text: "Endure the torture", effects: { despair: 25 }, message: "The pain is unbearable, but you endure." }
             },
             {
                 title: "The Prison Cell",
-                image: "images/prison.jpg",
-                scenario: "Alone in your cell, the guards warn that the Devil will tempt you to suicide.",
-                context: "Prisoners were watched constantly to prevent suicide, which would 'cheat' justice.",
-                choice1: {
-                    text: "Pray continuously",
-                    effects: { despair: -15 },
-                    message: "Prayer gives you strength and may impress the guards."
-                },
-                choice2: {
-                    text: "Plan escape",
-                    effects: { despair: +20 },
-                    message: "Escape attempts prove your guilt - only the Devil could help you."
-                }
+                scenario: "Alone in your cell, guards warn the Devil will tempt suicide.",
+                context: "Prisoners were watched to prevent suicide.",
+                choice1: { text: "Pray continuously", effects: { despair: -15 }, message: "Prayer gives you strength." },
+                choice2: { text: "Plan escape", effects: { despair: 20 }, message: "Escape attempts prove your guilt." }
             },
             {
                 title: "Name Others",
-                image: "images/accusation.jpg",
-                scenario: "They demand you name accomplices. 'Give us three names and avoid further torture.'",
-                context: "The witch hunt system required accusations to spread and justify itself.",
-                choice1: {
-                    text: "Give false names",
-                    effects: { despair: +30 },
-                    message: "You doom innocent women, but the guilt may destroy your soul."
-                },
-                choice2: {
-                    text: "Refuse to name anyone",
-                    effects: { despair: +10 },
-                    message: "Your silence protects others but ensures your own continued torture."
-                }
+                scenario: "They demand you name accomplices.",
+                context: "The witch hunt system required accusations to spread.",
+                choice1: { text: "Give false names", effects: { despair: 30 }, message: "You doom innocent women." },
+                choice2: { text: "Refuse to name anyone", effects: { despair: 10 }, message: "Your silence protects others but ensures more torture." }
             },
             {
                 title: "The Final Judgment",
-                image: "images/judgment.jpg",
-                scenario: "The judge announces your sentence. All your choices have led to this moment.",
-                context: "Most trials ended in execution, but some received life imprisonment.",
-                choice1: {
-                    text: "Accept your fate",
-                    effects: { despair: +5 },
-                    message: "You find peace in acceptance as your ordeal nears its end."
-                },
-                choice2: {
-                    text: "Make final appeal",
-                    effects: { despair: +15 },
-                    message: "Your desperate appeal is seen as proof you remain unrepentant."
-                }
+                scenario: "The judge announces your sentence.",
+                context: "Most trials ended in execution.",
+                choice1: { text: "Accept your fate", effects: { despair: 5 }, message: "You find peace in acceptance." },
+                choice2: { text: "Make final appeal", effects: { despair: 15 }, message: "Your appeal is seen as proof you remain unrepentant." }
             }
         ];
 
-        // === NAVIGATION FUNCTIONS ===
         function showScreen(screenId) {
             document.querySelectorAll('.container').forEach(screen => {
                 screen.classList.add('hidden');
@@ -659,76 +366,24 @@
             document.getElementById(screenId).classList.remove('hidden');
         }
 
-        function showIntroStory() {
-            document.getElementById('intro-story').classList.remove('hidden');
-            document.getElementById('historical-context').classList.add('hidden');
-        }
-
-        function showHistoricalContext() {
-            document.getElementById('intro-story').classList.add('hidden');
-            document.getElementById('historical-context').classList.remove('hidden');
-        }
-
         function showRoleSelection() {
             document.getElementById('intro-story').classList.add('hidden');
-            document.getElementById('historical-context').classList.add('hidden');
             document.getElementById('role-selection').classList.remove('hidden');
-            document.getElementById('role-details').classList.add('hidden');
         }
 
-        function showRoleDetails(roleKey) {
+        function selectRole(roleKey) {
             const role = ROLES[roleKey];
-            document.getElementById('role-selection').classList.add('hidden');
-            document.getElementById('role-details').classList.remove('hidden');
-            
-            document.getElementById('role-story-content').innerHTML = `
-                <h3>${role.name}</h3>
-                <p><strong>${role.description}</strong></p>
-                <p>${role.story}</p>
-                <div class="character-setup">
-                    <h4>Starting Attributes:</h4>
-                    <p><strong>Suspicion:</strong> ${role.startingSuspicion}%</p>
-                    <p><strong>Allies:</strong> ${role.startingAllies}</p>
-                </div>
-            `;
-            
-            // Store the selected role
-            player.selectedRole = roleKey;
-        }
-
-        function confirmRole() {
-            if (!player.selectedRole) return;
-            
-            const role = ROLES[player.selectedRole];
             player.role = role.name;
-            player.suspicion = role.startingSuspicion;
-            player.allies = role.startingAllies;
+            player.suspicion = role.suspicion;
+            player.allies = role.allies;
             player.round = 0;
             player.despair = 0;
             player.level2 = false;
             
-            // Show character introduction
-            showScreen('character-intro');
-            document.getElementById('character-intro-content').innerHTML = `
-                <h2>Welcome, ${role.name}</h2>
-                <p>${role.story}</p>
-                <div class="character-setup">
-                    <h4>Your Starting Position:</h4>
-                    <p><strong>Suspicion Level:</strong> ${player.suspicion}%</p>
-                    <p><strong>Allies:</strong> ${player.allies}</p>
-                    <p><strong>Role:</strong> ${role.name}</p>
-                </div>
-            `;
-        }
-
-        function proceedToGameplay() {
             showScreen('game-screen');
             updateStats();
-            currentCardIndex = 0;
-            usedCards = [];
         }
 
-        // === GAME FUNCTIONS ===
         function updateStats() {
             document.getElementById('suspicion').textContent = Math.max(0, Math.min(100, player.suspicion));
             document.getElementById('allies').textContent = Math.max(0, player.allies);
@@ -743,34 +398,25 @@
             player.level2 = true;
             player.despair = 0;
             player.round = 0;
-            usedCards = [];
             
             // Update UI for Level 2
             document.getElementById('level2-warning').classList.remove('hidden');
             document.getElementById('card-display').classList.add('level2');
             
-            // Update stats display for Level 2
+            // Update stats display
             document.getElementById('game-stats').innerHTML = `
                 <div class="stat-item">Despair: <span id="despair">0</span>%</div>
                 <div class="stat-item">Allies: <span id="allies">${player.allies}</span></div>
                 <div class="stat-item">Trial Round: <span id="round">1</span>/6</div>
             `;
             
-            // Update card display
-            document.getElementById('card-title').textContent = "Level 2: The Trial";
-            document.getElementById('card-scenario').textContent = "You have been captured and accused of witchcraft. Now you face the brutal reality of the witch trial system.";
-            document.getElementById('card-context').textContent = "Your goal is survival through the trial process. Can you endure without losing all hope?";
-            document.getElementById('card-image').innerHTML = '<div style="color: #ff6b6b; font-size: 18px;">⚖️<br>TRIAL</div>';
-            
-            // Update button styling for Level 2
+            // Update buttons
             document.getElementById('draw-btn').classList.add('level2-btn');
             document.getElementById('choice-1').classList.add('level2-btn');
             document.getElementById('choice-2').classList.add('level2-btn');
             
-            // Show message about entering Level 2
-            showMessage("You are now in the hands of the witch hunters. The Malleus Maleficarum guides their every action...", true);
-            document.getElementById('draw-btn').classList.remove('hidden');
-            document.getElementById('choices').classList.add('hidden');
+            updateStats();
+            showMessage("You are now in the hands of the witch hunters...", true);
         }
 
         function showMessage(text, isLevel2 = false) {
@@ -786,7 +432,7 @@
         }
 
         function drawCard() {
-            let currentDeck = player.level2 ? TRIAL_CARDS : TAROT_CARDS;
+            let deck = player.level2 ? LEVEL2_CARDS : LEVEL1_CARDS;
             let maxRounds = player.level2 ? 6 : 10;
             
             if (player.round >= maxRounds) {
@@ -794,39 +440,25 @@
                 return;
             }
 
-            // Get a random unused card
-            let availableCards = currentDeck.filter((card, index) => !usedCards.includes(index));
-            if (availableCards.length === 0) {
-                // Reset if we've used all cards
-                usedCards = [];
-                availableCards = currentDeck;
-            }
+            // Get random card
+            currentCard = deck[Math.floor(Math.random() * deck.length)];
 
-            const randomIndex = Math.floor(Math.random() * availableCards.length);
-            const card = availableCards[randomIndex];
-            currentCardIndex = currentDeck.indexOf(card);
-            usedCards.push(currentCardIndex);
-
-            // Display the card
-            document.getElementById('card-title').textContent = card.title;
-            document.getElementById('card-image').innerHTML = `<img src="${card.image}" alt="${card.title}" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\\"color: #ff6b6b; font-size: 16px;\\">${card.title}</div>'">`;
-            document.getElementById('card-scenario').textContent = card.scenario;
-            document.getElementById('card-context').textContent = card.context;
+            // Display card
+            document.getElementById('card-title').textContent = currentCard.title;
+            document.getElementById('card-image').textContent = player.level2 ? '⚖️' : '🔮';
+            document.getElementById('card-scenario').textContent = currentCard.scenario;
+            document.getElementById('card-context').textContent = currentCard.context;
 
             // Show choices
-            document.getElementById('choice-1-text').textContent = card.choice1.text;
-            document.getElementById('choice-2-text').textContent = card.choice2.text;
+            document.getElementById('choice-1-text').textContent = currentCard.choice1.text;
+            document.getElementById('choice-2-text').textContent = currentCard.choice2.text;
             document.getElementById('choices').classList.remove('hidden');
             document.getElementById('draw-btn').classList.add('hidden');
-
-            // Hide any previous message
             document.getElementById('message').classList.add('hidden');
         }
 
         function makeChoice(choiceNum) {
-            let currentDeck = player.level2 ? TRIAL_CARDS : TAROT_CARDS;
-            const card = currentDeck[currentCardIndex];
-            const choice = choiceNum === 1 ? card.choice1 : card.choice2;
+            const choice = choiceNum === 1 ? currentCard.choice1 : currentCard.choice2;
 
             // Apply effects
             if (choice.effects.suspicion) {
@@ -845,15 +477,15 @@
             // Show message
             showMessage(choice.message, player.level2);
 
-            // Update stats
+            // Update round and stats
             player.round++;
             updateStats();
 
-            // Hide choices and show draw button
+            // Hide choices
             document.getElementById('choices').classList.add('hidden');
             document.getElementById('draw-btn').classList.remove('hidden');
 
-            // Check for game ending conditions
+            // Check for transitions/endings
             if (player.level2) {
                 if (player.despair >= 100) {
                     setTimeout(() => endGame('broken'), 2000);
@@ -882,48 +514,33 @@
             
             if (endingType === 'broken') {
                 title = "Your Spirit Was Broken";
-                message = `<strong>The torture and psychological pressure destroyed your will.</strong> Like many victims, you confessed to impossible crimes and named innocent people as accomplices.<br><br><em>Final Stats: ${player.despair}% despair overwhelmed you during the trial process.</em>`;
-                theory = `<h3>The Machinery of Confession</h3>
-                         <p>The Malleus Maleficarum created a system designed to break the human spirit. Through torture, isolation, and false promises, it extracted confessions that 'proved' the witch hunt's validity.</p>
-                         <p>Your ending represents the countless women who were destroyed by this legal machinery of oppression.</p>`;
+                message = `The torture and psychological pressure destroyed your will. You confessed to impossible crimes.<br><br><em>Final Stats: ${player.despair}% despair overwhelmed you.</em>`;
+                theory = `The Malleus Maleficarum created a system designed to break the human spirit through torture and false promises.`;
             } else if (player.level2) {
                 if (player.despair >= 70) {
                     title = "You Were Executed";
-                    message = `<strong>Despite surviving the trial process, you were sentenced to death.</strong> Your ${player.despair}% despair wasn't enough to break you completely, but the system claimed your life anyway.<br><br><em>You maintained some dignity and resistance even in the face of death.</em>`;
-                    theory = `<h3>The Brutality of the System</h3>
-                             <p>Even those who endured the trial process with some spirit intact often faced execution. The witch hunt system was designed to eliminate women regardless of their guilt or innocence.</p>
-                             <p>Your resistance, though ultimately unsuccessful, represents the courage of those who refused to be completely broken.</p>`;
+                    message = `Despite surviving the trial process, you were sentenced to death. Your ${player.despair}% despair wasn't enough to break you completely.<br><br><em>You maintained dignity even facing death.</em>`;
+                    theory = `Even those who endured with spirit intact often faced execution. The system eliminated women regardless of guilt or innocence.`;
                 } else {
                     title = "You Survived the Trial";
-                    message = `<strong>Incredibly, you survived both levels of persecution.</strong> With only ${player.despair}% despair, you endured the trial and received life imprisonment instead of execution.<br><br><em>You represent the rare few who survived the complete witch hunt process.</em>`;
-                    theory = `<h3>Against All Odds</h3>
-                             <p>Your survival through both the community persecution and the trial system represents an almost impossible achievement. Very few women managed to maintain their psychological integrity through such ordeals.</p>
-                             <p>Your ending shows how some women's strength and strategic choices could, rarely, overcome even the most systematic oppression.</p>`;
+                    message = `Incredibly, you survived both levels of persecution with only ${player.despair}% despair. You received life imprisonment instead of execution.<br><br><em>You represent the rare few who survived the complete process.</em>`;
+                    theory = `Your survival represents an almost impossible achievement. Very few maintained psychological integrity through such ordeals.`;
                 }
             } else {
-                // Level 1 endings
                 if (player.suspicion >= 70) {
                     title = "Under Suspicion";
-                    message = `You survive, but barely. The community watches your every move, and one wrong step could be your last. You live in constant fear, your autonomy severely restricted.<br><br><em>Final Stats: Suspicion ${player.suspicion}%, Allies: ${player.allies}</em>`;
-                    theory = `Even women who avoided execution often lived under constant surveillance and control - which was part of the witch hunts' true purpose: to discipline all women into submission.`;
-                } else if (player.suspicion >= 40) {
-                    title = "Cautious Survivor";
-                    message = `You've managed to navigate the dangerous waters of suspicion while maintaining some allies. Your careful balance of resistance and discretion has kept you alive, but at what cost to your spirit?<br><br><em>Final Stats: Suspicion ${player.suspicion}%, Allies: ${player.allies}</em>`;
-                    theory = `Many women survived by carefully balancing compliance with resistance. This constant calculation was itself a form of oppression, forcing women to constantly police their own behavior.`;
+                    message = `You survive, but barely. The community watches every move. You live in constant fear.<br><br><em>Final Stats: Suspicion ${player.suspicion}%, Allies: ${player.allies}</em>`;
+                    theory = `Women who avoided execution often lived under constant surveillance - part of the witch hunts' true purpose: disciplining all women into submission.`;
                 } else {
                     title = "Hidden Strength";
-                    message = `Against all odds, you've maintained your integrity while building a network of allies and keeping suspicion low. You represent the underground resistance that preserved women's knowledge through the darkest times.<br><br><em>Final Stats: Suspicion ${player.suspicion}%, Allies: ${player.allies}</em>`;
-                    theory = `Some women did successfully resist and preserve their autonomy, often by building strong networks of mutual support. These hidden communities kept alive the knowledge and solidarity that patriarchal capitalism sought to destroy.`;
+                    message = `You maintained integrity while building allies and keeping suspicion low. You represent the underground resistance.<br><br><em>Final Stats: Suspicion ${player.suspicion}%, Allies: ${player.allies}</em>`;
+                    theory = `Some women successfully resisted by building strong networks of mutual support, preserving knowledge through the darkest times.`;
                 }
             }
             
             document.getElementById('end-title').textContent = title;
             document.getElementById('end-message').innerHTML = message;
-            document.getElementById('theory-message').innerHTML = `
-                <h4>Historical Analysis</h4>
-                <p>${theory}</p>
-                <p><strong>Rounds Survived:</strong> ${player.round} ${player.level2 ? 'trial rounds' : 'community rounds'}</p>
-            `;
+            document.getElementById('theory-message').innerHTML = `<h4>Historical Analysis</h4><p>${theory}</p>`;
         }
 
         function restartGame() {
@@ -933,13 +550,10 @@
                 allies: 0,
                 round: 0,
                 despair: 0,
-                level2: false,
-                selectedRole: null
+                level2: false
             };
-            currentCardIndex = 0;
-            usedCards = [];
             
-            // Reset UI elements
+            // Reset UI
             document.getElementById('level2-warning').classList.add('hidden');
             document.getElementById('card-display').classList.remove('level2');
             document.getElementById('message').classList.remove('level2');
@@ -948,14 +562,9 @@
             document.getElementById('choice-2').classList.remove('level2-btn');
             
             showScreen('start-screen');
-            showIntroStory();
+            document.getElementById('intro-story').classList.remove('hidden');
+            document.getElementById('role-selection').classList.add('hidden');
         }
-
-        // Initialize game
-        document.addEventListener('DOMContentLoaded', function() {
-            showScreen('start-screen');
-            showIntroStory();
-        });
     </script>
 </body>
 </html>
