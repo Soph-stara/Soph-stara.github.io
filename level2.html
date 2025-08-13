@@ -297,8 +297,13 @@
         };
 
         function startTrial() {
-            const allyCount = parseInt(document.getElementById('ally-count').value);
-            trialState.allies = allyCount;
+            // Get data from Level 1 if available
+            const level1Data = localStorage.getItem('calibansLevel1');
+            if (level1Data) {
+                const results = JSON.parse(level1Data);
+                trialState.allies = results.allies;
+            }
+            
             trialState.judgeFavor = 50;
             trialState.phase = 0;
             
