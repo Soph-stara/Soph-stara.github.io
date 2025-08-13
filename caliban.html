@@ -1037,6 +1037,19 @@
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
+
+                // === LEVEL 2 NAVIGATION ===
+        function goToLevel2() {
+            // Store Level 1 results for Level 2
+            localStorage.setItem('calibansLevel1', JSON.stringify({
+                allies: gameState.allies,
+                role: gameState.role,
+                suspicion: gameState.suspicion
+            }));
+            
+            // Navigate to Level 2
+            window.location.href = 'level2.html';
+        }
     </script>
 </body>
 </html>
