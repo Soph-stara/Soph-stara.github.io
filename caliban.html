@@ -619,7 +619,7 @@
 
             // Display the card
             document.getElementById('card-title').textContent = card.title;
-            document.getElementById('card-image').innerHTML = `[${card.title}]`;
+            document.getElementById('card-image').innerHTML = `<img src="${card.image}" alt="${card.title}">`;
             document.getElementById('card-scenario').textContent = card.scenario;
             document.getElementById('card-context').textContent = card.context;
 
