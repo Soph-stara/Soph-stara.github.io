@@ -749,6 +749,8 @@
                 player.despair += choice.effects.despair;
                 player.despair = Math.max(0, Math.min(100, player.despair));
             }
+            
+            updateStats();
 
             // Show message
             document.getElementById('message').textContent = choice.message;
