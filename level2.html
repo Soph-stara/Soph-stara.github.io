@@ -121,30 +121,15 @@
         
         <div class="level-header">
             <h3>You Have Been Accused</h3>
-            <p>Despite your best efforts in Level 1, suspicion has grown. You now face the ultimate test: a witch trial based on the actual procedures from the <em>Malleus Maleficarum</em> (1486).</p>
+            <p>Despite your efforts in Level 1, suspicion has grown. You now face the ultimate test: a witch trial based on actual procedures from the <em>Malleus Maleficarum</em> (1486).</p>
             
-            <p><strong>Your Goal:</strong> Survive the trial through a combination of legal knowledge, allies' help, and strategic choices.</p>
-            
-            <p><strong>New Mechanics:</strong></p>
-            <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
-                <li><strong>Legal Knowledge:</strong> Understanding trial procedures can save you</li>
-                <li><strong>Ally Support:</strong> Friends from Level 1 can provide testimony or aid</li>
-                <li><strong>Judge's Mood:</strong> Your responses affect the judge's disposition</li>
-            </ul>
-        </div>
-
-        <div class="story-section">
-            <label for="ally-count">How many allies did you have at the end of Level 1?</label>
-            <select id="ally-count" style="margin: 10px; padding: 5px;">
-                <option value="0">0 allies</option>
-                <option value="1">1 ally</option>
-                <option value="2">2 allies</option>
-                <option value="3">3 allies</option>
-                <option value="4">4+ allies</option>
-            </select>
+            <div id="level1-results" style="margin: 20px 0; padding: 15px; background-color: #0f3460; border-radius: 5px;">
+                <p>Loading your results from Level 1...</p>
+            </div>
         </div>
         
         <button onclick="startTrial()">Begin Your Trial</button>
+        <button onclick="window.location.href='index.html'" style="background-color: #16213e; margin-left: 10px;">Return to Level 1</button>
     </div>
 
     <!-- Trial Screen -->
@@ -194,6 +179,36 @@
     </div>
 
     <script>
+        // Load Level 1 results automatically
+        window.onload = function() {
+            const level1Data = localStorage.getItem('calibansLevel1');
+            if (level1Data) {
+                const results = JSON.parse(level1Data);
+                document.getElementById('level1-results').innerHTML = `
+                    <p><strong>Results from Level 1:</strong></p>
+                    <p>Role: ${ROLE_STORIES[results.role] ? ROLE_STORIES[results.role].title : results.role}</p>
+                    <p>Allies: ${results.allies}</p>
+                    <p>Final Suspicion: ${results.suspicion}%</p>
+                `;
+                
+                // Auto-set ally count
+                trialState.allies = results.allies;
+            } else {
+                document.getElementById('level1-results').innerHTML = `
+                    <p style="color: #e94560;"><strong>No Level 1 data found.</strong></p>
+                    <p><a href="index.html" style="color: #eee;">Play Level 1 first</a> to get the full experience!</p>
+                `;
+                trialState.allies = 0; // Default if no Level 1 data
+            }
+        };
+
+        // Add role data for Level 2 display
+        const ROLE_STORIES = {
+            'healer': { title: "The Healer" },
+            'midwife': { title: "The Midwife" },
+            'wise-woman': { title: "The Wise Woman" },
+            'dissenter': { title: "The Dissenter" }
+        };
         // Trial phases based on Malleus Maleficarum procedures
         const TRIAL_PHASES = [
             {
