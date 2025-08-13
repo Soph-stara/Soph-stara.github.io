@@ -439,13 +439,6 @@
             let deck = player.level2 ? LEVEL2_CARDS : LEVEL1_CARDS;
             let maxRounds = player.level2 ? 6 : 10;
             
-            // Check if we've completed all rounds AFTER attempting to draw
-            // This allows the final round to be played
-            if (player.round >= maxRounds) {
-                endGame();
-                return;
-            }
-
             // Get random card
             currentCard = deck[Math.floor(Math.random() * deck.length)];
 
@@ -489,15 +482,14 @@
 
             // Hide choices
             document.getElementById('choices').classList.add('hidden');
-            document.getElementById('draw-btn').classList.remove('hidden');
-
-            // Check for transitions/endings
+            
+            // Check for immediate endings before showing draw button
             if (player.level2) {
                 if (player.despair >= 100) {
                     setTimeout(() => endGame('broken'), 2000);
                     return;
                 }
-                // Allow all 6 rounds to complete before ending
+                // Check if we've completed all 6 rounds
                 if (player.round >= 6) {
                     setTimeout(() => endGame(), 2000);
                     return;
@@ -507,12 +499,15 @@
                     setTimeout(() => startLevel2(), 2000);
                     return;
                 }
-                // Allow all 10 rounds to complete before ending
+                // Check if we've completed all 10 rounds
                 if (player.round >= 10) {
                     setTimeout(() => endGame(), 2000);
                     return;
                 }
             }
+            
+            // If we get here, show draw button for next round
+            document.getElementById('draw-btn').classList.remove('hidden');
         }
 
         function endGame(endingType = null) {
