@@ -933,6 +933,10 @@
                 <p>You are accused of witchcraft and taken for trial. Like hundreds of thousands of women during this period, your knowledge, independence, or resistance to the new social order has marked you as dangerous.</p>
                 
                 <p><em>Final Stats: ${gameState.allies} allies tried to help you, but it wasn't enough to overcome ${gameState.suspicion}% suspicion.</em></p>
+                
+                <button onclick="goToLevel2()" style="background-color: #8b0000; margin: 15px 5px;">
+                    Continue to Your Trial
+                </button>
             `;
             
             document.getElementById('theory-message').innerHTML = `
@@ -955,6 +959,10 @@
                 <p>Your knowledge is preserved and shared secretly. You've helped other women escape persecution. Together, you represent the power of collective resistance against oppression.</p>
                 
                 <p><em>Final Stats: ${gameState.suspicion}% suspicion, but ${gameState.allies} allies protected you and built something larger.</em></p>
+                
+                <button onclick="goToLevel2()" style="background-color: #0f3460; margin: 15px 5px;">
+                    Continue to Level 2: The Trial
+                </button>
             `;
             
             document.getElementById('theory-message').innerHTML = `
@@ -977,6 +985,10 @@
                 <p>Your relationships with other women provided protection and support. While you couldn't build a large resistance network, you maintained connections that helped you survive.</p>
                 
                 <p><em>You represent the many women who survived through careful relationship-building and mutual support.</em></p>
+                
+                <button onclick="goToLevel2()" style="background-color: #0f3460; margin: 15px 5px;">
+                    Continue to Level 2: The Trial
+                </button>
             `;
             
             document.getElementById('theory-message').innerHTML = `
@@ -997,6 +1009,10 @@
                 <p>Your knowledge remains hidden, your connections limited. You're alive, but the system has succeeded in isolating you and limiting your power.</p>
                 
                 <p><em>You represent the many women who survived by becoming invisible and suppressing their autonomy.</em></p>
+                
+                <button onclick="goToLevel2()" style="background-color: #0f3460; margin: 15px 5px;">
+                    Continue to Level 2: The Trial
+                </button>
             `;
             
             document.getElementById('theory-message').innerHTML = `
