@@ -415,6 +415,10 @@
             document.getElementById('choice-1').classList.add('level2-btn');
             document.getElementById('choice-2').classList.add('level2-btn');
             
+            // Make sure draw button is visible and choices are hidden
+            document.getElementById('draw-btn').classList.remove('hidden');
+            document.getElementById('choices').classList.add('hidden');
+            
             updateStats();
             showMessage("You are now in the hands of the witch hunters...", true);
         }
