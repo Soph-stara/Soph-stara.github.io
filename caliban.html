@@ -733,14 +733,13 @@
             document.getElementById('message').classList.add('hidden');
         }
 
-        function makeChoice(choiceNum) {
-            const card = TAROT_CARDS[currentCardIndex];
-            const choice = choiceNum === 1 ? card.choice1 : card.choice2;
-
+        function makeChoice(choice) {
             // Apply effects
             if (choice.effects.suspicion) {
                 player.suspicion += choice.effects.suspicion;
+                player.suspicion = Math.max(0, Math.min(100, player.suspicion));
             }
+
             if (choice.effects.allies) {
                 player.allies += choice.effects.allies;
             }
@@ -749,9 +748,35 @@
                 player.despair += choice.effects.despair;
                 player.despair = Math.max(0, Math.min(100, player.despair));
             }
-            
-            updateStats();
 
+            updateStats();
+            showMessage(choice.message);
+
+            // Level 1 → Level 2 trigger
+            if (player.suspicion >= 100 && !player.level2) {
+                setTimeout(() => startLevel2(), 2000);
+                return;
+            }
+
+            // Level 2 end conditions
+            if (player.level2 && player.despair >= 100) {
+                setTimeout(() => endGame('broken'), 2000);
+                return;
+            }
+
+            if (player.level2 && player.round > player.maxRounds) {
+                if (player.despair <= 30) {
+                    setTimeout(() => endGame('survived_trial'), 2000);
+                } else {
+                    setTimeout(() => endGame('executed'), 2000);
+                }
+                return;
+            }
+
+            // Move to next round
+            player.round++;
+            drawCard();
+            }
             // Show message
             document.getElementById('message').textContent = choice.message;
             document.getElementById('message').classList.remove('hidden');
@@ -787,7 +812,6 @@
             if (!player.level2 && player.round >= 10) {
                 setTimeout(() => endGame(), 2000);
             }
-        }
 
         function startLevel2() {
             player.level2 = true;
