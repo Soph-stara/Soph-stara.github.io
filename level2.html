@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caliban's Daughters - Level 2: The Trial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #eee;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #16213e;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: #e94560;
+            margin-bottom: 10px;
+        }
+
+        .level-header {
+            background-color: #0f3460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 3px solid #e94560;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #0f3460;
+            border-radius: 5px;
+        }
+
+        .stat-item {
+            font-weight: bold;
+        }
+
+        .trial-display {
+            background-color: #8b0000;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            min-height: 200px;
+        }
+
+        .trial-phase {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .story-section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #0f3460;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        .choices {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #e94560;
+            color: white;
+            flex: 1;
+        }
+
+        button:hover {
+            background-color: #d63447;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message {
+            background-color: #0f3460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .ally-bonus {
+            background-color: rgba(0, 128, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <!-- Start Screen -->
+    <div id="start-screen" class="container">
+        <h1>Caliban's Daughters</h1>
+        <h2>Level 2: The Trial</h2>
+        
+        <div class="level-header">
+            <h3>You Have Been Accused</h3>
+            <p>Despite your best efforts in Level 1, suspicion has grown. You now face the ultimate test: a witch trial based on the actual procedures from the <em>Malleus Maleficarum</em> (1486).</p>
+            
+            <p><strong>Your Goal:</strong> Survive the trial through a combination of legal knowledge, allies' help, and strategic choices.</p>
+            
+            <p><strong>New Mechanics:</strong></p>
+            <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+                <li><strong>Legal Knowledge:</strong> Understanding trial procedures can save you</li>
+                <li><strong>Ally Support:</strong> Friends from Level 1 can provide testimony or aid</li>
+                <li><strong>Judge's Mood:</strong> Your responses affect the judge's disposition</li>
+            </ul>
+        </div>
+
+        <div class="story-section">
+            <label for="ally-count">How many allies did you have at the end of Level 1?</label>
+            <select id="ally-count" style="margin: 10px; padding: 5px;">
+                <option value="0">0 allies</option>
+                <option value="1">1 ally</option>
+                <option value="2">2 allies</option>
+                <option value="3">3 allies</option>
+                <option value="4">4+ allies</option>
+            </select>
+        </div>
+        
+        <button onclick="startTrial()">Begin Your Trial</button>
+    </div>
+
+    <!-- Trial Screen -->
+    <div id="trial-screen" class="container hidden">
+        <h1>The Witch Trial</h1>
+        
+        <!-- Game Statistics -->
+        <div class="game-stats">
+            <div class="stat-item">Judge's Favor: <span id="judge-favor">50</span>%</div>
+            <div class="stat-item">Allies Available: <span id="allies">0</span></div>
+            <div class="stat-item">Phase: <span id="phase">1</span>/5</div>
+        </div>
+
+        <!-- Trial Display Area -->
+        <div class="trial-display">
+            <div class="trial-phase" id="phase-title">Accusation Phase</div>
+            <p id="trial-scenario">You stand before the court...</p>
+            <p id="trial-context">The judge watches you carefully.</p>
+        </div>
+
+        <!-- Ally Bonus Display -->
+        <div id="ally-bonus" class="ally-bonus hidden">
+            <strong>Ally Support:</strong> <span id="ally-message"></span>
+        </div>
+
+        <!-- Choice Buttons -->
+        <div id="choices" class="choices">
+            <button id="choice-1" onclick="makeChoice(1)">
+                <span id="choice-1-text">Choice 1</span>
+            </button>
+            <button id="choice-2" onclick="makeChoice(2)">
+                <span id="choice-2-text">Choice 2</span>
+            </button>
+        </div>
+
+        <!-- Trial Messages -->
+        <div id="message" class="message hidden"></div>
+    </div>
+
+    <!-- End Screen -->
+    <div id="end-screen" class="container hidden">
+        <h1>Trial Complete</h1>
+        <h2 id="end-title"></h2>
+        <p id="end-message"></p>
+        <div id="historical-note" class="story-section"></div>
+        <button onclick="restartTrial()">Try Again</button>
+    </div>
+
+    <script>
+        // Trial phases based on Malleus Maleficarum procedures
+        const TRIAL_PHASES = [
+            {
+                title: "The Accusation",
+                scenario: "The court clerk reads the charges: 'You are accused of practicing witchcraft, consorting with devils, and harming your neighbors through supernatural means.'",
+                context: "According to the Malleus Maleficarum, the accused must respond to formal charges.",
+                choice1: {
+                    text: "Deny everything firmly",
+                    effects: { judgeFavor: +10 },
+                    message: "Your clear denial impresses the court with its confidence."
+                },
+                choice2: {
+                    text: "Question the legal basis",
+                    effects: { judgeFavor: +15 },
+                    message: "Your knowledge of legal procedure surprises the judge."
+                }
+            },
+            {
+                title: "Witness Testimony",
+                scenario: "Three neighbors testify against you. They claim they saw you speaking to your cat at midnight and that their milk soured after arguing with you.",
+                context: "The Malleus required witness testimony. Your response is crucial.",
+                choice1: {
+                    text: "Point out contradictions",
+                    effects: { judgeFavor: +20 },
+                    message: "You skillfully highlight inconsistencies in their stories."
+                },
+                choice2: {
+                    text: "Provide an alibi",
+                    effects: { judgeFavor: +10 },
+                    message: "Your explanation seems reasonable to the court."
+                }
+            },
+            {
+                title: "Physical Examination",
+                scenario: "The court examiner claims to have found a 'devil's mark' - a small birthmark on your shoulder.",
+                context: "The Malleus described how to identify supernatural marks on accused witches.",
+                choice1: {
+                    text: "Explain it's a birthmark",
+                    effects: { judgeFavor: +5 },
+                    message: "You calmly explain the natural origin of the mark."
+                },
+                choice2: {
+                    text: "Demand a physician's opinion",
+                    effects: { judgeFavor: +15 },
+                    message: "Your demand for expert testimony shows legal awareness."
+                }
+            },
+            {
+                title: "The Torture Chamber",
+                scenario: "The judge threatens torture to extract a confession. The implements are displayed before you.",
+                context: "The Malleus provided detailed instructions for torture procedures.",
+                choice1: {
+                    text: "Maintain innocence",
+                    effects: { judgeFavor: +25 },
+                    message: "Your unwavering stance despite intimidation is noted."
+                },
+                choice2: {
+                    text: "Appeal to canon law",
+                    effects: { judgeFavor: +30 },
+                    message: "Your knowledge of church law gives the judge pause."
+                }
+            },
+            {
+                title: "Final Judgment",
+                scenario: "The judge prepares to pronounce sentence. This is your last chance to speak in your defense.",
+                context: "The final phase determined life or death for the accused.",
+                choice1: {
+                    text: "Make a passionate plea",
+                    effects: { judgeFavor: +15 },
+                    message: "Your emotional appeal touches the court."
+                },
+                choice2: {
+                    text: "Cite legal precedents",
+                    effects: { judgeFavor: +20 },
+                    message: "Your legal arguments impress the learned judge."
+                }
+            }
+        ];
+
+        // Game state
+        let trialState = {
+            judgeFavor: 50,
+            allies: 0,
+            phase: 0,
+            maxPhases: 5
+        };
+
+        function startTrial() {
+            const allyCount = parseInt(document.getElementById('ally-count').value);
+            trialState.allies = allyCount;
+            trialState.judgeFavor = 50;
+            trialState.phase = 0;
+            
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('trial-screen').classList.remove('hidden');
+            
+            updateDisplay();
+            showCurrentPhase();
+        }
+
+        function showCurrentPhase() {
+            const phase = TRIAL_PHASES[trialState.phase];
+            
+            document.getElementById('phase-title').textContent = phase.title;
+            document.getElementById('trial-scenario').textContent = phase.scenario;
+            document.getElementById('trial-context').textContent = phase.context;
+            
+            document.getElementById('choice-1-text').textContent = phase.choice1.text;
+            document.getElementById('choice-2-text').textContent = phase.choice2.text;
+            
+            // Hide any previous messages
+            document.getElementById('message').classList.add('hidden');
+            document.getElementById('ally-bonus').classList.add('hidden');
+        }
+
+        function makeChoice(choiceNumber) {
+            const phase = TRIAL_PHASES[trialState.phase];
+            const choice = choiceNumber === 1 ? phase.choice1 : phase.choice2;
+            
+            // Apply base effects
+            applyEffects(choice.effects);
+            
+            // Show choice result
+            showMessage(choice.message);
+            
+            // Apply ally bonus if available
+            if (trialState.allies > 0 && Math.random() < 0.6) {
+                applyAllyBonus();
+            }
+            
+            // Check if trial should end
+            setTimeout(() => {
+                trialState.phase++;
+                if (trialState.phase >= trialState.maxPhases) {
+                    endTrial();
+                } else {
+                    showCurrentPhase();
+                    updateDisplay();
+                }
+            }, 2500);
+        }
+
+        function applyEffects(effects) {
+            if (effects.judgeFavor) {
+                trialState.judgeFavor += effects.judgeFavor;
+                trialState.judgeFavor = Math.max(0, Math.min(100, trialState.judgeFavor));
+            }
+            updateDisplay();
+        }
+
+        function applyAllyBonus() {
+            const bonuses = [
+                "A neighbor testifies to your good character",
+                "Someone provides evidence supporting your alibi",
+                "A respected villager speaks in your defense",
+                "Your ally brings a witness to contradict the accusers"
+            ];
+            
+            const bonus = bonuses[Math.floor(Math.random() * bonuses.length)];
+            trialState.judgeFavor += 10;
+            trialState.judgeFavor = Math.min(100, trialState.judgeFavor);
+            trialState.allies--;
+            
+            document.getElementById('ally-message').textContent = bonus + " (+10 Judge's Favor)";
+            document.getElementById('ally-bonus').classList.remove('hidden');
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            document.getElementById('judge-favor').textContent = trialState.judgeFavor;
+            document.getElementById('allies').textContent = trialState.allies;
+            document.getElementById('phase').textContent = trialState.phase + 1;
+        }
+
+        function showMessage(text) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.classList.remove('hidden');
+        }
+
+        function endTrial() {
+            document.getElementById('trial-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            
+            if (trialState.judgeFavor >= 80) {
+                showAcquittalEnding();
+            } else if (trialState.judgeFavor >= 60) {
+                showBanishmentEnding();
+            } else if (trialState.judgeFavor >= 40) {
+                showImprisonmentEnding();
+            } else {
+                showExecutionEnding();
+            }
+        }
+
+        function showAcquittalEnding() {
+            document.getElementById('end-title').textContent = "Acquitted!";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>The judge finds you innocent!</strong> Your combination of legal knowledge and strong defense convinced the court.</p>
+                <p><em>Final Judge's Favor: ${trialState.judgeFavor}%</em></p>
+            `;
+            
+            document.getElementById('historical-note').innerHTML = `
+                <h3>Historical Reality</h3>
+                <p>Full acquittals were rare but possible, especially when the accused demonstrated legal knowledge or had strong community support. Your success represents the few who overcame the system through preparation and allies.</p>
+            `;
+        }
+
+        function showBanishmentEnding() {
+            document.getElementById('end-title').textContent = "Banished";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You are banished from the region.</strong> The judge spares your life but exiles you permanently.</p>
+                <p><em>Final Judge's Favor: ${trialState.judgeFavor}%</em></p>
+            `;
+            
+            document.getElementById('historical-note').innerHTML = `
+                <h3>Historical Context</h3>
+                <p>Banishment was sometimes used as a compromise sentence when evidence was insufficient for execution but suspicion remained high. Many women survived this way, though they lost everything.</p>
+            `;
+        }
+
+        function showImprisonmentEnding() {
+            document.getElementById('end-title').textContent = "Imprisoned";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You are sentenced to life imprisonment.</strong> You escape death but will spend your remaining years in confinement.</p>
+                <p><em>Final Judge's Favor: ${trialState.judgeFavor}%</em></p>
+            `;
+            
+            document.getElementById('historical-note').innerHTML = `
+                <h3>Historical Reality</h3>
+                <p>According to the Malleus Maleficarum, perpetual imprisonment "on bread and water" was sometimes offered to those who confessed and provided information about other witches.</p>
+            `;
+        }
+
+        function showExecutionEnding() {
+            document.getElementById('end-title').textContent = "Condemned";
+            document.getElementById('end-message').innerHTML = `
+                <p><strong>You are sentenced to death.</strong> Despite your efforts, the court finds you guilty of witchcraft.</p>
+                <p><em>Final Judge's Favor: ${trialState.judgeFavor}%</em></p>
+            `;
+            
+            document.getElementById('historical-note').innerHTML = `
+                <h3>The Tragic Reality</h3>
+                <p>Most witch trials ended in execution. The Malleus Maleficarum was designed to ensure conviction, not justice. Your fate represents the thousands of women who faced this same unjust system.</p>
+            `;
+        }
+
+        function restartTrial() {
+            trialState = {
+                judgeFavor: 50,
+                allies: 0,
+                phase: 0,
+                maxPhases: 5
+            };
+            
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
