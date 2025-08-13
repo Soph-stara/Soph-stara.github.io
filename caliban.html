@@ -481,11 +481,10 @@
             player.round++;
             updateStats();
 
-            // Hide choices
+            // Hide choices and show draw button
             document.getElementById('choices').classList.add('hidden');
-            document.getElementById('draw-btn').classList.remove('hidden');
-
-            // Check for transitions/endings
+            
+            // Check for transitions/endings BEFORE showing draw button
             if (player.level2) {
                 if (player.despair >= 100) {
                     setTimeout(() => endGame('broken'), 2000);
@@ -505,6 +504,9 @@
                     return;
                 }
             }
+            
+            // Show draw button only if game continues
+            document.getElementById('draw-btn').classList.remove('hidden');
         }
 
         function endGame(endingType = null) {
