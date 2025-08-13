@@ -397,7 +397,7 @@
         const TAROT_CARDS = [
             {
                 title: "The Moon",
-                image: "images/moonjpg",
+                image: "images/moon.jpg",
                 scenario: "Whispers spread that you meet with spirits at night.",
                 context: "Rumors could quickly become deadly accusations.",
                 choice1: {
@@ -749,23 +749,63 @@
             document.getElementById('card-scenario').textContent = gameState.currentCard.scenario;
             document.getElementById('card-context').textContent = gameState.currentCard.context;
             
-            // Show tarot card symbol as fallback
+            // Display the actual image only
             const cardImageEl = document.getElementById('card-image');
-            const symbols = {
-                "The Moon": "🌙",
-                "The Tower": "🗼",
-                "The High Priestess": "👸",
-                "The Hermit": "🧙‍♀️",
-                "Death": "💀",
-                "The Devil": "😈",
-                "The Empress": "👑",
-                "The Magician": "🔮",
-                "Justice": "⚖️",
-                "The Star": "⭐",
-                "The Fool": "🃏",
-                "Temperance": "🏺"
-                            };
-                            cardImageEl.textContent = symbols[gameState.currentCard.title] || "🎴";
+            
+            if (gameState.currentCard.image && gameState.currentCard.image !== "") {
+                // Create img element
+                const img = document.createElement('img');
+                img.src = gameState.currentCard.image;
+                img.alt = gameState.currentCard.title;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '100%';
+                img.style.borderRadius = '3px';
+                
+                // Clear previous content and add image
+                cardImageEl.innerHTML = '';
+                cardImageEl.appendChild(img);
+                
+                // Show error message if image fails to load
+                img.onerror = function() {
+                    cardImageEl.innerHTML = `<div style="color: #ff6b6b; font-size: 14px; text-align: center;">Image not found:<br>${gameState.currentCard.image}</div>`;
+                };
+            } else {
+                // Show message if no image path specified
+                cardImageEl.innerHTML = `<div style="color: #888; font-size: 14px; text-align: center;">No image specified for<br>${gameState.currentCard.title}</div>`;
+            }
+            
+            document.getElementById('choice-1-text').textContent = gameState.currentCard.choice1.text;
+            document.getElementById('choice-2-text').textContent = gameState.currentCard.choice2.text;
+            document.getElementById('choices').classList.remove('hidden');
+            
+            document.getElementById('draw-btn').classList.add('hidden');
+            document.getElementById('message').classList.add('hidden');
+        }
+            // Show tarot card symbol as fallback
+            // Display the actual image only
+            const cardImageEl = document.getElementById('card-image');
+            
+            if (gameState.currentCard.image && gameState.currentCard.image !== "") {
+                // Create img element
+                const img = document.createElement('img');
+                img.src = gameState.currentCard.image;
+                img.alt = gameState.currentCard.title;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '100%';
+                img.style.borderRadius = '3px';
+                
+                // Clear previous content and add image
+                cardImageEl.innerHTML = '';
+                cardImageEl.appendChild(img);
+                
+                // Show error message if image fails to load
+                img.onerror = function() {
+                    cardImageEl.innerHTML = `<div style="color: #ff6b6b; font-size: 14px; text-align: center;">Image not found:<br>${gameState.currentCard.image}</div>`;
+                };
+            } else {
+                // Show message if no image path specified
+                cardImageEl.innerHTML = `<div style="color: #888; font-size: 14px; text-align: center;">No image specified for<br>${gameState.currentCard.title}</div>`;
+            }
                             
                             document.getElementById('choice-1-text').textContent = gameState.currentCard.choice1.text;
                             document.getElementById('choice-2-text').textContent = gameState.currentCard.choice2.text;
@@ -773,7 +813,6 @@
                             
                             document.getElementById('draw-btn').classList.add('hidden');
                             document.getElementById('message').classList.add('hidden');
-                        }
 
         function makeChoice(choiceNumber) {
             const choice = choiceNumber === 1 ? gameState.currentCard.choice1 : gameState.currentCard.choice2;
