@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entropy vs Hope</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #0a0a0a;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        canvas {
+            border: 1px solid #333;
+            cursor: crosshair;
+        }
+        
+        .info {
+            color: #fff;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 10px;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-label {
+            color: #888;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .entropy-value {
+            color: #ff4444;
+        }
+        
+        .hope-value {
+            color: #44ff88;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="info">
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-label">Entropy</span>
+                <span class="stat-value entropy-value" id="entropy">0%</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Order</span>
+                <span class="stat-value hope-value" id="order">100%</span>
+            </div>
+        </div>
+        <p style="margin-top: 20px; color: #666;">
+            Move your cursor to create islands of order.<br>
+            Entropy spreads constantly. Hope requires your presence.
+        </p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = 800;
+        canvas.height = 600;
+        
+        // Grid system
+        const cellSize = 4;
+        const cols = Math.floor(canvas.width / cellSize);
+        const rows = Math.floor(canvas.height / cellSize);
+        
+        // Create grid - each cell has an "order" value (0 = chaos, 1 = order)
+        let grid = [];
+        let nextGrid = [];
+        
+        // Initialize with perfect order
+        for (let i = 0; i < cols; i++) {
+            grid[i] = [];
+            nextGrid[i] = [];
+            for (let j = 0; j < rows; j++) {
+                grid[i][j] = 1.0; // Start with full order
+                nextGrid[i][j] = 1.0;
+            }
+        }
+        
+        // Mouse tracking
+        let mouseX = -1000;
+        let mouseY = -1000;
+        
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+        
+        canvas.addEventListener('mouseleave', () => {
+            mouseX = -1000;
+            mouseY = -1000;
+        });
+        
+        // Animation loop
+        function update() {
+            // Calculate entropy and order percentages
+            let totalOrder = 0;
+            let cellCount = cols * rows;
+            
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    let cell = grid[i][j];
+                    
+                    // Calculate distance from mouse
+                    const cellX = i * cellSize + cellSize / 2;
+                    const cellY = j * cellSize + cellSize / 2;
+                    const dist = Math.sqrt((cellX - mouseX) ** 2 + (cellY - mouseY) ** 2);
+                    
+                    // Hope agent: mouse creates order in nearby cells
+                    const hopeRadius = 80;
+                    if (dist < hopeRadius) {
+                        const hopeStrength = (1 - dist / hopeRadius) * 0.15;
+                        cell = Math.min(1, cell + hopeStrength);
+                    }
+                    
+                    // Entropy agent: constant decay
+                    cell -= 0.002;
+                    
+                    // Entropy spreads from neighbors (diffusion of disorder)
+                    let neighborEntropy = 0;
+                    let neighborCount = 0;
+                    
+                    for (let di = -1; di <= 1; di++) {
+                        for (let dj = -1; dj <= 1; dj++) {
+                            if (di === 0 && dj === 0) continue;
+                            
+                            const ni = i + di;
+                            const nj = j + dj;
+                            
+                            if (ni >= 0 && ni < cols && nj >= 0 && nj < rows) {
+                                neighborEntropy += (1 - grid[ni][nj]);
+                                neighborCount++;
+                            }
+                        }
+                    }
+                    
+                    // Spread entropy from disordered neighbors
+                    if (neighborCount > 0) {
+                        const avgNeighborEntropy = neighborEntropy / neighborCount;
+                        cell -= avgNeighborEntropy * 0.01;
+                    }
+                    
+                    // Clamp between 0 and 1
+                    cell = Math.max(0, Math.min(1, cell));
+                    
+                    nextGrid[i][j] = cell;
+                    totalOrder += cell;
+                }
+            }
+            
+            // Swap grids
+            [grid, nextGrid] = [nextGrid, grid];
+            
+            // Update stats
+            const orderPercent = Math.round((totalOrder / cellCount) * 100);
+            const entropyPercent = 100 - orderPercent;
+            document.getElementById('entropy').textContent = entropyPercent + '%';
+            document.getElementById('order').textContent = orderPercent + '%';
+        }
+        
+        function draw() {
+            // Clear canvas
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw grid
+            for (let i = 0; i < cols; i++) {
+                for (let j = 0; j < rows; j++) {
+                    const order = grid[i][j];
+                    
+                    // Color: green (order) to red (entropy)
+                    const r = Math.floor(255 * (1 - order));
+                    const g = Math.floor(200 * order);
+                    const b = Math.floor(50 * order);
+                    
+                    ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+                    ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+                }
+            }
+            
+            // Draw mouse influence radius
+            if (mouseX > 0 && mouseY > 0 && mouseX < canvas.width && mouseY < canvas.height) {
+                ctx.strokeStyle = 'rgba(68, 255, 136, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(mouseX, mouseY, 80, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+        
+        function animate() {
+            update();
+            draw();
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    </script>
+</body>
+</html>
