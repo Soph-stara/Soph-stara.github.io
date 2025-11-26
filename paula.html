@@ -1,0 +1,441 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Heart, Music, Lock, Mail, X, Download } from 'lucide-react';
+
+const BirthdayWebsite = () => {
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showLetter, setShowLetter] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [imageClarity, setImageClarity] = useState(0);
+  const [error, setError] = useState('');
+  const [letterSaved, setLetterSaved] = useState(false);
+  const canvasRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const analyserRef = useRef(null);
+  const sourceRef = useRef(null);
+  const audioRef = useRef(null);
+  const animationRef = useRef(null);
+  const imageRef = useRef(null);
+
+  // Password check
+  const handlePasswordSubmit = () => {
+    if (password.toLowerCase() === 'suruchi' || password === '2024') {
+      setIsUnlocked(true);
+      setError('');
+    } else {
+      setError('Incorrect password. Try again!');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handlePasswordSubmit();
+    }
+  };
+
+  // Load image
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=450&h=800&fit=crop';
+    img.onload = () => {
+      imageRef.current = img;
+    };
+  }, []);
+
+  // Initialize audio visualization and drawing
+  useEffect(() => {
+    if (isUnlocked && canvasRef.current) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      
+      // Create particles
+      const particles = [];
+      for (let i = 0; i < 50; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 15 + 3,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
+          baseRadius: Math.random() * 15 + 3,
+          hue: Math.random() * 60 + 300 // Purple to pink range
+        });
+      }
+
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw background image with blur effect (blur to clear)
+        if (imageRef.current) {
+          ctx.save();
+          const blurAmount = Math.max(0, 25 - imageClarity);
+          ctx.filter = `blur(${blurAmount}px) brightness(0.8)`;
+          ctx.globalAlpha = 0.5 + (imageClarity / 40);
+          
+          // Draw image to fit canvas
+          const scale = Math.max(canvas.width / imageRef.current.width, canvas.height / imageRef.current.height);
+          const x = (canvas.width / 2) - (imageRef.current.width / 2) * scale;
+          const y = (canvas.height / 2) - (imageRef.current.height / 2) * scale;
+          ctx.drawImage(imageRef.current, x, y, imageRef.current.width * scale, imageRef.current.height * scale);
+          ctx.restore();
+        } else {
+          // Fallback gradient if image doesn't load
+          const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+          gradient.addColorStop(0, '#ff6b9d');
+          gradient.addColorStop(0.5, '#c86dd7');
+          gradient.addColorStop(1, '#8b5cf6');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Get audio data if playing
+        let dataArray = null;
+        let avgFrequency = 0;
+        if (isPlaying && analyserRef.current) {
+          const bufferLength = analyserRef.current.frequencyBinCount;
+          dataArray = new Uint8Array(bufferLength);
+          analyserRef.current.getByteFrequencyData(dataArray);
+          
+          // Calculate average frequency for effects
+          const sum = dataArray.reduce((a, b) => a + b, 0);
+          avgFrequency = sum / bufferLength;
+        }
+
+        // Draw and update particles (music-reactive bubbles)
+        particles.forEach((p, index) => {
+          // Update size based on audio
+          let size = p.baseRadius;
+          if (dataArray && index < dataArray.length) {
+            const audioScale = (dataArray[index] / 255) * 25;
+            size = p.baseRadius + audioScale;
+          }
+
+          // Update position
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Bounce off walls
+          if (p.x < 0 || p.x > canvas.width) {
+            p.vx *= -1;
+            p.x = Math.max(0, Math.min(canvas.width, p.x));
+          }
+          if (p.y < 0 || p.y > canvas.height) {
+            p.vy *= -1;
+            p.y = Math.max(0, Math.min(canvas.height, p.y));
+          }
+
+          // Draw particle with vibrant colors
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+          
+          // Create gradient for each bubble
+          const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size);
+          gradient.addColorStop(0, `hsla(${p.hue}, 100%, 70%, 0.8)`);
+          gradient.addColorStop(1, `hsla(${p.hue + 20}, 100%, 50%, 0.3)`);
+          ctx.fillStyle = gradient;
+          ctx.fill();
+          
+          // Glow effect
+          ctx.shadowBlur = 15 + (avgFrequency / 10);
+          ctx.shadowColor = `hsla(${p.hue}, 100%, 60%, 0.8)`;
+        });
+
+        // Draw birthday text with wiggle effect
+        ctx.shadowBlur = 0;
+        ctx.save();
+        
+        // Calculate responsive font size
+        const fontSize = Math.min(canvas.width / 8, 60);
+        ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+        
+        const textY = canvas.height / 6;
+        const wiggleX = Math.sin(Date.now() / 300) * 5;
+        const wiggleY = Math.cos(Date.now() / 400) * 3;
+        const scale = 1 + Math.sin(Date.now() / 500) * 0.05;
+        
+        ctx.save();
+        ctx.translate(canvas.width / 2 + wiggleX, textY + wiggleY);
+        ctx.scale(scale, scale);
+        ctx.fillText('Happy Birthday', 0, -fontSize / 2);
+        ctx.fillText('Suruchi!', 0, fontSize / 2);
+        ctx.restore();
+        
+        ctx.restore();
+
+        animationRef.current = requestAnimationFrame(animate);
+      };
+
+      animate();
+
+      return () => {
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
+      };
+    }
+  }, [isUnlocked, isPlaying, imageClarity]);
+
+  // Gradually reveal image (blur to clear effect)
+  useEffect(() => {
+    if (isUnlocked && imageClarity < 25) {
+      const timer = setTimeout(() => {
+        setImageClarity(prev => Math.min(prev + 0.3, 25));
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [isUnlocked, imageClarity]);
+
+  const toggleMusic = async () => {
+    if (!audioRef.current) {
+      // Using a royalty-free happy birthday style music
+      audioRef.current = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+      audioRef.current.loop = true;
+    }
+
+    if (!isPlaying) {
+      try {
+        // Create audio context for visualization
+        if (!audioContextRef.current) {
+          audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+          analyserRef.current = audioContextRef.current.createAnalyser();
+          analyserRef.current.fftSize = 512;
+          analyserRef.current.smoothingTimeConstant = 0.8;
+          
+          sourceRef.current = audioContextRef.current.createMediaElementSource(audioRef.current);
+          sourceRef.current.connect(analyserRef.current);
+          analyserRef.current.connect(audioContextRef.current.destination);
+        }
+
+        await audioRef.current.play();
+        setIsPlaying(true);
+      } catch (err) {
+        console.error('Error playing audio:', err);
+        alert('Please tap again to play music. Some browsers require user interaction first.');
+      }
+    } else {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const handleSaveLetter = async () => {
+    try {
+      // Save to persistent storage
+      await window.storage.set('birthday_letter_saved', 'true', false);
+      await window.storage.set('birthday_letter_date', new Date().toISOString(), false);
+      setLetterSaved(true);
+      alert('💝 Your special message has been saved! You can access it anytime by returning to this page.');
+    } catch (err) {
+      console.error('Storage error:', err);
+      alert('✓ Message saved to your heart! Bookmark this page to return anytime.');
+      setLetterSaved(true);
+    }
+  };
+
+  // Check if letter was previously saved
+  useEffect(() => {
+    const checkSaved = async () => {
+      try {
+        const result = await window.storage.get('birthday_letter_saved', false);
+        if (result && result.value === 'true') {
+          setLetterSaved(true);
+        }
+      } catch (err) {
+        // Storage not available or key doesn't exist
+      }
+    };
+    if (isUnlocked) {
+      checkSaved();
+    }
+  }, [isUnlocked]);
+
+  // Password screen
+  if (!isUnlocked) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-500 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full animate-fade-in">
+          <div className="text-center mb-8">
+            <div className="bg-gradient-to-r from-pink-500 to-purple-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+              <Lock className="text-white" size={40} />
+            </div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Birthday Surprise 🎉</h1>
+            <p className="text-gray-600">Enter the password to unlock your special message</p>
+          </div>
+          
+          <div className="space-y-4">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Enter password"
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition text-center text-lg"
+              autoFocus
+            />
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                <p className="text-red-600 text-sm text-center">{error}</p>
+              </div>
+            )}
+            <button
+              onClick={handlePasswordSubmit}
+              className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition active:scale-95"
+            >
+              Unlock 🎁
+            </button>
+          </div>
+          
+          <div className="mt-6 p-4 bg-purple-50 rounded-lg">
+            <p className="text-center text-gray-600 text-sm">
+              💡 <strong>Hint:</strong> Try the birthday person's name or year 2024
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Main birthday experience
+  return (
+    <div className="min-h-screen bg-gray-900 relative overflow-hidden">
+      {/* Canvas for visualization */}
+      <canvas
+        ref={canvasRef}
+        width={450}
+        height={800}
+        className="mx-auto touch-none cursor-pointer"
+        style={{ maxWidth: '100%', height: 'auto' }}
+        onClick={toggleMusic}
+      />
+
+      {/* Controls */}
+      <div className="fixed bottom-8 left-0 right-0 flex flex-wrap justify-center gap-4 px-4">
+        <button
+          onClick={toggleMusic}
+          className={`bg-white rounded-full p-4 shadow-lg hover:shadow-xl transform hover:scale-110 transition active:scale-95 ${
+            isPlaying ? 'ring-4 ring-purple-400' : ''
+          }`}
+          aria-label={isPlaying ? 'Pause music' : 'Play music'}
+        >
+          <Music className={isPlaying ? 'text-purple-600' : 'text-gray-600'} size={24} />
+        </button>
+        
+        <button
+          onClick={() => setShowLetter(true)}
+          className="bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-full px-6 py-4 shadow-lg hover:shadow-xl transform hover:scale-110 transition active:scale-95 font-semibold flex items-center gap-2"
+        >
+          <Mail size={20} />
+          <span className="hidden sm:inline">Read Your Letter</span>
+          <span className="sm:hidden">Letter</span>
+        </button>
+      </div>
+
+      {/* Letter Modal */}
+      {showLetter && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto">
+            <div className="sticky top-0 bg-gradient-to-r from-pink-500 to-purple-600 p-6 flex justify-between items-center z-10">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                <Heart className="fill-white" size={24} />
+                Your Special Letter
+              </h2>
+              <button
+                onClick={() => setShowLetter(false)}
+                className="text-white hover:bg-white hover:text-purple-600 rounded-full p-2 transition active:scale-95"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            
+            <div className="p-6 sm:p-8 space-y-4 text-gray-700 leading-relaxed">
+              <p className="text-xl font-semibold text-purple-600">Dear Suruchi,</p>
+              
+              <p className="text-base sm:text-lg">
+                Happy Birthday! 🎂 Today is a celebration of you and all the wonderful things you bring into this world. 
+                Your kindness, your laughter, and your unique spirit make every day brighter for those around you.
+              </p>
+              
+              <p>
+                As you celebrate another year of life, I hope you take a moment to reflect on all the amazing things 
+                you've accomplished and all the lives you've touched. You deserve all the happiness, love, and 
+                success that comes your way.
+              </p>
+              
+              <p>
+                May this year bring you exciting adventures, beautiful memories, and dreams that come true. 
+                May you always find reasons to smile and may your heart be filled with joy.
+              </p>
+              
+              <p>
+                Thank you for being such an incredible person. The world is better with you in it, and I'm grateful 
+                to be able to celebrate this special day with you.
+              </p>
+              
+              <div className="bg-gradient-to-r from-pink-50 to-purple-50 p-6 rounded-lg my-6">
+                <p className="text-lg font-semibold text-center text-purple-700">
+                  Wishing you the happiest of birthdays! 🎂🎉✨
+                </p>
+              </div>
+              
+              <div className="text-right space-y-1 mt-8">
+                <p className="italic text-gray-600">With all my love and best wishes,</p>
+                <p className="font-semibold text-lg text-purple-600">Your loving family ❤️</p>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-r from-pink-50 to-purple-50 p-6 text-center border-t">
+              <p className="text-sm text-gray-600 mb-4">
+                {letterSaved ? '💝 This message is saved forever!' : '💝 Save this message to keep it forever'}
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center">
+                <button
+                  onClick={handleSaveLetter}
+                  disabled={letterSaved}
+                  className={`${
+                    letterSaved 
+                      ? 'bg-gray-300 cursor-not-allowed' 
+                      : 'bg-gradient-to-r from-pink-500 to-purple-600 hover:shadow-lg'
+                  } text-white px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2`}
+                >
+                  <Download size={18} />
+                  {letterSaved ? 'Saved ✓' : 'Save Forever'}
+                </button>
+              </div>
+              <p className="text-xs text-gray-500 mt-4">
+                💡 Bookmark this page to return anytime
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Instructions overlay */}
+      <div className="fixed top-4 left-0 right-0 text-center px-4 pointer-events-none">
+        <div className="inline-block bg-white bg-opacity-95 rounded-full px-4 sm:px-6 py-2 shadow-lg">
+          <p className="text-xs sm:text-sm text-gray-700">
+            {isPlaying ? '🎵 Music playing • Tap to pause' : '🎵 Tap anywhere to play birthday music'}
+          </p>
+        </div>
+      </div>
+
+      {/* Image clarity indicator */}
+      {imageClarity < 25 && (
+        <div className="fixed top-16 left-0 right-0 text-center px-4">
+          <div className="inline-block bg-purple-600 bg-opacity-90 rounded-full px-4 py-1 shadow-lg">
+            <p className="text-xs text-white">
+              ✨ Revealing your surprise... {Math.round((imageClarity / 25) * 100)}%
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default BirthdayWebsite;
