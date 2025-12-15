@@ -6,114 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        :root {
-            --primary-color: #8A2BE2;
-            --primary-light: #E6E6FA;
-            --primary-dark: #4B0082;
-            --white: #FFFFFF;
-            --text-dark: #333333;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background-color: var(--primary-light);
-            color: var(--text-dark);
-            min-height: 100vh;
-            padding: 30px 20px;
+            background: white;
+            color: #e10600;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                         "Liberation Mono", "Courier New", monospace;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 40px;
+            max-width: 900px;
         }
 
-        .page-container {
-            max-width: 900px;
-            margin: 0 auto;
+        a {
+            color: #e10600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         h1 {
-            color: var(--primary-dark);
-            font-size: 2rem;
+            font-size: 22px;
+            font-weight: normal;
             margin-bottom: 20px;
-            text-align: center;
         }
 
-        .content-card {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-            line-height: 1.6;
-        }
-
-        .content-card p {
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
-
-        .content-card em {
-            color: var(--primary-dark);
-            font-weight: 500;
-        }
-
-        .back-button {
+        .back {
+            margin-bottom: 40px;
             display: inline-block;
-            margin-bottom: 25px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 10px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s;
         }
 
-        .back-button:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
+        .content {
+            max-width: 700px;
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.6rem;
-            }
-
-            .content-card {
-                padding: 20px;
-            }
+        footer {
+            margin-top: 80px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-<div class="page-container">
+<a href="../index.html" class="back">← back</a>
 
-    <a href="../index.html" class="back-button">← Back to Portfolio</a>
+<h1>How Algae Can Change the World</h1>
 
-    <h1>How Algae Can Change the World</h1>
+<div class="content">
+    <p>
+        This project explores algae as a speculative, scientific, and political
+        actor in planetary futures.
+    </p>
 
-    <div class="content-card">
-        <p>
-            This project explores algae as a speculative, scientific, and political
-            actor in planetary futures.
-        </p>
+    <p>
+        Algae appear here as infrastructure, collaborator, and storyteller —
+        from climate mitigation to alternative imaginaries of growth.
+    </p>
 
-        <p>
-            Algae appear here as infrastructure, collaborator, and storyteller —
-            from climate mitigation to alternative imaginaries of growth.
-        </p>
+    <p>
+        The work sits at the intersection of environmental humanities,
+        speculative design, and climate research.
+    </p>
 
-        <p>
-            The work sits at the intersection of environmental humanities,
-            speculative design, and climate research.
-        </p>
-
-        <p><em>Work in progress.</em></p>
-    </div>
-
+    <p><em>Work in progress.</em></p>
 </div>
+
+<footer>
+    Sophie Hamann
+</footer>
 
 </body>
 </html>
