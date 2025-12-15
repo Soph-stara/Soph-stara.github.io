@@ -6,130 +6,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        :root {
-            --primary-color: #8A2BE2;
-            --primary-light: #E6E6FA;
-            --primary-dark: #4B0082;
-            --white: #FFFFFF;
-            --text-dark: #333333;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background-color: var(--primary-light);
-            color: var(--text-dark);
-            min-height: 100vh;
-            padding: 30px 20px;
+            background: white;
+            color: #e10600;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                         "Liberation Mono", "Courier New", monospace;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 40px;
+            max-width: 900px;
         }
 
-        .page-container {
-            max-width: 900px;
-            margin: 0 auto;
+        a {
+            color: #e10600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         h1 {
-            color: var(--primary-dark);
-            font-size: 2rem;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .content-card {
-            background-color: var(--white);
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-
-        .content-card p {
+            font-size: 22px;
+            font-weight: normal;
             margin-bottom: 20px;
         }
 
-        .content-card em {
-            color: var(--primary-dark);
-            font-weight: 500;
-        }
-
-        .questions {
-            list-style: none;
-            margin: 25px 0;
-            padding-left: 0;
-        }
-
-        .questions li {
-            margin-bottom: 12px;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .questions li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--primary-dark);
-            font-weight: bold;
-        }
-
-        .back-button {
+        .back {
+            margin-bottom: 40px;
             display: inline-block;
-            margin-bottom: 25px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 10px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s;
         }
 
-        .back-button:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
+        .content {
+            max-width: 700px;
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.6rem;
-            }
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 20px 0;
+        }
 
-            .content-card {
-                padding: 22px;
-            }
+        li::before {
+            content: "→ ";
+        }
+
+        footer {
+            margin-top: 80px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-<div class="page-container">
+<a href="../index.html" class="back">← back</a>
 
-    <a href="../index.html" class="back-button">← Back to Portfolio</a>
+<h1>Mapping Commons</h1>
 
-    <h1>Mapping Commons</h1>
+<div class="content">
+    <p>
+        Mapping Commons investigates shared resources, collective ownership,
+        and alternative spatial imaginaries.
+    </p>
 
-    <div class="content-card">
-        <p>
-            <strong>Mapping Commons</strong> investigates shared resources,
-            collective ownership, and alternative spatial imaginaries.
-        </p>
+    <ul>
+        <li>What is a commons?</li>
+        <li>Who maintains it?</li>
+        <li>Who is excluded?</li>
+    </ul>
 
-        <ul class="questions">
-            <li>What is a commons?</li>
-            <li>Who maintains it?</li>
-            <li>Who is excluded?</li>
-        </ul>
-
-        <p><em>Research project / ongoing.</em></p>
-    </div>
-
+    <p><em>Research project / ongoing.</em></p>
 </div>
+
+<footer>
+    Sophie Hamann
+</footer>
 
 </body>
 </html>
