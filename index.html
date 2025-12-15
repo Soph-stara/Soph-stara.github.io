@@ -1,167 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
+    <meta charset="UTF-8">
+    <title>Sophie Hamann</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <!-- Alternative favicon formats for better browser compatibility -->
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <!-- Try with absolute path as well -->
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
     <style>
         body {
-            background-color: pink;
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
+            background-color: white;
+            color: #e10600;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            margin: 40px;
+            line-height: 1.6;
         }
 
-                /* Button style */
-        .special-button {
-            display: inline-block;
-            background-color: #ff69b4;
-            color: white !important;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
+        h1, h2, h3 {
+            font-weight: normal;
+            margin-bottom: 0.5em;
         }
 
-        .special-button:hover {
-            background-color: #ff5aa7;
-            transform: scale(1.05);
-            text-decoration: none !important;
+        a {
+            color: #e10600;
+            text-decoration: none;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            margin: 15px 0;
-            border-radius: 8px;
+        a:hover {
+            text-decoration: underline;
         }
-        .education {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-        }
-        .year {
-            font-weight: bold;
-        }
-        .job {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-        }
-        .year {
-            font-weight: bold;
-        }
-        /* Navigation style */
+
+        /* Navigation */
         .navigation {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
+            margin-bottom: 60px;
         }
 
         .navigation a {
-            margin-right: 15px;
-            color: #333;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .navigation a:hover {
-            text-decoration: underline;
-            color: #ff69b4;
+            margin-right: 20px;
         }
 
-        .cv-section {
-            background-color: rgba(255, 255, 255, 0.6);
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 8px;
+        /* Sections */
+        .section {
+            max-width: 700px;
+            margin-bottom: 60px;
         }
-        .cv-section h3 {
-            margin-top: 20px;
-            color: #cc3366;
-        }
-        .cv-section ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .cv-section li {
-            margin-bottom: 10px;
+
+        .muted {
+            opacity: 0.7;
         }
     </style>
 </head>
+
 <body>
+
     <h1>Sophie Hamann</h1>
-    
-    <!-- Navigation -->
+
     <div class="navigation">
-    <!-- <a href="index.html" class="special-button">Home</a> -->
-    <!-- <a href="https://soph-stara.github.io/feminist_memory/" class="special-button">Feminist Memory Project</a> -->
-    <a href="caliban.html" class="special-button">Caliban´s Daughters</a>
-    <!-- <a href="vienna_tips.html" class="special-button">Wiener Dolce Vita</a> -->
-    <a href="entropy_hope.html" class="special-button">Entropy vs Hope</a>
-    <a href="algae.html" class="special-button">How Algae Can Change the World</a>
-    <a href="ode_to_our_mother.html" class="special-button">Ode to Our Mother</a>
-    <a href="mapping_commons.html" class="special-button">Mapping Commons</a>
-</div>
-    
-    <!-- Your hamster GIF -->
-    <img src="images/sadhamstergirl.gif" alt="Sad hamster girl GIF">
-    <p>My favorite sad hamster girl.</p>
+        <a href="index.html">Home</a>
+        <a href="https://soph-stara.github.io/feminist_memory/">Feminist Memory</a>
+        <a href="caliban.html">Caliban’s Daughters</a>
+        <a href="entropy_hope.html">(Mad) Hope</a>
+        <a href="algae.html">How Algae Can Change the World</a>
+        <a href="mapping_commons.html">Mapping Commons</a>
+        <a href="ode_to_our_mother.html">Ode to Our Mother</a>
+    </div>
 
-    <div class="cv-section">
-        <h2>Curriculum Vitae</h2>
+    <div class="section">
+        <p class="muted">
+            Research, writing, and artistic practice at the intersection of
+            ecology, feminism, technology, and speculation.
+        </p>
+    </div>
 
-        <h3>Education</h3>
-        <ul>
-            <li><strong>2025-2027</strong>: Master of Arts in Cross Disciplinary Strategies, University of Applied Arts Vienna</li>
-            <li><strong>2023–2026</strong>: MA in Digital Humanities, University of Vienna</li>
-            <li><strong>2018–2022</strong>: BA in Sociology, Politics and Economics, Zeppelin University</li>
-        </ul>
+    <div class="section">
+        <h2>Projects</h2>
+        <p>
+            → <a href="caliban.html">Caliban’s Daughters</a><br>
+            → <a href="entropy_hope.html">(Mad) Hope</a><br>
+            → <a href="algae.html">How Algae Can Change the World</a><br>
+            → <a href="mapping_commons.html">Mapping Commons</a><br>
+            → <a href="ode_to_our_mother.html">Ode to Our Mother</a>
+        </p>
+    </div>
 
-        <h3>Work, Internship & Volunteer Experience</h3>
-        <ul>
-            <li><strong>2025</strong>: Researcher, infrared.city – Urban Resilience, Climate Simulation, Business Development</li>
-            <li><strong>2024–2025</strong>: Research Intern, infrared.city – Climate Research & Business Development</li>
-            <!-- <li><strong>2023–2024</strong>: Austrian Gallery Belvedere – Customer Management & Booking</li> -->
-            <li><strong>2022–2023</strong>: Petar Petrov – Archive and Logistics Coordinator (Internship)</li>
-            <li><strong>2021</strong>: Kunstverein München – Exhibition Planning & Artist Correspondence (Internship)</li>
-            <li><strong>2021</strong>: Kunstverein Harburger Bahnhof Hamburg – Administration & Archive Work (Internship)</li>
-            <li><strong>2020–2021</strong>: Artsprogram, Zeppelin University – Curatorial Assistant</li>
-        </ul>
+    <div class="section muted">
+        <p>
+            Vienna / Berlin<br>
+            Contact via GitHub Pages
+        </p>
+    </div>
 
-        <h3>Scholarships</h3>
-        <ul>
-            <li><strong>2020–2022</strong>: Deutschlandstipendium – Federal Ministry of Education and Research</li>
-        </ul>
-
-        <h3>Publications</h3>
-        <ul>
-            <li><strong>2025</strong>: Hamann, S., Chronis, A., Taut, O., Galanos, T. <br>
-            <em>Advanced Weather Data Morphing for Future Climate-Based Building Simulation. A Modular Python Tool Utilizing Enhanced Morphing Algorithms for .epw File Generation.
-                
-            </em> Proceedings of the ANNSIM'25, Madrid, Spain.
-            </li>
-        </ul>
-
-        <h3>Extracurricular and Volunteering</h3>
-        <ul>
-            <li><strong>2023</strong>: Fashion Capsule Collection – Design & Construction</li>
-            <li><strong>2019–2021</strong>: Das LAUT Kollektiv – Founder & Chairwoman</li>
-        </ul>
-
-        <h3>Digital and Soft Skills</h3>
-        <ul>
-            <li><strong>Human Languages:</strong> German (Native), English (C1)</li>
-            <li><strong>Computer Languages:</strong> R, Python, HTML, JavaScript</li>
-            <li><strong>Interests:</strong> Sewing & Fashion Design, Cycling, Creative Coding</li>
-        </ul>
-</div>
 </body>
 </html>
