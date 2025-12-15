@@ -6,113 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        :root {
-            --primary-color: #8A2BE2;
-            --primary-light: #E6E6FA;
-            --primary-dark: #4B0082;
-            --white: #FFFFFF;
-            --text-dark: #333333;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            background-color: var(--primary-light);
-            color: var(--text-dark);
-            min-height: 100vh;
-            padding: 30px 20px;
+            background: white;
+            color: #e10600;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                         "Liberation Mono", "Courier New", monospace;
+            font-size: 15px;
+            line-height: 1.7;
+            margin: 40px;
+            max-width: 900px;
         }
 
-        .page-container {
-            max-width: 900px;
-            margin: 0 auto;
+        a {
+            color: #e10600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
 
         h1 {
-            color: var(--primary-dark);
-            font-size: 2rem;
+            font-size: 22px;
+            font-weight: normal;
             margin-bottom: 25px;
-            text-align: center;
         }
 
-        .poem-card {
-            background-color: var(--white);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-            line-height: 1.9;
-            font-size: 1.05rem;
-            text-align: center;
+        .back {
+            margin-bottom: 40px;
+            display: inline-block;
         }
 
-        .poem-card p {
+        .content {
+            max-width: 700px;
+        }
+
+        .content p {
             margin-bottom: 20px;
         }
 
-        .poem-card em {
-            color: var(--primary-dark);
-            font-style: italic;
-            font-weight: 500;
-        }
-
-        .back-button {
-            display: inline-block;
-            margin-bottom: 25px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 10px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        .back-button:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.6rem;
-            }
-
-            .poem-card {
-                padding: 25px;
-                font-size: 1rem;
-            }
+        footer {
+            margin-top: 80px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-<div class="page-container">
+<a href="../index.html" class="back">← back</a>
 
-    <a href="../index.html" class="back-button">← Back to Portfolio</a>
+<h1>Ode to Our Mother</h1>
 
-    <h1>Ode to Our Mother</h1>
+<div class="content">
+    <p>
+        We write to the ground beneath us,<br>
+        to the water remembering our names,<br>
+        to the air carrying our excess.
+    </p>
 
-    <div class="poem-card">
-        <p>
-            We write to the ground beneath us,<br>
-            to the water remembering our names,<br>
-            to the air carrying our excess.
-        </p>
+    <p>
+        This project is a poetic reflection on care,<br>
+        extraction, and interdependence.
+    </p>
 
-        <p>
-            This project is a poetic reflection on care,<br>
-            extraction, and interdependence.
-        </p>
-
-        <p><em>In devotion.</em></p>
-    </div>
-
+    <p><em>In devotion.</em></p>
 </div>
+
+<footer>
+    Sophie Hamann
+</footer>
 
 </body>
 </html>
