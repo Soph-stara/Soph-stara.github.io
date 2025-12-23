@@ -14,7 +14,6 @@
             font-size: 15px;
             line-height: 1.6;
             margin: 40px;
-            max-width: 900px;
         }
 
         a {
@@ -33,12 +32,8 @@
         }
 
         .back {
-            margin-bottom: 40px;
             display: inline-block;
-        }
-
-        .content {
-            max-width: 700px;
+            margin-bottom: 40px;
         }
 
         footer {
@@ -46,11 +41,12 @@
             font-size: 14px;
         }
 
+        /* BUTTON */
         .button {
             display: inline-block;
             padding: 10px 18px;
             border: 1px solid #e10600;
-            margin: 30px 0;
+            margin: 20px 0 40px 0;
         }
 
         .button:hover {
@@ -58,17 +54,47 @@
             color: white;
         }
 
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
+        /* LAYOUT (same as algae page) */
+        .layout {
+            display: flex;
+            gap: 60px;
+            width: 100%;
+            align-items: flex-start;
         }
 
-        .image-grid img {
+        /* LEFT COLUMN — TEXT */
+        .text {
+            flex: 1;
+            max-width: 520px;
+        }
+
+        /* RIGHT COLUMN — IMAGES */
+        .images {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .images img {
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .text {
+                max-width: 100%;
+            }
+
+            .images {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -78,46 +104,68 @@
 <h1>Mapping Commons</h1>
 <a href="index.html" class="back">← Back</a>
 
-<div class="content">
+<div class="layout">
 
-    <a href="mapping_commons_map.html" class="button">
-        Open Interactive Map →
-    </a>
+    <!-- LEFT: TEXT -->
+    <div class="text">
 
-    <div class="image-grid">
+        <a href="mapping_commons_map.html" class="button">
+            Open Interactive Map →
+        </a>
+
+        <p>
+            <em>Mapping Commons</em> is an artistic research project that investigates
+            stickers as indicators of places of commons and practices of commoning
+            in urban space. The project is inspired by Silvia Federici’s feminist
+            framework of the commons, which understands commoning as a relational,
+            collective, and ongoing practice.
+        </p>
+
+        <p>
+            For this work, I photographed and catalogued over 100 stickers found on
+            street signs and traffic lights in the area surrounding my apartment.
+            Each sticker was documented with attention to its origin, iconography,
+            political message, and spatial context.
+        </p>
+
+        <p>
+            From this material, I created a structured dataset and programmed an
+            interactive map visualizing the geographic distribution and connections
+            between sticker-based commoning practices. The resulting visualization
+            revealed a networked, <em>mycelial</em> structure of commoning across urban
+            space, highlighting informal, cross-regional practices of cooperation
+            and community.
+        </p>
+
+        <p>
+            Methodologically, the project combines ethnographic observation, digital
+            mapping, and artistic research to make visible forms of collective
+            infrastructure that often remain unnoticed in everyday life. Stickers
+            function here as both medium and marker: ephemeral, informal, and
+            collectively produced traces of shared political and social imaginaries.
+        </p>
+
+        <p>
+            The project can be read as an analysis of sticker culture as a medium
+            through which places of commons emerge and persist, understood in light
+            of Federici’s concept of commoning as an active, relational process rather
+            than a fixed resource.
+        </p>
+
+    </div>
+
+    <!-- RIGHT: IMAGES (same logic as algae page) -->
+    <div class="images">
         <img src="images/map1.png" alt="Sticker documentation and mapping process">
         <img src="images/map2.JPG" alt="Sticker locations and urban context">
         <img src="images/map3.JPG" alt="Networked commoning practices visualization">
     </div>
 
-    <p>
-        <em>Mapping Commons</em> is an artistic research project that investigates
-        stickers as indicators of places of commons and practices of commoning
-        in urban space. The project is inspired by Silvia Federici’s feminist
-        framework of the commons.
-    </p>
-
-    <p>
-        For this work, I photographed and catalogued over 100 stickers found on
-        street signs and traffic lights in the area surrounding my apartment.
-        Each sticker was documented with attention to its origin, iconography,
-        political message, and spatial context.
-    </p>
-
-    <p>
-        From this material, I created a structured dataset and programmed an
-        interactive map visualizing the geographic distribution and connections
-        between sticker-based commoning practices.
-    </p>
-
-    <p>
-        Methodologically, the project combines ethnographic observation, digital
-        mapping, and artistic research to make visible forms of collective
-        infrastructure that often remain unnoticed in everyday life.
-    </p>
-
 </div>
 
+<footer>
+    Sophie Hamann
+</footer>
 
 </body>
 </html>
