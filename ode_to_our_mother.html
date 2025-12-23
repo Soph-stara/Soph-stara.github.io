@@ -14,7 +14,6 @@
             font-size: 15px;
             line-height: 1.7;
             margin: 40px;
-            max-width: 900px;
         }
 
         a {
@@ -33,69 +32,120 @@
         }
 
         .back {
-            margin-bottom: 40px;
             display: inline-block;
-        }
-
-        .content {
-            max-width: 700px;
-        }
-
-        .content p {
-            margin-bottom: 22px;
+            margin-bottom: 40px;
         }
 
         footer {
             margin-top: 80px;
             font-size: 14px;
         }
+
+        /* FULL-WIDTH LAYOUT */
+        .layout {
+            display: flex;
+            gap: 60px;
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        /* LEFT COLUMN — TEXT */
+        .text {
+            flex: 1;
+            max-width: 520px;
+        }
+
+        .text p {
+            margin-bottom: 22px;
+        }
+
+        /* RIGHT COLUMN — IMAGES */
+        .images {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .images img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .text {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
 
+<h1>Ode to Our Mother</h1>
 <a href="index.html" class="back">← back</a>
 
-<h1>Ode to Our Mother</h1>
+<div class="layout">
 
-<div class="content">
+    <!-- LEFT: TEXT -->
+    <div class="text">
 
-    <p>
-        We write to the ground beneath us,<br>
-        to the water remembering our names,<br>
-        to the air carrying our excess.
-    </p>
+        <p>
+            We write to the ground beneath us,<br>
+            to the water remembering our names,<br>
+            to the air carrying our excess.
+        </p>
 
-    <p>
-        This project is a poetic reflection on care,<br>
-        extraction, and interdependence.
-    </p>
+        <p>
+            This project is a poetic reflection on care,<br>
+            extraction, and interdependence.
+        </p>
 
-    <p>
-        <em>Ode to Our Mother</em> is an artistic research project that seeks to evoke
-        reverence for nature by foregrounding human dependence on natural
-        ecosystems. It draws connections between poetic insight and visual
-        representation, inviting a contemplative engagement with ecological
-        relations.
-    </p>
+        <p>
+            <em>Ode to Our Mother</em> is an artistic research project that seeks to evoke
+            reverence for nature by foregrounding human dependence on natural
+            ecosystems. It draws connections between poetic language and visual
+            representation, inviting a contemplative engagement with ecological
+            relations.
+        </p>
 
-    <p>
-        The research was conducted through the combination of poetry and nature
-        photography, creating a visual–literary dialogue that guides viewers
-        through the poems while preserving space for personal interpretation.
-        Rather than illustrating the text directly, the images operate alongside
-        the poems as parallel modes of sensing and meaning-making.
-    </p>
+        <p>
+            The research was conducted through the combination of poetry and nature
+            photography, creating a visual–literary dialogue that guides viewers
+            through the poems while preserving space for personal interpretation.
+            Rather than illustrating the text directly, the images operate alongside
+            the poems as parallel modes of sensing and meaning-making.
+        </p>
 
-    <p>
-        Within this project, I developed a conceptual framework in which
-        photographs function as interpretative lenses. They render the poems
-        more approachable while encouraging reflection on ecological,
-        emotional, and relational themes. Together, text and image form an
-        invitation to slow down, attend, and respond with care.
-    </p>
+        <p>
+            Within this project, I developed a conceptual framework in which
+            photographs function as interpretative lenses. They render the poems
+            more approachable while encouraging reflection on ecological,
+            emotional, and relational themes.
+        </p>
+
+        <p><em>In devotion.</em></p>
+
+    </div>
+
+    <!-- RIGHT: IMAGES -->
+    <div class="images">
+        <img src="images/ode1.png" alt="Nature photograph from Ode to Our Mother">
+        <img src="images/ode2.png" alt="Poetic visual study from Ode to Our Mother">
+        <img src="images/ode3.png" alt="Ecological imagery from Ode to Our Mother">
+    </div>
 
 </div>
+
+<footer>
+    Sophie Hamann
+</footer>
 
 </body>
 </html>
