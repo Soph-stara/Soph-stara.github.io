@@ -20,6 +20,8 @@
         a {
             color: #e10600;
             text-decoration: none;
+            font-style: italic;
+            font-weight: bold;
         }
 
         a:hover {
@@ -35,10 +37,8 @@
         .back {
             margin-bottom: 40px;
             display: inline-block;
-        }
-
-        .content {
-            max-width: 700px;
+            font-style: normal;
+            font-weight: normal;
         }
 
         footer {
@@ -46,66 +46,92 @@
             font-size: 14px;
         }
 
-        .figure {
-            margin: 40px 0;
+        /* Layout */
+        .layout {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
         }
 
-        .figure img {
-            max-width: 100%;
+        .text {
+            flex: 2;
+            max-width: 420px;
+        }
+
+        .images {
+            flex: 1;
+        }
+
+        .images img {
+            width: 100%;
             height: auto;
             display: block;
+            margin-bottom: 20px;
+        }
+
+        /* Mobile fallback */
+        @media (max-width: 800px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .text,
+            .images {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
+
 <body>
 
 <h1>How Algae Can Change the World</h1>
 
-<a href="../index.html" class="back">← back</a>
+<a href="index.html" class="back">← back</a>
 
-<div class="content">
-    <p>
-        <em>How Algae Can Change the World</em> is a curatorial and research-based
-        exhibition project exploring algae as a material, ecological, and political
-        actor in planetary futures.
-    </p>
+<div class="layout">
 
-    <p>
-        Developed as part of a group exhibition at Zeppelin University, the project
-        contributed a curatorial perspective that translated complex material science
-        into an accessible visual and experiential format. The exhibition connected
-        research, design, and ecology to question dominant narratives of growth,
-        sustainability, and resource extraction.
-    </p>
+    <div class="text">
+        <p>
+            <em>How Algae Can Change the World</em> is a curatorial and research-based
+            exhibition project exploring algae as a material, ecological, and political
+            actor in planetary futures.
+        </p>
 
-    <p>
-        The project was realized in collaboration with
-        <a href="https://www.mujolab.com/" target="_blank" rel="noopener noreferrer">mujō</a>        
-        a Berlin-based interdisciplinary team of designers and engineers developing
-        biodegradable packaging materials from brown algae. Their research into
-        algae-based alternatives to synthetic packaging formed the material and
-        conceptual core of the exhibition.
-    </p>
+        <p>
+            Developed as part of a group exhibition at Zeppelin University, the project
+            contributed a curatorial perspective that translated complex material science
+            into an accessible visual and experiential format. The exhibition connected
+            research, design, and ecology to question dominant narratives of growth,
+            sustainability, and resource extraction.
+        </p>
 
-    <p>
-        We designed a laboratory-like exhibition environment that mirrored mujō’s
-        scientific and design-driven research practice. By foregrounding processes,
-        material samples, and experimental states, the exhibition made visible the
-        transformation of algae from living organism to industrial material.
-    </p>
+        <p>
+            The project was realized in collaboration with
+            <a href="https://www.mujolab.com/" target="_blank" rel="noopener noreferrer">mujō</a>,
+            a Berlin-based interdisciplinary team of designers and engineers developing
+            biodegradable packaging materials from brown algae. Their research into
+            algae-based alternatives to synthetic packaging formed the material and
+            conceptual core of the exhibition.
+        </p>
 
-    <p>
-        Positioned within broader discourses of biodesign, circular materials, and
-        climate-conscious innovation, the project framed algae not only as a solution
-        to ecological crisis, but as a lens through which alternative imaginaries of
-        production, care, and coexistence can be articulated.
-    </p>
+        <p>
+            We designed a laboratory-like exhibition environment that mirrored mujō’s
+            scientific and design-driven research practice. By foregrounding processes,
+            material samples, and experimental states, the exhibition made visible the
+            transformation of algae from living organism to industrial material.
+        </p>
 
-    <div class="figure">
-        <img src="images/algae1.png" alt="Exhibition visual: How Algae Can Change the World">
+        <p>
+            Positioned within broader discourses of biodesign, circular materials, and
+            climate-conscious innovation, the project framed algae not only as a solution
+            to ecological crisis, but as a lens through which alternative imaginaries of
+            production, care, and coexistence can be articulated.
+        </p>
     </div>
 
-    <div class="figure">
+    <div class="images">
+        <img src="images/algae1.png" alt="Exhibition visual: algae material processes">
         <img src="images/algae2.png" alt="Exhibition booklet and curatorial material">
     </div>
 
