@@ -14,7 +14,6 @@
             font-size: 15px;
             line-height: 1.6;
             margin: 40px;
-            max-width: 900px;
         }
 
         a {
@@ -35,8 +34,8 @@
         }
 
         .back {
-            margin-bottom: 40px;
             display: inline-block;
+            margin-bottom: 40px;
             font-style: normal;
             font-weight: normal;
         }
@@ -46,18 +45,21 @@
             font-size: 14px;
         }
 
-        /* Layout */
+        /* FULL-WIDTH LAYOUT */
         .layout {
             display: flex;
-            gap: 40px;
+            gap: 60px;
+            width: 100%;
             align-items: flex-start;
         }
 
+        /* LEFT COLUMN — TEXT */
         .text {
-            flex: 2;
-            max-width: 420px;
+            flex: 1;
+            max-width: 520px;
         }
 
+        /* RIGHT COLUMN — IMAGES */
         .images {
             flex: 1;
         }
@@ -66,11 +68,11 @@
             width: 100%;
             height: auto;
             display: block;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        /* Mobile fallback */
-        @media (max-width: 800px) {
+        /* MOBILE FALLBACK */
+        @media (max-width: 900px) {
             .layout {
                 flex-direction: column;
             }
@@ -91,6 +93,7 @@
 
 <div class="layout">
 
+    <!-- LEFT: TEXT -->
     <div class="text">
         <p>
             <em>How Algae Can Change the World</em> is a curatorial and research-based
@@ -101,14 +104,25 @@
         <p>
             Developed as part of a group exhibition at Zeppelin University, the project
             contributed a curatorial perspective that translated complex material science
-            into an accessible visual and experiential format.
+            into an accessible visual and experiential format. The exhibition connected
+            research, design, and ecology to question dominant narratives of growth,
+            sustainability, and resource extraction.
         </p>
 
         <p>
             The project was realized in collaboration with
             <a href="https://www.mujolab.com/" target="_blank" rel="noopener noreferrer">mujō</a>,
             a Berlin-based interdisciplinary team of designers and engineers developing
-            biodegradable packaging materials from brown algae.
+            biodegradable packaging materials from brown algae. Their research into
+            algae-based alternatives to synthetic packaging formed the material and
+            conceptual core of the exhibition.
+        </p>
+
+        <p>
+            We designed a laboratory-like exhibition environment that mirrored mujō’s
+            scientific and design-driven research practice. By foregrounding processes,
+            material samples, and experimental states, the exhibition made visible the
+            transformation of algae from living organism to industrial material.
         </p>
 
         <p>
@@ -119,9 +133,10 @@
         </p>
     </div>
 
+    <!-- RIGHT: IMAGES -->
     <div class="images">
-        <img src="images/algae2.png" alt="Exhibition booklet and curatorial material">
-        <img src="images/algae1.png" alt="Exhibition visual: algae material processes">
+        <img src="algae2.png" alt="Exhibition booklet and curatorial material">
+        <img src="algae1.png" alt="Exhibition visual: algae material processes">
     </div>
 
 </div>
