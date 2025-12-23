@@ -59,16 +59,18 @@
             max-width: 520px;
         }
 
-        /* RIGHT COLUMN — IMAGES */
+        /* RIGHT COLUMN — IMAGE GRID */
         .images {
             flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .images img {
             width: 100%;
             height: auto;
             display: block;
-            margin-bottom: 30px;
         }
 
         /* MOBILE FALLBACK */
@@ -77,9 +79,12 @@
                 flex-direction: column;
             }
 
-            .text,
-            .images {
+            .text {
                 max-width: 100%;
+            }
+
+            .images {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -133,10 +138,12 @@
         </p>
     </div>
 
-    <!-- RIGHT: IMAGES -->
+    <!-- RIGHT: IMAGES (2×2 GRID) -->
     <div class="images">
         <img src="images/algae2.png" alt="Exhibition booklet and curatorial material">
-        <img src="/images/algae1.png" alt="Exhibition visual: algae material processes">
+        <img src="images/algae1.png" alt="Exhibition visual: algae material processes">
+        <img src="images/algae3.jpg" alt="Exhibition installation detail">
+        <img src="images/algae4.jpg" alt="Exhibition material samples">
     </div>
 
 </div>
