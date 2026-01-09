@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric Net Simulation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // ===== CUSTOMIZATION SETTINGS =====
+        // Change these values to customize your fabric!
+        
+        let cols = 50;          // Number of columns (horizontal points)
+        let rows = 50;          // Number of rows (vertical points)
+        let spacing = 10;       // Distance between points (smaller = more dense)
+        
+        // Color settings (R, G, B, Alpha)
+        let lineColor = [255, 140, 0, 180];        // Bright orange fabric lines
+        let pointColor = [220, 20, 20];            // Red dots
+        let backgroundColor = [30, 40, 60];        // Canvas background
+        
+        // ==================================
+        
+        let points = [];
+        let gravity = 0.3;
+        let damping = 0.98;
+        let wave = 0;
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            
+            // Create grid of points
+            let offsetX = (width - (cols - 1) * spacing) / 2;
+            let offsetY = 100;
+            
+            for (let y = 0; y < rows; y++) {
+                points[y] = [];
+                for (let x = 0; x < cols; x++) {
+                    let fixed = (y === 0); // Fix top row
+                    points[y][x] = {
+                        x: offsetX + x * spacing,
+                        y: offsetY + y * spacing,
+                        prevX: offsetX + x * spacing,
+                        prevY: offsetY + y * spacing,
+                        fixed: fixed
+                    };
+                }
+            }
+        }
+
+        function draw() {
+            background(backgroundColor[0], backgroundColor[1], backgroundColor[2]);
+            
+            wave += 0.05;
+            
+            // Apply forces and update positions
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    let p = points[y][x];
+                    
+                    if (!p.fixed) {
+                        // Verlet integration
+                        let vx = (p.x - p.prevX) * damping;
+                        let vy = (p.y - p.prevY) * damping;
+                        
+                        p.prevX = p.x;
+                        p.prevY = p.y;
+                        
+                        // Add wave motion
+                        let waveForce = sin(wave + x * 0.3) * 0.5;
+                        
+                        p.x += vx + waveForce;
+                        p.y += vy + gravity;
+                        
+                        // Mouse interaction
+                        let dx = mouseX - p.x;
+                        let dy = mouseY - p.y;
+                        let dist = sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < 100) {
+                            let force = (100 - dist) / 100;
+                            p.x -= dx * force * 0.1;
+                            p.y -= dy * force * 0.1;
+                        }
+                    } else {
+                        // Animate fixed points slightly
+                        let originalX = (width - (cols - 1) * spacing) / 2 + x * spacing;
+                        p.x = originalX + sin(wave + x * 0.5) * 10;
+                    }
+                }
+            }
+            
+            // Constraint iterations for structural integrity
+            for (let i = 0; i < 3; i++) {
+                applyConstraints();
+            }
+            
+            // Draw the fabric
+            stroke(lineColor[0], lineColor[1], lineColor[2], lineColor[3]);
+            strokeWeight(1);
+            
+            // Draw horizontal lines
+            for (let y = 0; y < rows; y++) {
+                beginShape();
+                noFill();
+                for (let x = 0; x < cols; x++) {
+                    let p = points[y][x];
+                    vertex(p.x, p.y);
+                }
+                endShape();
+            }
+            
+            // Draw vertical lines
+            for (let x = 0; x < cols; x++) {
+                beginShape();
+                noFill();
+                for (let y = 0; y < rows; y++) {
+                    let p = points[y][x];
+                    vertex(p.x, p.y);
+                }
+                endShape();
+            }
+            
+            // Draw points
+            fill(pointColor[0], pointColor[1], pointColor[2]);
+            noStroke();
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    let p = points[y][x];
+                    let size = p.fixed ? 6 : 3;
+                    circle(p.x, p.y, size);
+                }
+            }
+        }
+
+        function applyConstraints() {
+            // Constrain distances between connected points
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    let p1 = points[y][x];
+                    
+                    // Right neighbor
+                    if (x < cols - 1) {
+                        let p2 = points[y][x + 1];
+                        constrainDistance(p1, p2, spacing);
+                    }
+                    
+                    // Bottom neighbor
+                    if (y < rows - 1) {
+                        let p2 = points[y + 1][x];
+                        constrainDistance(p1, p2, spacing);
+                    }
+                }
+            }
+        }
+
+        function constrainDistance(p1, p2, targetDist) {
+            let dx = p2.x - p1.x;
+            let dy = p2.y - p1.y;
+            let dist = sqrt(dx * dx + dy * dy);
+            
+            if (dist > 0) {
+                let diff = (targetDist - dist) / dist;
+                let offsetX = dx * diff * 0.5;
+                let offsetY = dy * diff * 0.5;
+                
+                if (!p1.fixed) {
+                    p1.x -= offsetX;
+                    p1.y -= offsetY;
+                }
+                
+                if (!p2.fixed) {
+                    p2.x += offsetX;
+                    p2.y += offsetY;
+                }
+            }
+        }
+
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+            
+            // Reposition grid
+            let offsetX = (width - (cols - 1) * spacing) / 2;
+            let offsetY = 100;
+            
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    points[y][x].x = offsetX + x * spacing;
+                    points[y][x].prevX = points[y][x].x;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
