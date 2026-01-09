@@ -168,63 +168,65 @@
 
         function draw() {
             background(255, 255, 255, 0);
-            wave += 0.03;
-            
+            wave += 0.04; // faster wave progression
+
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
                     let p = points[y][x];
-                    
+
                     if (!p.fixed) {
                         let vx = (p.x - p.prevX) * damping;
                         let vy = (p.y - p.prevY) * damping;
-                        
+
                         p.prevX = p.x;
                         p.prevY = p.y;
-                        
-                        let waveForce = sin(wave + x * 0.2 + y * 0.2) * 0.3;
-                        
-                        p.x += vx + waveForce;
-                        p.y += vy + gravity;
-                        
+
+                        // 🌊 Traveling wave (never settles)
+                        let waveForceX = sin(wave + y * 0.3) * 0.4;
+                        let waveForceY = cos(wave + x * 0.25) * 0.3;
+
+                        // 🌬 Perpetual wind noise
+                        let wind = sin(wave * 0.7 + x * 0.1) * 0.5;
+
+                        p.x += vx + waveForceX + wind;
+                        p.y += vy + gravity + waveForceY;
+
+                        // 🖱 Mouse interaction stays
                         let dx = mouseX - p.x;
                         let dy = mouseY - p.y;
                         let dist = sqrt(dx * dx + dy * dy);
-                        
+
                         if (dist < 120) {
                             let force = (120 - dist) / 120;
-                            p.x -= dx * force * 0.08;
-                            p.y -= dy * force * 0.08;
+                            p.x -= dx * force * 0.1;
+                            p.y -= dy * force * 0.1;
                         }
                     }
                 }
             }
-            
-            for (let i = 0; i < 5; i++) {
+
+            for (let i = 0; i < 6; i++) {
                 applyConstraints();
             }
-            
+
             stroke(lineColor[0], lineColor[1], lineColor[2], lineColor[3]);
             strokeWeight(0.8);
             noFill();
-            
+
             for (let y = 0; y < rows; y++) {
                 beginShape();
                 for (let x = 0; x < cols; x++) {
                     let p = points[y][x];
-                    if (x === 0) curveVertex(p.x, p.y);
                     curveVertex(p.x, p.y);
-                    if (x === cols - 1) curveVertex(p.x, p.y);
                 }
                 endShape();
             }
-            
+
             for (let x = 0; x < cols; x++) {
                 beginShape();
                 for (let y = 0; y < rows; y++) {
                     let p = points[y][x];
-                    if (y === 0) curveVertex(p.x, p.y);
                     curveVertex(p.x, p.y);
-                    if (y === rows - 1) curveVertex(p.x, p.y);
                 }
                 endShape();
             }
