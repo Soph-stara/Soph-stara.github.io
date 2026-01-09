@@ -59,6 +59,50 @@
 
 </head>
 
+<script>
+let threads = [];
+let cols = 30;
+let rows = 18;
+let spacing = 18;
+
+function setup() {
+    let canvas = createCanvas(520, 320);
+    canvas.parent("textile-sketch");
+    noFill();
+    stroke('#e10600');
+    strokeWeight(0.6);
+
+    for (let y = 0; y < rows; y++) {
+        let row = [];
+        for (let x = 0; x < cols; x++) {
+            row.push({
+                x: x * spacing,
+                y: y * spacing,
+                offset: random(TWO_PI),
+                speed: random(0.002, 0.01)
+            });
+        }
+        threads.push(row);
+    }
+}
+
+function draw() {
+    clear();
+    translate(20, 20);
+
+    for (let y = 0; y < threads.length; y++) {
+        beginShape();
+        for (let x = 0; x < threads[y].length; x++) {
+            let t = threads[y][x];
+            let wave = sin(frameCount * t.speed + t.offset) * 6;
+            curveVertex(t.x, t.y + wave);
+        }
+        endShape();
+    }
+}
+</script>
+
+
 <body>
 
     <h1>Sophie Hamann</h1>
