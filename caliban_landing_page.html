@@ -50,18 +50,21 @@
         }
 
         .image-container {
-            flex: 0 0 400px;
+            flex: 0 0 500px;
             position: sticky;
             top: 40px;
             display: grid;
             grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
             gap: 15px;
+            height: fit-content; /* This allows the container to grow with content */
         }
 
         .image-container img {
             width: 100%;
             height: auto;
             display: block;
+            object-fit: cover; /* This helps images fit properly */
         }
 
         .section {
