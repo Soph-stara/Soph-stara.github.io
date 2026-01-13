@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Caliban's Daughters</title>
+    <title>Sophie Hamann</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 
     <style>
         body {
             background-color: white;
+
             color: #e10600;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            margin: 40px;
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
         }
 
-        h1, h2 {
+        h1, h2, h3 {
             font-weight: normal;
             margin-bottom: 0.5em;
         }
@@ -28,6 +30,43 @@
             text-decoration: underline;
         }
 
+        /* Main container */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            gap: 60px;
+            align-items: flex-start;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            min-width: 400px;
+        }
+
+        /* Fabric visualization */
+        #fabric-container {
+            flex: 1;
+            position: sticky;
+            top: 300px; /* ← THIS moves it down on desktop */
+            height: 100px;
+        }
+
+        /* Navigation */
+
+        
+        .navigation {
+            margin-bottom: 60px;
+            white-space: nowrap;
+        }
+
+        .navigation a {
+            margin-right: 20px;
+            display: inline-block;
+        }
+
         .navigation {
             margin-bottom: 60px;
         }
@@ -36,31 +75,7 @@
             margin-right: 20px;
         }
 
-        /* Two column layout */
-        .container {
-            display: flex;
-            gap: 60px;
-            align-items: flex-start;
-            max-width: 1400px;
-        }
-
-        .content {
-            flex: 1;
-            min-width: 400px;
-        }
-
-        .image-container {
-            flex: 0 0 400px;
-            position: sticky;
-            top: 40px;
-        }
-
-        .image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
+        /* Sections */
         .section {
             max-width: 700px;
             margin-bottom: 60px;
@@ -70,85 +85,209 @@
             opacity: 0.7;
         }
 
-        .button {
-            display: inline-block;
-            padding: 10px 18px;
-            border: 1px solid #e10600;
-            margin-top: 20px;
-        }
-
-        .button:hover {
-            background-color: #e10600;
-            color: white;
-        }
-
-        /* Responsive: stack on smaller screens */
         @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
             }
             
-            .image-container {
-                position: relative;
-                flex: 1;
-                width: 100%;
-                max-width: 500px;
-            }
+            #fabric-container {
+        position: relative;
+        margin-top: 120px;
+        width: 100%;
+        height: 400px;
+    }
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 </head>
 
 <body>
-
-    <h1>Caliban's Daughters</h1>
-
-    <div class="navigation">
-        <a href="index.html">← Back</a><br>
-
-        <a href="caliban.html" class="button">
-            Play Caliban's Daughters →
-        </a>
-    </div>
-
     <div class="container">
+        <!-- Main content -->
         <div class="content">
+            <h1>Sophie Hamann</h1>
+
+            <div class="navigation">
+                <a href="cv.html">CV</a>
+                <a href="caliban_landing_page.html">Caliban's Daughters</a>
+                <a href="entropy_hope_landing.html">(Mad) Hope</a>
+                <a href="algae.html">How Algae Can Change the World</a>
+                <a href="mapping_commons.html">Mapping Commons</a>
+                <a href="ode_to_our_mother.html">Ode to Our Mother</a>
+            </div>
+
+            <div class="section">
+                <p class="muted">
+                    I am an interdisciplinary researcher and artist working across computation, feminist theory, and artistic research. My practice investigates how hidden systems can be made perceptible through sensory, computational, and narrative methods. Moving between digital humanities, climate research, and artistic experimentation, I use tools such as data analysis, mapping, sonification, and interactive systems to translate complex structures into experiential forms. I am particularly interested in glitches, commons, and moments of instability as sites for knowledge production, care, and collective imagination.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>Projects</h2>
+                <p>
+                    → <a href="caliban_landing_page.html">Caliban's Daughters</a><br>             
+                    → <a href="entropy_hope_landing.html">(Mad) Hope</a><br>             
+                    → <a href="algae.html">How Algae Can Change the World</a><br>
+                    → <a href="mapping_commons.html">Mapping Commons</a><br>
+                    → <a href="ode_to_our_mother.html">Ode to Our Mother</a>
+                </p>
+            </div>
+
             <div class="section muted">
                 <p>
-                    <em>Caliban's Daughters</em> is an interactive narrative game that explores feminist history,
-                    survival, and resistance during the European witch hunts (15th–17th centuries).
-                    The project draws on Silvia Federici's analysis of witch hunts as a mechanism of primitive
-                    accumulation and patriarchal discipline.
-                </p>
-            </div>
-
-            <div class="section">
-                <h2>About the Game</h2>
-                <p>
-                    Players inhabit the role of a woman whose knowledge, labor, or dissent places her under suspicion.
-                    Through tarot-inspired scenarios, the game exposes how everyday choices were entangled with
-                    structures of surveillance, fear, and collective punishment.
-                </p>
-                <p>
-                    The game foregrounds the tension between individual survival and collective care, asking
-                    how resistance might persist under conditions of extreme control.
-                </p>
-            </div>
-
-            <div class="section">
-                <h2>Gameplay Structure</h2>
-                <p>
-                    → Character selection based on historical roles<br>
-                    → Decision-making through narrative tarot cards<br>
-                    → Suspicion and alliance mechanics<br>
-                    → Transition into a historically grounded witch trial (Level 2)
+                    Living and working in Vienna<br>
+                    <a href="mailto:sophiehamann.maxi@gmail.com">sophiehamann.maxi@gmail.com</a>
                 </p>
             </div>
         </div>
 
-        <div class="image-container">
-            <img src="images/empress.jpg" alt="Empress tarot card">
-        </div>
+        <!-- Fabric simulation -->
+        <div id="fabric-container"></div>
     </div>
 
+    <script>
+        // Fabric simulation
+        let cols = 40;
+        let rows = 40;
+        let spacing = 15;
+        
+        let lineColor = [225, 6, 0, 100];
+        let points = [];
+        let gravity = 0.2;
+        let damping = 0.98;
+        let wave = 0;
+
+        function setup() {
+            let canvas = createCanvas(600, 600);
+            canvas.parent('fabric-container');
+            
+            let offsetX = (600 - (cols - 1) * spacing) / 2;
+            let offsetY = (600 - (rows - 1) * spacing) / 2;
+            
+            for (let y = 0; y < rows; y++) {
+                points[y] = [];
+                for (let x = 0; x < cols; x++) {
+                    let fixed = (y === 0 || y === rows - 1 || x === 0 || x === cols - 1);
+                    points[y][x] = {
+                        x: offsetX + x * spacing,
+                        y: offsetY + y * spacing,
+                        prevX: offsetX + x * spacing,
+                        prevY: offsetY + y * spacing,
+                        fixed: fixed
+                    };
+                }
+            }
+        }
+
+        function draw() {
+            background(255, 255, 255, 30);
+            wave += 0.04; // faster wave progression
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    let p = points[y][x];
+
+                    if (!p.fixed) {
+                        let vx = (p.x - p.prevX) * damping;
+                        let vy = (p.y - p.prevY) * damping;
+
+                        p.prevX = p.x;
+                        p.prevY = p.y;
+
+                        // 🌊 Traveling wave (never settles)
+                        let waveForceX = sin(wave + y * 0.3) * 0.4;
+                        let waveForceY = cos(wave + x * 0.25) * 0.3;
+
+                        // 🌬 Perpetual wind noise
+                        let wind = sin(wave * 0.7 + x * 0.1) * 0.5;
+
+                        p.x += vx + waveForceX + wind;
+                        p.y += vy + gravity + waveForceY;
+
+                        // 🖱 Mouse interaction stays
+                        let dx = mouseX - p.x;
+                        let dy = mouseY - p.y;
+                        let dist = sqrt(dx * dx + dy * dy);
+
+                        if (dist < 120) {
+                            let force = (120 - dist) / 120;
+                            p.x -= dx * force * 0.1;
+                            p.y -= dy * force * 0.1;
+                        }
+                    }
+                }
+            }
+
+            for (let i = 0; i < 6; i++) {
+                applyConstraints();
+            }
+
+            stroke(lineColor[0], lineColor[1], lineColor[2], lineColor[3]);
+            strokeWeight(0.8);
+            noFill();
+
+            for (let y = 0; y < rows; y++) {
+                beginShape();
+                for (let x = 0; x < cols; x++) {
+                    let p = points[y][x];
+                    curveVertex(p.x, p.y);
+                }
+                endShape();
+            }
+
+            for (let x = 0; x < cols; x++) {
+                beginShape();
+                for (let y = 0; y < rows; y++) {
+                    let p = points[y][x];
+                    curveVertex(p.x, p.y);
+                }
+                endShape();
+            }
+        }
+
+        function applyConstraints() {
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    let p1 = points[y][x];
+                    
+                    if (x < cols - 1) {
+                        let p2 = points[y][x + 1];
+                        constrainDistance(p1, p2, spacing);
+                    }
+                    
+                    if (y < rows - 1) {
+                        let p2 = points[y + 1][x];
+                        constrainDistance(p1, p2, spacing);
+                    }
+                }
+            }
+        }
+
+        function constrainDistance(p1, p2, targetDist) {
+            let dx = p2.x - p1.x;
+            let dy = p2.y - p1.y;
+            let dist = sqrt(dx * dx + dy * dy);
+            
+            if (dist > 0) {
+                let diff = (targetDist - dist) / dist;
+                let offsetX = dx * diff * 0.5;
+                let offsetY = dy * diff * 0.5;
+                
+                if (!p1.fixed) {
+                    p1.x -= offsetX;
+                    p1.y -= offsetY;
+                }
+                
+                if (!p2.fixed) {
+                    p2.x += offsetX;
+                    p2.y += offsetY;
+                }
+            }
+        }
+
+        function windowResized() {
+            // Canvas stays fixed size, no resize needed
+        }
+    </script>
 </body>
 </html>
