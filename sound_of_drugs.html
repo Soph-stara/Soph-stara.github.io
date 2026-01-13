@@ -14,7 +14,7 @@
             line-height: 1.6;
         }
 
-        h1, h2 {
+        h1, h2, h4 {
             font-weight: normal;
             margin-bottom: 0.5em;
         }
@@ -32,13 +32,37 @@
             margin-bottom: 60px;
         }
 
-        .section {
+        /* TWO-COLUMN LAYOUT */
+        .container {
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+            max-width: 1200px;
+        }
+
+        .content {
+            flex: 1;
             max-width: 700px;
+        }
+
+        .audio-column {
+            flex: 1;
+            max-width: 400px;
+            position: sticky;
+            top: 40px;
+        }
+
+        .section {
             margin-bottom: 60px;
         }
 
-        .muted {
-            opacity: 0.7;
+        .track {
+            margin-bottom: 40px;
+        }
+
+        iframe {
+            margin-top: 10px;
+            border-radius: 2px;
         }
 
         .button {
@@ -52,147 +76,137 @@
             background-color: #e10600;
             color: white;
         }
+
+        /* MOBILE */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .audio-column {
+                position: relative;
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <h1>Sound of Drugs</h1>
+<h1>Sound of Drugs</h1>
 
-    <div class="navigation">
-        <a href="index.html">← Back</a>
+<div class="navigation">
+    <a href="index.html">← Back</a>
+</div>
+
+<div class="container">
+
+    <!-- LEFT COLUMN: TEXT -->
+    <div class="content">
+
+        <div class="section">
+            <p>
+                <em>Sound of Drugs</em> is an artistic research project that explores how
+                biochemical properties can be translated into sound. Rather than attempting
+                to reproduce or simulate drug-induced states, the project investigates data
+                sonification as a method for interpreting altered states through structured,
+                analogue mappings.
+            </p>
+            <p>
+                A custom dataset was developed covering eight psychoactive substances,
+                incorporating chemical, physiological, and experiential variables. These
+                data profiles inform a data-to-sound translation system in which drug
+                characteristics are mapped to sonic parameters.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Sound Production & Method</h2>
+            <p>
+                The sound compositions were generated using
+                <a href="https://sonic-pi.net/" target="_blank">Sonic Pi</a>, a live-coding
+                environment based on the Ruby programming language. For each substance,
+                generative sound pieces were algorithmically produced based on its specific
+                data profile, treating sound as an analytical and expressive medium rather
+                than a vehicle for sensory imitation.
+            </p>
+        </div>
+
+        <div class="section">
+            <p>
+                The generated sound compositions can also be found on my SoundCloud:
+            </p>
+            <a href="https://soundcloud.com/sophie-hamann-381661734/tracks"
+               target="_blank"
+               class="button">
+                Listen on SoundCloud →
+            </a>
+        </div>
+
     </div>
 
-    <div class="section">
-        <p>
-            Sound of Drugs is an artistic research project that explores how biochemical
-            properties can be translated into sound. Rather than attempting to reproduce
-            or simulate drug-induced states, the project investigates data sonification
-            as a method for interpreting altered states through structured, analogue
-            mappings.
-        <p>   
-            A custom dataset was developed covering eight psychoactive substances,
-            incorporating chemical, physiological, and experiential variables. These
-            data profiles inform a data-to-sound translation system in which drug
-            characteristics are mapped to sonic parameters.
-        </p>
+    <!-- RIGHT COLUMN: AUDIO -->
+    <div class="audio-column">
+
+        <div class="track">
+            <h4>Methamphetamine</h4>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/935110855&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
+            </iframe>
+        </div>
+
+        <div class="track">
+            <h4>Ethanol</h4>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/935105578&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
+            </iframe>
+        </div>
+
+        <div class="track">
+            <h4>Nicotine</h4>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/935045782&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
+            </iframe>
+        </div>
+
+        <div class="track">
+            <h4>Caffeine</h4>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/934535920&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
+            </iframe>
+        </div>
+
+        <div class="track">
+            <h4>MDMA</h4>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/934526440&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
+            </iframe>
+        </div>
+
+        <div class="track">
+            <h4>Cocaine</h4>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/933105394&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
+            </iframe>
+        </div>
+
+        <div class="track">
+            <h4>LSD</h4>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/933077041&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
+            </iframe>
+        </div>
+
+        <div class="track">
+            <h4>DMT</h4>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/927342925&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
+            </iframe>
+        </div>
+
     </div>
 
-    <div class="section">
-        <h2>Sound Production & Method</h2>
-        <p>
-            The sound compositions were generated using
-            <a href="https://sonic-pi.net/" target="_blank">Sonic Pi</a>, a live-coding
-            environment based on the Ruby programming language. For each substance,
-            generative sound pieces were algorithmically produced based on its specific
-            data profile, treating sound as an analytical and expressive medium rather
-            than a vehicle for sensory imitation.
-        </p>
-    </div>
-    
-
-    <div class="section">
-        <h2>Listen</h2>
-        <h4>Methamphetamine</h4>
-        <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/935110855&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
-        </iframe>
-
-        <div class="section">
-        <h4>Ethanol</h4>
-        <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/935105578&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
-        </iframe>
-
-        <div class="section">
-        <h4>Nicotine</h4>
-        <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/935045782&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
-        </iframe>
-
-        <div class="section">
-        <h4>Caffeine</h4>
-        <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/934535920&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
-        </iframe>
-
-        <div class="section">
-        <h4>MDMA</h4>
-        <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/934526440&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
-        </iframe>
-
-        <div class="section">
-        <h4>Cocaine</h4>
-        <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/933105394&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
-        </iframe>
-
-        <div class="section">
-        <h4>LSD</h4>
-        <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/933077041&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
-        </iframe>
-
-        <div class="section">
-        <h4>DMT</h4>
-        <iframe
-            width="100%"
-            height="166"
-            scrolling="no"
-            frameborder="no"
-            allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/927342925&color=%23e10600&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false">
-        </iframe>
-    </div>
-
-
-        
-    </div>
-    <div class="section">
-        <p>
-            The generated sound compositions can also be found on my SoundCloud:
-        </p>
-
-        <a href="https://soundcloud.com/sophie-hamann-381661734/tracks" target="_blank" class="button">
-            Listen on SoundCloud →
-        </a>
-    </div>
+</div>
 
 </body>
 </html>
