@@ -2,23 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sophie Hamann</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 
     <style>
-        body {
-            background-color: white;
-
-            color: #e10600;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        html, body {
             margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            height: 100%;
+            overflow: hidden;
         }
 
-        h1, h2, h3 {
-            font-weight: normal;
-            margin-bottom: 0.5em;
+        body {
+            background-color: white;
+            color: #e10600;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            line-height: 1.6;
         }
 
         a {
@@ -30,130 +29,121 @@
             text-decoration: underline;
         }
 
-        /* Main container */
-        .container {
-            display: flex;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px;
-            gap: 60px;
-            align-items: flex-start;
-        }
-
-        /* Content */
-        .content {
-            flex: 1;
-            min-width: 400px;
-        }
-
-        /* Fabric visualization */
+        /* Fabric fills the whole screen */
         #fabric-container {
-            flex: 1;
-            position: sticky;
-            top: 300px; /* ← THIS moves it down on desktop */
-            height: 600px;
+            position: fixed;
+            inset: 0;
+            z-index: 0;
         }
 
-        /* Navigation */
-
-        
-        .navigation {
-            margin-bottom: 60px;
-            white-space: nowrap;
+        /* Text floats on top of the fabric */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+            pointer-events: none;
         }
 
-        .navigation a {
-            margin-right: 20px;
-            display: inline-block;
+        .overlay a {
+            pointer-events: auto;
         }
 
-        .navigation {
-            margin-bottom: 60px;
+        h1 {
+            font-weight: normal;
+            font-size: clamp(42px, 9vw, 140px);
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            margin: 0;
         }
 
-        .navigation a {
-            margin-right: 20px;
-        }
-
-        /* Sections */
-        .section {
-            max-width: 700px;
-            margin-bottom: 60px;
-        }
-
-        .muted {
+        .tagline {
+            max-width: 420px;
+            margin-top: 20px;
             opacity: 0.7;
         }
 
-        @media (max-width: 1024px) {
-            .container {
-                flex-direction: column;
+        .navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            font-size: clamp(20px, 3vw, 36px);
+        }
+
+        .navigation a {
+            background: white;
+            padding: 0 6px;
+            margin-left: -6px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer span,
+        .footer a {
+            background: white;
+            opacity: 0.7;
+        }
+
+        .hint {
+            position: fixed;
+            right: 40px;
+            bottom: 40px;
+            z-index: 1;
+            font-size: 12px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .overlay {
+                padding: 20px;
             }
-            
-            #fabric-container {
-                position: relative;
-                margin-top: 120px;
-                width: 100%;
-                height: 600px;
+
+            .hint {
+                display: none;
             }
         }
- /*xxx*/
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Main content -->
-        <div class="content">
-            <h1>Sophie Hamann</h1>
+    <div id="fabric-container"></div>
 
-            <div class="navigation">
-                <a href="cv.html">CV</a>
-                <a href="caliban_landing_page.html">Caliban's Daughters</a>
-                <a href="sound_of_drugs.html">Sound of Drugs</a>
-                <a href="refusal_to_resign.html">The Refusal to Resign</a>
-                <a href="algae.html">How Algae Can Change the World</a>
-                <a href="mapping_commons.html">Mapping Commons</a>
-                <a href="ode_to_our_mother.html">Ode to Our Mother</a>
-            </div>
-
-            <div class="section">
-                <p class="muted">
-                    I am an interdisciplinary researcher and artist working across computation, feminist theory, and artistic research. My practice investigates how hidden systems can be made perceptible through sensory, computational, and narrative methods. Moving between digital humanities, climate research, and artistic experimentation, I use tools such as data analysis, mapping, sonification, and interactive systems to translate complex structures into experiential forms. I am particularly interested in glitches, commons, and moments of instability as sites for knowledge production, care, and collective imagination.
-                </p>
-            </div>
-
-            <div class="section">
-                <h2>Projects</h2>
-                <p>
-                     <a href="caliban_landing_page.html">Caliban's Daughters</a><br> 
-                     <a href="sound_of_drugs.html">Sound of Drugs</a><br>           
-                     <a href="refusal_to_resign.html">The Refusal to Resign</a><br>             
-                     <a href="algae.html">How Algae Can Change the World</a><br>
-                     <a href="mapping_commons.html">Mapping Commons</a><br>
-                     <a href="ode_to_our_mother.html">Ode to Our Mother</a>
-                </p>
-            </div>
-
-            <div class="section muted">
-                <p>
-                    Living and working in Vienna<br>
-                    <a href="mailto:sophiehamann.maxi@gmail.com">sophiehamann.maxi@gmail.com</a>
-                </p>
-            </div>
+    <div class="overlay">
+        <div>
+            <h1>Sophie<br>Hamann</h1>
+            <p class="tagline">
+                researcher &amp; artist working across computation,
+                feminist theory and artistic research
+            </p>
         </div>
 
-        <!-- Fabric simulation -->
-        <div id="fabric-container"></div>
+        <div>
+            <div class="navigation">
+                <a href="portfolio.html">→ portfolio</a>
+                <a href="cv.html">→ cv</a>
+            </div>
+            <div class="footer">
+                <span>Living and working in Vienna</span><br>
+                <a href="mailto:sophiehamann.maxi@gmail.com">sophiehamann.maxi@gmail.com</a>
+            </div>
+        </div>
     </div>
 
+    <div class="hint">move / click the fabric</div>
+
     <script>
-        // Fabric simulation
-        let cols = 40;
-        let rows = 40;
-        let spacing = 15;
-        
+        // Fabric simulation, stretched across the whole viewport
+        let spacing = 22;
+        let cols, rows;
+
         let lineColor = [225, 6, 0, 100];
         let points = [];
         let gravity = 0.2;
@@ -161,12 +151,20 @@
         let wave = 0;
 
         function setup() {
-            let canvas = createCanvas(600, 600);
+            let canvas = createCanvas(windowWidth, windowHeight);
             canvas.parent('fabric-container');
-            
-            let offsetX = (600 - (cols - 1) * spacing) / 2;
-            let offsetY = (600 - (rows - 1) * spacing) / 2;
-            
+            buildFabric();
+        }
+
+        function buildFabric() {
+            spacing = width < 600 ? 18 : 22;
+            cols = ceil(width / spacing) + 3;
+            rows = ceil(height / spacing) + 3;
+
+            let offsetX = (width - (cols - 1) * spacing) / 2;
+            let offsetY = (height - (rows - 1) * spacing) / 2;
+
+            points = [];
             for (let y = 0; y < rows; y++) {
                 points[y] = [];
                 for (let x = 0; x < cols; x++) {
@@ -184,7 +182,7 @@
 
         function draw() {
             background(255, 255, 255, 30);
-            wave += 0.04; // faster wave progression
+            wave += 0.04;
 
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
@@ -197,17 +195,17 @@
                         p.prevX = p.x;
                         p.prevY = p.y;
 
-                        // 🌊 Traveling wave (never settles)
+                        // Traveling wave (never settles)
                         let waveForceX = sin(wave + y * 0.3) * 0.4;
                         let waveForceY = cos(wave + x * 0.25) * 0.3;
 
-                        // 🌬 Perpetual wind noise
+                        // Perpetual wind noise
                         let wind = sin(wave * 0.7 + x * 0.1) * 0.5;
 
                         p.x += vx + waveForceX + wind;
                         p.y += vy + gravity + waveForceY;
 
-                        // 🖱 Mouse interaction stays
+                        // Mouse pushes the fabric away
                         let dx = mouseX - p.x;
                         let dy = mouseY - p.y;
                         let dist = sqrt(dx * dx + dy * dy);
@@ -232,8 +230,7 @@
             for (let y = 0; y < rows; y++) {
                 beginShape();
                 for (let x = 0; x < cols; x++) {
-                    let p = points[y][x];
-                    curveVertex(p.x, p.y);
+                    curveVertex(points[y][x].x, points[y][x].y);
                 }
                 endShape();
             }
@@ -241,10 +238,29 @@
             for (let x = 0; x < cols; x++) {
                 beginShape();
                 for (let y = 0; y < rows; y++) {
-                    let p = points[y][x];
-                    curveVertex(p.x, p.y);
+                    curveVertex(points[y][x].x, points[y][x].y);
                 }
                 endShape();
+            }
+        }
+
+        // Click / tap sends a shockwave through the fabric
+        function mousePressed() {
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    let p = points[y][x];
+                    if (p.fixed) continue;
+
+                    let dx = p.x - mouseX;
+                    let dy = p.y - mouseY;
+                    let dist = sqrt(dx * dx + dy * dy);
+
+                    if (dist < 300 && dist > 0) {
+                        let force = (300 - dist) / 300 * 25;
+                        p.prevX -= dx / dist * force;
+                        p.prevY -= dy / dist * force;
+                    }
+                }
             }
         }
 
@@ -252,15 +268,13 @@
             for (let y = 0; y < rows; y++) {
                 for (let x = 0; x < cols; x++) {
                     let p1 = points[y][x];
-                    
+
                     if (x < cols - 1) {
-                        let p2 = points[y][x + 1];
-                        constrainDistance(p1, p2, spacing);
+                        constrainDistance(p1, points[y][x + 1], spacing);
                     }
-                    
+
                     if (y < rows - 1) {
-                        let p2 = points[y + 1][x];
-                        constrainDistance(p1, p2, spacing);
+                        constrainDistance(p1, points[y + 1][x], spacing);
                     }
                 }
             }
@@ -270,17 +284,17 @@
             let dx = p2.x - p1.x;
             let dy = p2.y - p1.y;
             let dist = sqrt(dx * dx + dy * dy);
-            
+
             if (dist > 0) {
                 let diff = (targetDist - dist) / dist;
                 let offsetX = dx * diff * 0.5;
                 let offsetY = dy * diff * 0.5;
-                
+
                 if (!p1.fixed) {
                     p1.x -= offsetX;
                     p1.y -= offsetY;
                 }
-                
+
                 if (!p2.fixed) {
                     p2.x += offsetX;
                     p2.y += offsetY;
@@ -289,7 +303,8 @@
         }
 
         function windowResized() {
-            // Canvas stays fixed size, no resize needed
+            resizeCanvas(windowWidth, windowHeight);
+            buildFabric();
         }
     </script>
 </body>
