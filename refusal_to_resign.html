@@ -2,126 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Resignation and the Refusal to Resign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resignation and the Refusal to Resign — Sophie Hamann</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-
-    <style>
-        body {
-            background-color: white;
-            color: #e10600;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            margin: 40px;
-            line-height: 1.6;
-        }
-
-        h1, h2 {
-            font-weight: normal;
-            margin-bottom: 0.5em;
-        }
-
-        a {
-            color: #e10600;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .navigation {
-            margin-bottom: 40px;
-        }
-
-        .section {
-            max-width: 700px;
-            margin-bottom: 60px;
-        }
-
-        .muted {
-            opacity: 0.7;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 10px 18px;
-            border: 1px solid #e10600;
-            margin-top: 10px;
-        }
-
-        .button:hover {
-            background-color: #e10600;
-            color: white;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
+    <link rel="stylesheet" href="site.css">
 </head>
-
 <body>
 
-    <h1>Resignation and the Refusal to Resign</h1>
+<main class="code">
+    <span class="l"></span>
+    <span class="l"># @title&nbsp;&nbsp;&nbsp;Resignation and the Refusal to Resign</span>
+    <span class="l">from <a href="portfolio.html">projects</a> import *</span>
+    <span class="l dim"># part of <a href="https://www.donaufestival.at/en/artists/hope4hope/1845" target="_blank" rel="noopener">Hope4Hope</a>, Donaufestival 2026</span>
+    <span class="l"></span>
 
-    <div class="navigation">
-        <a href="portfolio.html">← Portfolio</a><br>
-    </div>
-
-    <div class="section muted">
+    <span class="l">class ResignationAndTheRefusalToResign(KineticTextileInstallation):</span>
+    <div class="in">
+        <span class="l">"""</span>
         <p>
-            Part of <a href="https://www.donaufestival.at/en/artists/hope4hope/1845"><em>**Hope4Hope**</em></a>
-            
             <em>Resignation and the Refusal to Resign</em> is a kinetic textile installation that stages the tension
             between entropy and resistance. Using robotic motors to repeatedly stretch and release
             fabric, the work makes tangible the oscillation between resignation (release) and
             the refusal to resign (stretch).
         </p>
-    </div>
+        <span class="l">"""</span>
+        <span class="l"></span>
 
-    <div class="section">
-        <h2>Concept</h2>
-        <p>
-            The Second Law of Thermodynamics tells us that entropy (disorder) will always increase
-            in an isolated system. Yet hope persists. This contradiction does not have to be resolved, 
-            but is a state to inhabit. Drawing on Schrödinger's concept
-            of negentropy, the installation enacts resistance through continuous energy input:
-            linear actuator motors function as agents of order, temporarily defying material collapse.
-        </p>
-        <p>
-            This act of defiance, of remaining within contradiction rather than resolving it, is what animates the piece.
-        </p>
-    </div>
+        <span class="l">def concept(self):</span>
+        <div class="in">
+            <p>
+                The Second Law of Thermodynamics tells us that entropy (disorder) will always increase
+                in an isolated system. Yet hope persists. This contradiction does not have to be resolved,
+                but is a state to inhabit. Drawing on Schrödinger's concept
+                of negentropy, the installation enacts resistance through continuous energy input:
+                linear actuator motors function as agents of order, temporarily defying material collapse.
+            </p>
+            <p>
+                This act of defiance, of remaining within contradiction rather than resolving it, is what animates the piece.
+            </p>
+        </div>
 
-    <div class="section">
-        <h2>Installation</h2>
-        <p>
-            The textile structure is mounted diagonally on the wall at approximately two meters,
-            tilting downward. Viewers stand directly beneath the suspended installation, placing
-            themselves within its field of movement rather than observing from a distance.
-        </p>
-        <p>
-            Linear actuator motors provide sustained mechanical force<br>
-            The fabric gradually shows signs of strain and fatigue<br>
-            The system remains intentionally unstable and imperfect<br>
-            Audible and tactile: friction, mechanical whirring, tightening<br>
-            Spatial arrangement reinforces precarity and endurance
-        </p>
-    </div>
+        <span class="l">def installation(self):</span>
+        <div class="in">
+            <p>
+                The textile structure is mounted diagonally on the wall at approximately two meters,
+                tilting downward. Viewers stand directly beneath the suspended installation, placing
+                themselves within its field of movement rather than observing from a distance.
+            </p>
+            <span class="l"></span>
+            <span class="l">yield "Linear actuator motors provide sustained mechanical force"</span>
+            <span class="l">yield "The fabric gradually shows signs of strain and fatigue"</span>
+            <span class="l">yield "The system remains intentionally unstable and imperfect"</span>
+            <span class="l">yield "Audible and tactile: friction, mechanical whirring, tightening"</span>
+            <span class="l">yield "Spatial arrangement reinforces precarity and endurance"</span>
+            <span class="l"></span>
+        </div>
 
-    <div class="section">
-        <h2>Experience</h2>
-        <p>
-            The angled suspension generates bodily awareness of
-            looming pressure, as if the system could collapse at any moment. Through this tension
-            between mechanical persistence and material vulnerability, the viewer experiences
-            cognitive dissonance: the knowledge that decay is inevitable, and yet the system continues.
-        </p>
+        <span class="l">def experience(self):</span>
+        <div class="in">
+            <p>
+                The angled suspension generates bodily awareness of
+                looming pressure, as if the system could collapse at any moment. Through this tension
+                between mechanical persistence and material vulnerability, the viewer experiences
+                cognitive dissonance: the knowledge that decay is inevitable, and yet the system continues.
+            </p>
+        </div>
     </div>
+    <span class="l"></span>
 
-    <div class="section muted">
-        <p>
-            Part of <a href="https://www.donaufestival.at/en/artists/hope4hope/1845"><em>**Hope4Hope**</em></a>,
-            a group exhibition at Donaufestival 2026. As global crises multiply and exhaustion becomes chronic,
-            MA students from the Department of Cross-Disciplinary Strategies at the University of Applied Arts Vienna
-            undertake a search for traces of hope across various fields, exploring the conditions under which hope manifests.
-        </p>
-    </div>
+    <span class="l dim">"""</span>
+    <p class="dim">
+        Part of <a href="https://www.donaufestival.at/en/artists/hope4hope/1845" target="_blank" rel="noopener">Hope4Hope</a>,
+        a group exhibition at Donaufestival 2026. As global crises multiply and exhaustion becomes chronic,
+        MA students from the Department of Cross-Disciplinary Strategies at the University of Applied Arts Vienna
+        undertake a search for traces of hope across various fields, exploring the conditions under which hope manifests.
+    </p>
+    <span class="l dim">"""</span>
+</main>
 
+<script src="site.js"></script>
 </body>
 </html>

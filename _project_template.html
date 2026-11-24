@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!--
+    PROJECT PAGE TEMPLATE
+    (Files starting with "_" are not published by GitHub Pages, so this one stays private.)
+
+    How to add a new project:
+      1. Copy this file and rename it, e.g.  my_new_project.html  (no "_" at the start).
+      2. Replace everything marked ✏️ below. Delete any block you don't need
+         (button, extra def sections, IMAGES, TRACKS, VIDEO).
+      3. Add the project to PROJECTS at the top of site.js:
+             {
+                 title: "My New Project",
+                 href: "my_new_project.html",
+                 image: "images/my_new_project1.png",   // hover preview on the projects page (optional)
+                 medium: "sound installation",          // shown as .sound_installation()
+                 text: "one short line describing it"
+             },
+         It then shows up on the home page, the projects page and in the ticker.
+
+    Naming tips for the Python look:
+      - class name: the title in CamelCase, no spaces or apostrophes   →  MyNewProject
+      - in brackets: the medium in CamelCase                            →  (SoundInstallation)
+      - section names: lowercase_with_underscores                       →  def concept(self):
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My New Project — Sophie Hamann</title> <!-- ✏️ -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
+    <link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<main class="code">
+    <span class="l"></span>
+    <span class="l"># @title&nbsp;&nbsp;&nbsp;My New Project</span> <!-- ✏️ title -->
+    <span class="l">from <a href="portfolio.html">projects</a> import *</span>
+    <span class="l dim"># year, place, exhibition or context</span> <!-- ✏️ optional one-line note, or delete -->
+    <span class="l"></span>
+
+    <!-- ✏️ OPTIONAL BUTTON: a boxed link to a game, map, video, shop...
+         Use any verb you like: play(), open(), watch(), listen(), read() -->
+    <span class="l">open("<a class="btn" href="https://example.com" target="_blank" rel="noopener">Something</a>")</span>
+    <span class="l"></span>
+
+    <!-- ✏️ class TitleInCamelCase(MediumInCamelCase): -->
+    <span class="l">class MyNewProject(SoundInstallation):</span>
+    <div class="in">
+
+        <!-- INTRO: the docstring. Add as many <p> paragraphs as you need. -->
+        <span class="l">"""</span>
+        <p>
+            <em>My New Project</em> is ... ✏️ first paragraph.
+        </p>
+        <p>
+            ✏️ Second paragraph. Links look like
+            <a href="https://example.com" target="_blank" rel="noopener">this</a>.
+        </p>
+        <span class="l">"""</span>
+        <span class="l"></span>
+
+        <!-- SECTION: copy this whole block for each heading (concept, method, ...) -->
+        <span class="l">def concept(self):</span> <!-- ✏️ section name -->
+        <div class="in">
+            <p>
+                ✏️ Section text.
+            </p>
+        </div>
+
+        <!-- SECTION WITH A LIST: each bullet is one "yield" line -->
+        <span class="l">def details(self):</span> <!-- ✏️ section name -->
+        <div class="in">
+            <span class="l">yield "✏️ First point"</span>
+            <span class="l">yield "✏️ Second point"</span>
+            <span class="l">yield "✏️ Third point"</span>
+        </div>
+    </div>
+    <span class="l"></span>
+
+    <!-- IMAGES: two per row. class="full" makes one span the whole row. -->
+    <span class="l">IMAGES = [</span>
+    <div class="gallery">
+        <img src="images/my_new_project1.png" alt="✏️ describe the image"> <!-- ✏️ -->
+        <img src="images/my_new_project2.png" alt="✏️ describe the image"> <!-- ✏️ -->
+        <img src="images/my_new_project3.png" class="full" alt="✏️ describe the image"> <!-- ✏️ -->
+    </div>
+    <span class="l">]</span>
+    <span class="l"></span>
+
+    <!-- SOUNDCLOUD TRACKS (optional): copy one <div> per track.
+         On SoundCloud: Share → Embed, copy the track number from the URL into the src below.
+         Keep &color=%231200ff so the player matches the blue. -->
+    <span class="l">TRACKS = [</span>
+    <div class="tracks">
+        <div>
+            <span class="l">track("✏️ Track name"),</span>
+            <iframe title="✏️ Track name" loading="lazy" scrolling="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/000000000&color=%231200ff&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>
+        </div>
+    </div>
+    <span class="l">]</span>
+    <span class="l"></span>
+
+    <!-- VIDEO (optional): YouTube → Share → Embed, paste the video id. -->
+    <span class="l">watch("✏️ Video title")</span>
+    <div class="in">
+        <iframe title="✏️ Video title" loading="lazy" style="width:100%;aspect-ratio:16/9;border:0;margin:0.4em 0"
+            src="https://www.youtube-nocookie.com/embed/VIDEO_ID" allowfullscreen></iframe>
+    </div>
+</main>
+
+<script src="site.js"></script>
+</body>
+</html>

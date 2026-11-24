@@ -2,110 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>How Algae Can Change the World</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        body {
-            background: white;
-            color: #e10600;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-                         "Liberation Mono", "Courier New", monospace;
-            font-size: 15px;
-            line-height: 1.6;
-            margin: 40px;
-        }
-
-        a {
-            color: #e10600;
-            text-decoration: none;
-            font-style: italic;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        h1 {
-            font-size: 22px;
-            font-weight: normal;
-            margin-bottom: 20px;
-        }
-
-        .back {
-            display: inline-block;
-            margin-bottom: 40px;
-            font-style: normal;
-            font-weight: normal;
-        }
-
-        footer {
-            margin-top: 80px;
-            font-size: 14px;
-        }
-
-        /* FULL-WIDTH LAYOUT */
-        .layout {
-            display: flex;
-            gap: 60px;
-            width: 100%;
-            align-items: flex-start;
-        }
-
-        /* LEFT COLUMN — TEXT */
-        .text {
-            flex: 1;
-            max-width: 520px;
-        }
-
-        /* RIGHT COLUMN — IMAGE GRID */
-        .images {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .images img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* MOBILE FALLBACK */
-        @media (max-width: 900px) {
-            .layout {
-                flex-direction: column;
-            }
-
-            .text {
-                max-width: 100%;
-            }
-
-            .images {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <title>How Algae Can Change the World — Sophie Hamann</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
+    <link rel="stylesheet" href="site.css">
 </head>
-
 <body>
 
-<h1>How Algae Can Change the World</h1>
+<main class="code">
+    <span class="l"></span>
+    <span class="l"># @title&nbsp;&nbsp;&nbsp;How Algae Can Change the World</span>
+    <span class="l">from <a href="portfolio.html">projects</a> import *</span>
+    <span class="l"></span>
 
-<a href="portfolio.html" class="back">← Portfolio</a>
-
-<div class="layout">
-
-    <!-- LEFT: TEXT -->
-    <div class="text">
+    <span class="l">class HowAlgaeCanChangeTheWorld(CuratorialProject):</span>
+    <div class="in">
+        <span class="l">"""</span>
         <p>
             <em>How Algae Can Change the World</em> is a curatorial and research-based
             exhibition project exploring algae as a material, ecological, and political
             actor in planetary futures.
         </p>
-
         <p>
             Developed as part of a group exhibition at Zeppelin University, the project
             contributed a curatorial perspective that translated complex material science
@@ -113,7 +33,6 @@
             research, design, and ecology to question dominant narratives of growth,
             sustainability, and resource extraction.
         </p>
-
         <p>
             The project was realized in collaboration with
             <a href="https://www.mujolab.com/" target="_blank" rel="noopener noreferrer">mujō</a>,
@@ -122,31 +41,32 @@
             algae-based alternatives to synthetic packaging formed the material and
             conceptual core of the exhibition.
         </p>
-
         <p>
             We designed a laboratory-like exhibition environment that mirrored mujō’s
             scientific and design-driven research practice. By foregrounding processes,
             material samples, and experimental states, the exhibition made visible the
             transformation of algae from living organism to industrial material.
         </p>
-
         <p>
             Positioned within broader discourses of biodesign, circular materials, and
             climate-conscious innovation, the project framed algae not only as a solution
             to ecological crisis, but as a lens through which alternative imaginaries of
             production, care, and coexistence can be articulated.
         </p>
+        <span class="l">"""</span>
     </div>
+    <span class="l"></span>
 
-    <!-- RIGHT: IMAGES (2×2 GRID) -->
-    <div class="images">
+    <span class="l">IMAGES = [</span>
+    <div class="gallery">
         <img src="images/algae2.png" alt="Exhibition booklet and curatorial material">
         <img src="images/algae4.png" alt="Exhibition material samples">
         <img src="images/algae1.png" alt="Exhibition visual: algae material processes">
         <img src="images/algae3.png" alt="Exhibition installation detail">
     </div>
+    <span class="l">]</span>
+</main>
 
-</div>
-
+<script src="site.js"></script>
 </body>
 </html>
