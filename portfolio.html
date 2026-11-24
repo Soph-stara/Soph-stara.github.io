@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects — Sophie Hamann</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="stylesheet" href="word.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
+    <link rel="stylesheet" href="site.css">
 </head>
-<body data-page="projects" data-title="Projects">
+<body>
 
-<article class="doc">
-    <h1>Projects</h1>
-    <p class="meta">Artistic research, installations, games, maps and sound. Hover a title for a preview.</p>
-    <hr>
+<main class="code">
+    <span class="l"></span>
+    <span class="l">/* @title&nbsp;&nbsp;&nbsp;Projects */</span>
+    <span class="l">.back("<a href="index.html">home</a>")</span>
+    <span class="l"></span>
+    <span class="l dim">// artistic research, installations, games, maps and sound. hover a title for a preview.</span>
+    <span class="l"></span>
+    <span class="l">const PROJECTS = [</span>
+    <!-- Filled from PROJECTS in site.js -->
+    <div id="project-list"></div>
+    <span class="l">]</span>
+</main>
 
-    <!-- Filled from PROJECTS in word.js -->
-    <ul class="project-list" id="project-list"></ul>
-</article>
-
-<script src="word.js"></script>
+<script src="site.js"></script>
 </body>
 </html>

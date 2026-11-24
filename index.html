@@ -5,147 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sophie Hamann</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="stylesheet" href="word.css">
-
-    <style>
-        .masthead {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 32px;
-            align-items: center;
-        }
-
-        #fabric-container canvas {
-            display: block;
-            width: 100% !important;
-            height: auto !important;
-        }
-
-        .masthead h1 {
-            font-size: clamp(44px, 7vw, 92px);
-            text-align: center;
-            margin: 0 0 12px;
-        }
-
-        .masthead .subtitle {
-            text-align: center;
-            font-size: 20px;
-            margin: 0 0 16px;
-        }
-
-        .dateline {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 8px;
-            border-top: 2px solid #000;
-            padding-top: 6px;
-            font-style: italic;
-            font-size: 16px;
-        }
-
-        .body-cols {
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: 48px;
-            border-top: 2px dotted #000;
-            margin-top: 24px;
-            padding-top: 20px;
-        }
-
-        .inside {
-            font-family: "Chicago", "Chicago_12", sans-serif;
-            font-size: 40px;
-            margin: 0 0 12px;
-        }
-
-        .body-cols h2 {
-            margin-top: 0;
-        }
-
-        @media (max-width: 1000px) {
-            .masthead,
-            .body-cols {
-                grid-template-columns: 1fr;
-            }
-
-            #fabric-container {
-                max-width: 240px;
-                margin: 0 auto;
-            }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
+    <link rel="stylesheet" href="site.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
 </head>
 
-<body data-page="home" data-title="Sophie Hamann">
+<body data-fabric>
 
-<article class="doc">
-    <header class="masthead">
-        <div id="fabric-container" title="move / click the fabric"></div>
-        <div>
-            <h1>Sophie Hamann</h1>
-            <p class="subtitle">
-                Researcher &amp; Artist working across computation,<br>
-                feminist theory and artistic research
-            </p>
-            <div class="dateline">
-                <span>Vienna, Austria</span>
-                <span id="today"></span>
-                <span>Number 9</span>
-            </div>
-        </div>
-    </header>
+<main class="code">
+    <span class="l"></span>
+    <span class="l">/* @title&nbsp;&nbsp;&nbsp;Sophie_Hamann's Website */</span>
+    <span class="l"></span>
 
-    <div class="body-cols">
-        <section>
-            <p class="inside">Inside…</p>
-            <ul class="toc">
-                <li><a href="cv.html">Curriculum Vitae</a><span class="leader"></span>CV</li>
-                <li><a href="portfolio.html">All Projects</a><span class="leader"></span>01–09</li>
-            </ul>
-            <p></p>
-            <ul class="toc" id="toc-projects"></ul>
-        </section>
+    <span class="l">ABOUT:</span>
+    <span class="l i1">.researcher().artist()</span>
+    <span class="l i1">.working_across("computation", "feminist theory", "artistic research")</span>
+    <span class="l i1">/*</span>
+    <span class="l i2 dim">I am an interdisciplinary researcher and artist working across computation,
+        feminist theory, and artistic research. My practice investigates how hidden
+        systems can be made perceptible through sensory, computational, and narrative
+        methods.</span>
+    <span class="l"></span>
+    <span class="l i2 dim">Moving between digital humanities, climate research, and artistic
+        experimentation, I use tools such as data analysis, mapping, sonification,
+        and interactive systems to translate complex structures into experiential
+        forms. I am particularly interested in glitches, commons, and moments of
+        instability as sites for knowledge production, care, and collective imagination.</span>
+    <span class="l i1">*/</span>
+    <span class="l"></span>
 
-        <section>
-            <h2>About</h2>
-            <p>
-                I am an interdisciplinary researcher and artist working across computation,
-                feminist theory, and artistic research. My practice investigates how hidden
-                systems can be made perceptible through sensory, computational, and narrative
-                methods.
-            </p>
-            <p>
-                Moving between digital humanities, climate research, and artistic
-                experimentation, I use tools such as data analysis, mapping, sonification,
-                and interactive systems to translate complex structures into experiential
-                forms. I am particularly interested in glitches, commons, and moments of
-                instability as sites for knowledge production, care, and collective imagination.
-            </p>
+    <span class="l">PROJECTS:</span>
+    <div id="home-projects"></div>
+    <span class="l i1">.see("<a href="portfolio.html">all</a>").<a href="portfolio.html" class="blink">projects</a>()</span>
+    <span class="l"></span>
 
-            <h2>Contact</h2>
-            <p>
-                Living and working in Vienna<br>
-                <a href="mailto:sophiehamann.maxi@gmail.com">sophiehamann.maxi@gmail.com</a>
-            </p>
-        </section>
-    </div>
-</article>
+    <span class="l">CV:</span>
+    <span class="l i1">.read("<a href="cv.html">Curriculum Vitae</a>").<a href="cv.html">cv</a>()</span>
+    <span class="l"></span>
 
-<script src="word.js"></script>
+    <span class="l">const CONTACT = [</span>
+    <span class="l i1">.<a href="mailto:sophiehamann.maxi@gmail.com">email</a>("sophiehamann.maxi@gmail.com"),</span>
+    <span class="l i1">.based_in("Vienna, Austria")</span>
+    <span class="l">]</span>
+</main>
+
+<script src="site.js"></script>
 <script>
-    // Dateline shows the current month, like a newsletter issue
-    document.getElementById("today").textContent =
-        new Date().toLocaleDateString("en-GB", { month: "long", year: "numeric" });
-
-    // "Inside…" table of contents with dotted leaders
-    document.getElementById("toc-projects").innerHTML = PROJECTS.map((p, i) => {
-        const n = String(i + 1).padStart(2, "0");
-        const title = p.href ? `<a href="${p.href}">${p.title}</a>` : `<span class="soon">${p.title}</span>`;
-        return `<li>${title}<span class="leader"></span>${n}</li>`;
-    }).join("");
-
     // Fabric simulation, 1-bit edition
     const SIZE = 480;
     let cols = 26;
@@ -186,7 +93,7 @@
     }
 
     function draw() {
-        background(255);
+        clear();
         wave += 0.04;
         let m = localMouse();
 
@@ -225,8 +132,8 @@
             applyConstraints();
         }
 
-        stroke(0);
-        strokeWeight(2);
+        stroke(18, 0, 255);
+        strokeWeight(4);
         noFill();
 
         for (let y = 0; y < rows; y++) {
