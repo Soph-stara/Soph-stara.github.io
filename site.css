@@ -1,5 +1,5 @@
 /* Shared styles: the site written as code, set in bold electric blue on white,
-   with a scrolling ticker on top and a live system readout in the corner. */
+   with a scrolling ticker along the bottom and a live system readout in the corner. */
 
 :root {
     --blue: #1200ff;
@@ -59,8 +59,10 @@ a:active {
 /* ---------- Ticker ---------- */
 
 .ticker {
-    position: sticky;
-    top: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 1000;
     background: var(--bar);
     color: #fff;
@@ -123,12 +125,15 @@ main.code .l {
 
 main.code h2 {
     font: inherit;
-    text-transform: uppercase;
     margin: 1.2em 0 0;
 }
 
+main.code h2::before {
+    content: "def ";
+}
+
 main.code h2::after {
-    content: ":";
+    content: "():";
 }
 
 main.code .entry {
@@ -142,7 +147,7 @@ main.code .meta {
 }
 
 main.code .meta::before {
-    content: "// ";
+    content: "# ";
 }
 
 main.code .entry > .meta {
@@ -158,23 +163,15 @@ main.code em {
 .sys {
     position: fixed;
     right: 20px;
-    bottom: 16px;
+    bottom: calc(1.2em + 26px);
     z-index: 5;
     text-align: right;
     pointer-events: none;
     font-size: 0.8em;
 }
 
-.sys .fabric {
-    width: 170px;
-    margin: 0 0 6px auto;
+.sys a {
     pointer-events: auto;
-}
-
-.sys .fabric canvas {
-    display: block;
-    width: 100% !important;
-    height: auto !important;
 }
 
 /* ---------- Hover preview image (projects page) ---------- */
@@ -212,6 +209,10 @@ main.code em {
 
     main.code {
         padding-bottom: 40px;
+    }
+
+    .sys {
+        padding-bottom: calc(1.2em + 40px);
     }
 }
 

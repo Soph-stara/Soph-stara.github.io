@@ -1,4 +1,4 @@
-// Shared behaviour: the blue ticker on top, the live system readout in the
+// Shared behaviour: the blue ticker along the bottom, the live system readout in the
 // bottom-right corner, and the project lists.
 // Add new projects to PROJECTS below; the ticker, the home page and the
 // projects page all read from it.
@@ -50,6 +50,7 @@ const PROJECTS = [
 ];
 
 const EMAIL = "sophiehamann.maxi@gmail.com";
+const INSTAGRAM = ""; // your handle, without the @
 
 function esc(s) {
     return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -60,13 +61,13 @@ function slug(s) {
     return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
 }
 
-// One project as a line of code: .open("Title").medium()
-function projectLine(p, cls = "i1") {
+// One project as a line of Python: open("Title").medium()
+function projectLine(p, cls = "i1", end = "") {
     if (!p.href) {
-        return `<span class="l ${cls} soon">.soon("${esc(p.title)}")</span>`;
+        return `<span class="l ${cls} soon">soon("${esc(p.title)}")${end}</span>`;
     }
     const img = p.image ? ` data-image="${p.image}"` : "";
-    return `<span class="l ${cls}">.open("<a href="${p.href}"${img}>${esc(p.title)}</a>").<a href="${p.href}"${img}>${slug(p.medium || "project")}</a>()</span>`;
+    return `<span class="l ${cls}">open("<a href="${p.href}"${img}>${esc(p.title)}</a>").<a href="${p.href}"${img}>${slug(p.medium || "project")}</a>()${end}</span>`;
 }
 
 (function () {
@@ -77,21 +78,21 @@ function projectLine(p, cls = "i1") {
         "computation",
         "feminist theory",
         "artistic research",
-        `x=&gt;x.fabric("interlude")`,
+        `lambda x: x.textile("interlude")`,
         ...PROJECTS.filter(p => p.href).map(p => `<a href="${p.href}">${esc(p.title)}</a>`),
-        `x=&gt;x.glitch("interlude")`,
+        `lambda x: x.glitch("interlude")`,
         "commons",
         "instability",
         "care",
         "Vienna"
     ];
-    const run = `<span>${phrases.join("  =&gt;  ")}  =&gt; </span>`;
+    const run = `<span>${phrases.join("  -&gt;  ")}  -&gt; </span>`;
 
     const ticker = document.createElement("header");
     ticker.className = "ticker";
     ticker.innerHTML = `<div class="ticker-track">${run}${run}</div>`;
     ticker.querySelectorAll(".ticker-track > span")[1].setAttribute("aria-hidden", "true");
-    document.body.prepend(ticker);
+    document.body.appendChild(ticker);
 
     // ---------- System readout ----------
 
@@ -111,13 +112,11 @@ function projectLine(p, cls = "i1") {
     const sys = document.createElement("aside");
     sys.className = "sys";
     sys.innerHTML = `
-        ${document.body.hasAttribute("data-fabric") ?`<div class="fabric" id="fabric-container" title="move / click the fabric"></div>` : ""}
         <div>OS: ${os}<br>
         Browser: ${browser}<br>
         Screen: ${screen.width} x ${screen.height}<br>
-        Cookies: ${navigator.cookieEnabled ? "Yes" : "No"}<br>
-        CPU Cores: ${navigator.hardwareConcurrency || "?"}<br>
-        RAM: ${navigator.deviceMemory ? navigator.deviceMemory + " GB" : "?"}<br>
+        Instagram: ${INSTAGRAM ? `<a href="https://www.instagram.com/${INSTAGRAM}/" target="_blank" rel="noopener">@${esc(INSTAGRAM)}</a>` : "@…"}<br>
+        Email: <a href="mailto:${EMAIL}">${EMAIL}</a><br>
         Vienna: <span id="sys-time"></span></div>
         <div class="coords">X: <span id="sys-x">0</span> | Y: <span id="sys-y">0</span></div>`;
     document.body.appendChild(sys);
@@ -140,7 +139,7 @@ function projectLine(p, cls = "i1") {
     const fullList = document.getElementById("project-list");
     if (fullList) {
         fullList.innerHTML = PROJECTS.map(p =>
-            projectLine(p) + (p.text ? `<span class="l i2 dim">// ${esc(p.text)}</span>` : "")
+            projectLine(p, "i1", ",") + (p.text ? `<span class="l i2 dim"># ${esc(p.text)}</span>` : "")
         ).join("");
     }
 
