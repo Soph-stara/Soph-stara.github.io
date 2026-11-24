@@ -50,7 +50,8 @@ const PROJECTS = [
 ];
 
 const EMAIL = "sophiehamann.maxi@gmail.com";
-const INSTAGRAM = ""; // your handle, without the @
+const INSTAGRAM = "sophie_haman"; // handle, without the @
+const ARENA = "https://www.are.na/sophie-hamann-vyx4etfrmca";
 
 function esc(s) {
     return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -116,6 +117,7 @@ function projectLine(p, cls = "i1", end = "") {
         Browser: ${browser}<br>
         Screen: ${screen.width} x ${screen.height}<br>
         Instagram: ${INSTAGRAM ? `<a href="https://www.instagram.com/${INSTAGRAM}/" target="_blank" rel="noopener">@${esc(INSTAGRAM)}</a>` : "@…"}<br>
+        Are.na: <a href="${ARENA}" target="_blank" rel="noopener">sophie-hamann</a><br>
         Email: <a href="mailto:${EMAIL}">${EMAIL}</a><br>
         Vienna: <span id="sys-time"></span></div>
         <div class="coords">X: <span id="sys-x">0</span> | Y: <span id="sys-y">0</span></div>`;
